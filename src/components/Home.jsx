@@ -1,17 +1,19 @@
 import React from 'react'
-import useStyles from "../styles";
+import useStyles from "../styles/mainStyles";
+
 import {
     Container,
     Typography,
     Stack,
     Button,
 } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import {
   Link as RouterLink,
 } from "react-router-dom";
 
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+
 export const Home = () => {
   const classes = useStyles();
   return (
