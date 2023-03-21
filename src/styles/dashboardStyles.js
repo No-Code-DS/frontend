@@ -7,16 +7,18 @@ const useStyles = makeStyles({
     },
     sideBar: {
         backgroundColor: 'white',
-        // width: 20%,
-        // height: "100vh",
+        width: "20%",
+        height: "100vh",
         borderRight: "1px solid",
         padding: "0px"
     },
     listItem: {
         // borderTop: "1px solid",
         borderBottom: "1px solid"
+    },
+    board: {
+        padding: "auto",
     }
-    
 })
 
 export default useStyles;
