@@ -9,9 +9,10 @@ export const Footer = () => {
             maxWidth="md"
             component="footer"
             sx={{
-            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-            mt: 8,
-            py: [3, 6],
+                borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+                mt: 8,
+                py: [3, 6],
+                // border: "1px solid",
             }}
         >
         <Typography variant="h6">

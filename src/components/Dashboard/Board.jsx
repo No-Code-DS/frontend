@@ -12,7 +12,6 @@ export const Board = () => {
         <IconButton onClick={() => console.log('Button clicked')}>
           <DataSource style={{transform: "scale(2.7)"}}/>
         </IconButton>
-
       </Box>
     </Box>
   )

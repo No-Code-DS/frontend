@@ -1,5 +1,6 @@
 import React from 'react'
 import useStyles from "../styles/mainStyles";
+import { Footer } from './Footer';
 
 import {
     Container,
@@ -54,6 +55,7 @@ export const Home = () => {
             </Container>
         </div>
       
+        <Footer />
     </div> 
   )
 }

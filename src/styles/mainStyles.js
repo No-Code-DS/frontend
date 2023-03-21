@@ -44,13 +44,9 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column"
     },
-    // footer: {
-    //     backgroundColor: "#5b748ae8",
-    //     padding: "10px 10px 10px",
-    //     // height: "100px",
-    //     boxShadow: "0px -2px 10px 0px grey",
-    //     width: '100%',
-    // },
+    footer: {
+        // border: "1px solid",
+    },
 });
 
 export default useStyles;

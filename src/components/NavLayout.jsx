@@ -9,6 +9,7 @@ export const NavLayout = () => {
     <>
       <Link to="/">Home</Link>
       <Link to="/prices">prices</Link>
+      <Link to="/dashboard">dashboard</Link>
       <Outlet />
     </>
   )

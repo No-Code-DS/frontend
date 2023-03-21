@@ -4,7 +4,6 @@ import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
 import { Pricing } from './components/Pricing';
 import { CssBaseline } from '@mui/material';
-import { Footer } from './components/Footer';
 import { Dashboard } from './components/Dashboard/Dashboard';
 // import { NavLayout } from './components/NavLayout';
 
@@ -19,10 +18,10 @@ const App = () => {
             <CssBaseline />
             <Navbar />
             <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/pricing" element={<Pricing />} />
             </Routes>
-            <Footer />
         </>
     )
 }

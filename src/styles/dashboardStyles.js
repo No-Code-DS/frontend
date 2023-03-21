@@ -6,9 +6,9 @@ const useStyles = makeStyles({
         height: "100vh",
     },
     sideBar: {
-        backgroundColor: 'white',
-        width: "20%",
-        height: "100vh",
+        // backgroundColor: 'white',
+        // width: "20%",
+        // height: "100vh",
         borderRight: "1px solid",
         padding: "0px"
     },
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
         borderBottom: "1px solid"
     },
     board: {
-        padding: "auto",
+        // padding: "auto",
     }
 })
 
