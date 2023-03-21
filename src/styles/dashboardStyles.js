@@ -4,18 +4,19 @@ const useStyles = makeStyles({
     stack: {
         backgroundColor: 'white',
         height: "100vh",
-        border: "1px solid"
     },
     sideBar: {
         backgroundColor: 'white',
         // width: 20%,
         // height: "100vh",
-        // borderRight: "1px solid
+        borderRight: "1px solid",
+        padding: "0px"
     },
-    board: {
-
+    listItem: {
+        // borderTop: "1px solid",
+        borderBottom: "1px solid"
     }
-
+    
 })
 
 export default useStyles;

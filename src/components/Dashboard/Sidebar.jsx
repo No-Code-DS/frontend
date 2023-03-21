@@ -10,6 +10,7 @@ import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
 import FeatureEngineering from './icons/FeatureEngineering';
 import Model from './icons/Model';
+import Deployment from './icons/Demployment';
 
 import {
     Box,
@@ -24,13 +25,13 @@ export const Sidebar = () => {
   const classes = useStyles();
   return (
     <Box 
-      flex={1} 
-      p={2}
-    //   sx={{ display: {xs: "none", sm: "block" }}}
+      flex={0.6} 
+      // p={2}
+      // sx={{ display: {xs: "none", sm: "block" }}}
       className={classes.sideBar}
     >
-        <List>
-          <ListItem disablePadding>
+        <List >
+          <ListItem className={classes.listItem}>
             <ListItemButton component="a" href="#home">
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
@@ -38,7 +39,7 @@ export const Sidebar = () => {
               <ListItemText primary="Upload data" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem className={classes.listItem}>
             <ListItemButton component="a" href="#home">
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
@@ -46,7 +47,7 @@ export const Sidebar = () => {
               <ListItemText primary="Clean data" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem className={classes.listItem}>
             <ListItemButton component="a" href="#home">
               <ListItemIcon>
                 <FeatureEngineering style={{transform: "scale(1.8)"}}/>
@@ -54,12 +55,20 @@ export const Sidebar = () => {
               <ListItemText primary="Feature engineering" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem className={classes.listItem}>
             <ListItemButton component="a" href="#home">
               <ListItemIcon>
                 <Model style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
               <ListItemText primary="Model" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <ListItemButton component="a" href="#home">
+              <ListItemIcon>
+                <Deployment style={{transform: "scale(1.8)"}}/>
+              </ListItemIcon>
+              <ListItemText primary="Deployment" />
             </ListItemButton>
           </ListItem>
         </List>
