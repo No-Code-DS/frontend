@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import useStyles from '../../styles/dashboardStyles';
 
 import DataSource from './icons/DataSource';
@@ -16,8 +16,9 @@ import {
     ListItemText,
 } from "@mui/material";
 
-export const Sidebar = () => {
+export const Sidebar = ({nextProcess, handleButtonClick}) => {
   const classes = useStyles();
+
   return (
     <Box 
       flex={0.6} 
@@ -27,7 +28,7 @@ export const Sidebar = () => {
     >
         <List>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="a" href="#home">
+            <ListItemButton component="button" onClick={() => handleButtonClick(0)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
               </ListItemIcon>
@@ -35,7 +36,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="a" href="#home">
+            <ListItemButton component="button" onClick={() => handleButtonClick(1)}>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
@@ -43,7 +44,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="a" href="#home">
+            <ListItemButton component="button">
               <ListItemIcon>
                 <FeatureEngineering style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
@@ -51,7 +52,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="a" href="#home">
+            <ListItemButton component="button">
               <ListItemIcon>
                 <Model style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
@@ -59,7 +60,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="a" href="#home">
+            <ListItemButton component="button">
               <ListItemIcon>
                 <Deployment style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
