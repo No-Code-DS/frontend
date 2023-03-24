@@ -4,10 +4,10 @@ const useStyles = makeStyles({
     cleanWindowContainer: {
         // backgroundColor: "red",
         backgroundColor: "#243782b0", 
-        height: "400px",
-        width: "600px",
-        position: "relative",
-        // bottom: "200px"
+        height: "800px",
+        width: "800px",
+        position: "absolute",
+        bottom: "200px"
     }
 });
 
