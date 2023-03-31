@@ -21,16 +21,26 @@ const useStyles = makeStyles({
         // padding: "auto",
     },
     modelsContainer: {
-			padding: "60px", 
-			backgroundColor: "#eee"
+			padding: "50px", 
+			backgroundColor: "#eee",
+			display: "flex",
+			flexWrap: "wrap",
+			flexDirection: "row",
+			justifyContent: "space-between",
+			height: "100vh",
+			alignItems: "flex-start",
+			alignContent: "flex-start"
     },
+
 		model: {
-			height: "200px",
-			width: "400px",
+			height: "240px",
+			width: "480px",
 			borderRadius: "5px",
 			boxShadow: "5px 7px 18px #888888",
 			padding: "20px", 
-			backgroundColor: "white"
+			backgroundColor: "white",
+			// margin: "20px"
+			marginBottom: "10px"
 		}
 })
 
