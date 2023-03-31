@@ -7,6 +7,9 @@ import FeatureEngineering from './icons/FeatureEngineering';
 import Model from './icons/Model';
 import Deployment from './icons/Demployment';
 
+import { DataUpload } from '../Processes/DataUpload';
+import { DataCleaning } from '../Processes/DataCleaning';
+
 import {
     Box,
     List,
@@ -28,7 +31,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
     >
         <List>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="button" onClick={() => handleButtonClick(0)}>
+            <ListItemButton component="button" onClick={() => handleButtonClick(<DataUpload />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
               </ListItemIcon>
@@ -36,7 +39,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
             </ListItemButton>
           </ListItem>
           <ListItem className={classes.listItem}>
-            <ListItemButton component="button" onClick={() => handleButtonClick(1)}>
+            <ListItemButton component="button" onClick={() => handleButtonClick(<DataCleaning />)}>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>

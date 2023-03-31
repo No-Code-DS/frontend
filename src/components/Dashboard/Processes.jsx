@@ -1,44 +1,17 @@
 import React, { useRef, useState } from 'react'
-import IconButton from '@mui/material/IconButton';
-import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
-import {DataCleaning} from '../Processes/DataCleaning';
+import { Stack } from '@mui/material';
 
-
-const processes = [
-    <IconButton>
-        <DataSource style={{transform: "scale(2.7)"}}/>
-    </IconButton>,
-    <IconButton onClick={() => alert('Button clicked')}>
-        <DataSource style={{transform: "scale(2.7)"}}/>
-    </IconButton>
-]
 
 export const Processes = ({nextProcess}) => {
-  const [activeProcesses, setActiveProcesses] = useState([processes[nextProcess]])
-  const fileInputRef = useRef(null);
-
-  const handleFileInput = (event) => {
-    fileInputRef.current.click();
-    const file = event.target.files[0];
-    // handle file upload logic here
-  };
-
+  const [currentProcess, setCurrentProcess] = useState(nextProcess)
+  
   return (
     <>
-      {/* <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-        onChange={handleFileInput}
-        accept=".csv" 
-      />
-      <IconButton onClick={handleFileInput}>
-        <DataSource style={{ transform: 'scale(2.7)' }} />
-      </IconButton> */}
-      <DataCleaning />
+      {/* {DataProcesses.slice(0, nextProcess+1).map((Proc, index) => (
+          <Proc key={index} />
+          <ArrowRightAltIcon style={{ transform: `scale(1.7)` }}/>
+      ))} */}
     </>
-    // processes[nextProcess]
   )
 }
-

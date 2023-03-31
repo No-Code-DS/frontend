@@ -6,10 +6,11 @@ import useStyles from "../../styles/dashboardStyles";
 
 export const Dashboard = () => {
   const [nextProcess, setNextProcess] = useState(0)
+  const [activeProcesses, setActiveProcesses] = useState([])
   const classes = useStyles();
 
   function handleProcessChange(nextProc){
-    setNextProcess(nextProc);
+    setActiveProcesses(current => [...current, nextProc]);
   }
 
   return (
@@ -19,8 +20,8 @@ export const Dashboard = () => {
       justifyContent="space-between"
       className={classes.stack}
     >
-      <Sidebar nextProcess={nextProcess} handleButtonClick={handleProcessChange} />
-      <Board nextProcess={nextProcess}/>
+      <Sidebar handleButtonClick={handleProcessChange} />
+      <Board activeProcesses={activeProcesses} nextProcess={nextProcess}/>
     </Stack>
   )
 }

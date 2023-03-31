@@ -78,12 +78,19 @@ export const Navbar = () => {
               <Link component={RouterLink} to="/" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                 Home
               </Link>
+
               <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                 Pricing
               </Link>
+
               <Link component={RouterLink} to="/dashboard" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                 Dashboard
               </Link>
+
+              <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                Models
+              </Link>
+
               <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
                 Login
               </Button>
