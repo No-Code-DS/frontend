@@ -38,16 +38,16 @@ export const DataCleaning = () => {
 					<Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
 						<TableHead>
 							<TableRow>
-								<TableCell>Dessert (100g serving)</TableCell>
-								<TableCell align="right">Calories</TableCell>
-								<TableCell align="right">Fat&nbsp;(g)</TableCell>
-								<TableCell align="right">Carbs&nbsp;(g)</TableCell>
-								<TableCell align="right">Protein&nbsp;(g)</TableCell>
+								<TableCell>title</TableCell>
+								<TableCell align="right">tempcell</TableCell>
+								<TableCell align="right">tempcell</TableCell>
+								<TableCell align="right">tempcell</TableCell>
+								<TableCell align="right">tempcell</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-								<TableCell component="th" scope="row">what is this</TableCell>
+								<TableCell component="th" scope="row">temp</TableCell>
 								<TableCell align="right">param1</TableCell>
 								<TableCell align="right">param2</TableCell>
 								<TableCell align="right">param3</TableCell>
