@@ -4,7 +4,11 @@ const useStyles = makeStyles({
 	  topPanel: {
 			backgroundColor: "white", 
 			padding: "10px",
-			paddingLeft: "40px"
+			paddingLeft: "50px",
+			paddingRight: "50px",
+			display: "flex",
+			justifyContent: "space-between",
+			alignItems: "center"
 		},
     stack: {
 			backgroundColor: 'white',
@@ -40,7 +44,7 @@ const useStyles = makeStyles({
 			padding: "20px", 
 			backgroundColor: "white",
 			// margin: "20px"
-			marginBottom: "10px"
+			marginBottom: "40px"
 		}
 })
 

@@ -1,35 +1,14 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import AdbIcon from '@mui/icons-material/Adb';
-
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import StarIcon from '@mui/icons-material/StarBorder';
-import GlobalStyles from '@mui/material/GlobalStyles';
-
-import { Home } from './Home';
-import { Pricing } from './Pricing';
 
 import {
   Link as RouterLink,
 } from "react-router-dom";
-import { NavLayout } from './NavLayout';
 
 const pages = ['Home', 'Pricing'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -81,10 +60,6 @@ export const Navbar = () => {
 
               <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                 Pricing
-              </Link>
-
-              <Link component={RouterLink} to="/dashboard" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
-                Dashboard
               </Link>
 
               <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>

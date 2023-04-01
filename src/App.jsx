@@ -18,10 +18,10 @@ const App = () => {
 			<CssBaseline />
 			<Navbar />
 			<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/dashboard" element={<Dashboard />} />
-					<Route path="/pricing" element={<Pricing />} />
-					<Route path="/models" element={<Models />} />
+				<Route path="/" element={<Home />} />
+				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/pricing" element={<Pricing />} />
+				<Route path="/models" element={<Models />} />
 			</Routes>
 		</>
 	)

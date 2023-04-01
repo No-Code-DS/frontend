@@ -1,6 +1,10 @@
 import React from 'react'
-import { Box, Grid, Typography, Stack, Container } from "@mui/material";
+import { Box, Grid, Typography, Stack, Container, Button } from "@mui/material";
 import useStyles from "../styles/dashboardStyles";
+import Link from '@mui/material/Link';
+import {
+  Link as RouterLink,
+} from "react-router-dom";
 
 const models = [
   {
@@ -27,7 +31,6 @@ const models = [
     "date": "23-4-2023",
     "status": "Failed"
   },
-
 ]
 
 const statusColors = {"Deployed": "green", "Failed": "red", "Training": "orange"}
@@ -37,7 +40,16 @@ export const Models = () => {
 
   return (
     <>
-      <Box className={classes.topPanel}>Dashboard</Box>
+      <Box className={classes.topPanel}>
+        <Typography>
+          Dashboard
+        </Typography>
+        <Button variant="contained">
+          <Link component={RouterLink} to="/dashboard" sx={{color:"white"}}>
+            Create new model 
+          </Link>
+        </Button> 
+      </Box>
       <Box className={classes.modelsContainer}>
           {models.map((model, index) => (
             <Box display="flex" flexDirection="column" justifyContent="space-between" className={classes.model}key={index}>
