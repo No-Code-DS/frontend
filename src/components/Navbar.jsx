@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Box } from '@mui/material';
+import useStyles from '../styles/navBarStyles';
 
 import {
   Link as RouterLink,
@@ -14,7 +16,7 @@ const pages = ['Home', 'Pricing'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const Navbar = () => {
-
+  const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -40,36 +42,43 @@ export const Navbar = () => {
         elevation={0}
         sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, backgroundColor: '#241e53'}}
       >
-        <Toolbar sx={{ justifyContent: "space-between" }} >
+        <Toolbar sx={{display: "flex"}} >
 
-          <Typography variant="h6" sx={{ color:"white"}}>
-            Company name
-          </Typography>
+          <Box className={classes.innerBox}>
+            <Typography variant="h6" sx={{ 
+              color:"white",
+              }}>
+              Company name
+            </Typography>
+          </Box>
 
-          <AdbIcon sx={{ 
-            display: { xs: 'flex'}, 
-            color:"white", 
-            marginLeft: "80px",
-            display:{xs:"none", sm:"block"}
-          }} />
+          <Box className={classes.innerBox} sx={{justifyContent: "center"}}>
+            <AdbIcon sx={{ 
+              color:"white", 
+              // marginLeft: "80px",
+              display:{xs:"none", sm:"flex"},
+            }} />
+          </Box>
 
-          <nav>
-              <Link component={RouterLink} to="/" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
-                Home
-              </Link>
+          <Box className={classes.innerBox} sx={{marginRight: "auto", justifyContent:"end"}}>
+            <nav>
+                <Link component={RouterLink} to="/" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                  Home
+                </Link>
 
-              <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
-                Pricing
-              </Link>
+                <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                  Pricing
+                </Link>
 
-              <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
-                Models
-              </Link>
+                <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                  Models
+                </Link>
 
-              <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
-                Login
-              </Button>
-          </nav>
+                <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
+                  Login
+                </Button>
+            </nav>
+          </Box>
         </Toolbar>
 
       </AppBar>

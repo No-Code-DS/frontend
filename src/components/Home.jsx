@@ -8,7 +8,6 @@ import {
     Stack,
     Button,
 } from "@mui/material";
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import {
   Link as RouterLink,
@@ -30,8 +29,10 @@ export const Home = () => {
                 <div className={classes.buttons}>
                     <Stack direction="row" justifyContent="center" spacing={2}>
                         <Button variant="contained" color="primary">
-                            Get Started
-                        </Button>
+                            <Link component={RouterLink} to="/login" sx={{color:"white"}}>
+															Get started
+                            </Link>
+                        </Button> 
 
                         <Button variant="outlined" sx={{color:"white", borderColor:"#6777bf"}}>
                             <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>

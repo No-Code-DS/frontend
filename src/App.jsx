@@ -6,6 +6,7 @@ import { Pricing } from './components/Pricing';
 import { Models } from './components/Models';
 import { CssBaseline } from '@mui/material';
 import { Dashboard } from './components/Dashboard/Dashboard';
+import { LogIn } from './components/Account/LogIn';
 
 import {
   Routes,
@@ -22,6 +23,7 @@ const App = () => {
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/pricing" element={<Pricing />} />
 				<Route path="/models" element={<Models />} />
+				<Route path="/login" element={<LogIn />} />
 			</Routes>
 		</>
 	)
