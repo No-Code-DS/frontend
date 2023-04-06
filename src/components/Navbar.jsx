@@ -17,23 +17,6 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const Navbar = () => {
   const classes = useStyles();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar
@@ -55,7 +38,6 @@ export const Navbar = () => {
           <Box className={classes.innerBox} sx={{justifyContent: "center"}}>
             <AdbIcon sx={{ 
               color:"white", 
-              // marginLeft: "80px",
               display:{xs:"none", sm:"flex"},
             }} />
           </Box>
@@ -73,10 +55,11 @@ export const Navbar = () => {
                 <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                   Models
                 </Link>
-
-                <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
-                  Login
-                </Button>
+                <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
+                  <Link component={RouterLink} to="/login" sx={{color:"white"}}>
+                    Login
+                  </Link>
+                </Button> 
             </nav>
           </Box>
         </Toolbar>

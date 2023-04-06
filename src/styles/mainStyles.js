@@ -47,6 +47,13 @@ const useStyles = makeStyles({
     footer: {
         // border: "1px solid",
     },
+    optionLinks: {
+        textDecoration: "none",
+        '&:hover': {
+            borderBottom: "1px solid",
+            borderBottomColor: "#363891",
+        }
+    },
 });
 
 export default useStyles;
