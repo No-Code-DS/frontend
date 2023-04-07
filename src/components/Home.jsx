@@ -16,6 +16,7 @@ import {
 
 
 export const Home = () => {
+    // example request
     useEffect(() => {
         fetch("http://localhost:8000/")
         .then(response => response.json())
