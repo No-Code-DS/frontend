@@ -1,7 +1,7 @@
-import { makeStyles, StylesProvider } from '@mui/styles';
+import { css } from '@mui/system';
 
-const useStyles = makeStyles({
-    cleanWindowContainer: {
+const classes = {
+    cleanWindowContainer: css({
         // backgroundColor: "red",
         // backgroundColor: "#243782b0", 
         height: "600px",
@@ -9,11 +9,11 @@ const useStyles = makeStyles({
         // padding: "200px"
         // position: "absolute",
         // bottom: "200px"
-    },
-    table: {
+    }),
+    table: css({
         // minWidth: 650,
         backgroundColor: "grey"
-    }
-});
+    })
+};
 
-export default useStyles;
+export default classes;

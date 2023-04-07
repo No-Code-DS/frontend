@@ -1,59 +1,58 @@
-import { makeStyles, StylesProvider } from '@mui/styles';
+import { css } from '@mui/system';
 
-const useStyles = makeStyles({
-    mainContainer: {
+const classes = {
+    mainContainer: css({
         minHeight: "calc(100vh - 200px)",
         marginTop: "20px",
         marginBottom: "20px",
         // border: "1px solid",
-    },
-    container: {
+    }),
+    container: css({
         padding: "40px 10px 40px",
-        // backgroundColor: "#243782b0", 
         backgroundColor: "#243782b0",
         opacity: "86%",
         width: "55%",
         margin: "auto",
         borderRadius: "20px"
-    },
-    welcome: {
+    }),
+    welcome: css({
         padding: "20px 10px 20px",
-    },
-    icon: {
+    }),
+    icon: css({
         marginRight: '20px',
-    },
-    buttons: {
+    }),
+    buttons: css({
         marginTop: "40px",
-    },
-    cardGrid: {
+    }),
+    cardGrid: css({
         padding: "20px 0",
-    },
-    card: {
+    }),
+    card: css({
         height: "100%",
         display: "flex",
         flexDirection: "column"
-    },
-    cardMedia: {
+    }),
+    cardMedia: css({
         paddingTop: "56.25%"
-    },
-    cardContent: {
+    }),
+    cardContent: css({
         flexGrow: 1
-    },
-    tutorial: {
+    }),
+    tutorial: css({
         padding: "20px 10px 20px",
         display: "flex",
         flexDirection: "column"
-    },
-    footer: {
+    }),
+    footer: css({
         // border: "1px solid",
-    },
-    optionLinks: {
+    }),
+    optionLinks: css({
         textDecoration: "none",
         '&:hover': {
             borderBottom: "1px solid",
             borderBottomColor: "#363891",
         }
-    },
-});
+    }),
+};
 
-export default useStyles;
+export default classes;

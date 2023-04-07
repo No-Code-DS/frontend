@@ -1,5 +1,5 @@
 import React from 'react';
-import useStyles from '../../styles/dashboardStyles';
+import classes from '../../styles/dashboardStyles';
 
 import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
@@ -20,17 +20,16 @@ import {
 } from "@mui/material";
 
 export const Sidebar = ({nextProcess, handleButtonClick}) => {
-  const classes = useStyles();
 
   return (
     <Box 
       flex={0.6} 
       // p={2}
       // sx={{ display: {xs: "none", sm: "block" }}}
-      className={classes.sideBar}
+      sx={{...classes.sideBar}}
     >
         <List>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => handleButtonClick(<DataUpload />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
@@ -38,7 +37,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
               <ListItemText primary="Upload data" />
             </ListItemButton>
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => handleButtonClick(<DataCleaning />)}>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
@@ -46,7 +45,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
               <ListItemText primary="Clean data" />
             </ListItemButton>
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
                 <FeatureEngineering style={{transform: "scale(1.8)"}}/>
@@ -54,7 +53,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
               <ListItemText primary="Feature engineering" />
             </ListItemButton>
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
                 <Model style={{transform: "scale(1.8)"}}/>
@@ -62,7 +61,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
               <ListItemText primary="Model" />
             </ListItemButton>
           </ListItem>
-          <ListItem className={classes.listItem}>
+          <ListItem sx={{...classes.istItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
                 <Deployment style={{transform: "scale(1.8)"}}/>

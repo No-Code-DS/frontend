@@ -6,17 +6,14 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Box } from '@mui/material';
-import useStyles from '../styles/navBarStyles';
+import classes from '../styles/navBarStyles';
 
 import {
   Link as RouterLink,
 } from "react-router-dom";
 
-const pages = ['Home', 'Pricing'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const Navbar = () => {
-  const classes = useStyles();
 
   return (
     <AppBar
@@ -27,7 +24,7 @@ export const Navbar = () => {
       >
         <Toolbar sx={{display: "flex"}} >
 
-          <Box className={classes.innerBox}>
+          <Box sx={{...classes.innerBox}}>
             <Typography variant="h6" sx={{ 
               color:"white",
               }}>
@@ -35,14 +32,14 @@ export const Navbar = () => {
             </Typography>
           </Box>
 
-          <Box className={classes.innerBox} sx={{justifyContent: "center"}}>
+          <Box sx={{...classes.innerBox}} style={{justifyContent: "center"}}>
             <AdbIcon sx={{ 
               color:"white", 
               display:{xs:"none", sm:"flex"},
             }} />
           </Box>
 
-          <Box className={classes.innerBox} sx={{marginRight: "auto", justifyContent:"end"}}>
+          <Box sx={{...classes.innerBox}} style={{marginRight: "auto", justifyContent:"end"}}>
             <nav>
                 <Link component={RouterLink} to="/" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                   Home

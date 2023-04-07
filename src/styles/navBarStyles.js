@@ -1,10 +1,10 @@
-import { makeStyles, StylesProvider } from '@mui/styles';
+import { css, StylesProvider } from '@mui/system';
 
-const useStyles = makeStyles({
-  innerBox: {
+const classes = {
+  innerBox: css({
     flex: 1,
     display: "flex",
-  },
-})
+  }),
+}
 
-export default useStyles;
+export default classes;

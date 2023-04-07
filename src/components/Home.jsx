@@ -1,6 +1,7 @@
 import React from 'react'
-import useStyles from "../styles/mainStyles";
+import classes from "../styles/mainStyles";
 import { Footer } from './Footer';
+import { Box } from '@mui/material';
 
 import {
     Container,
@@ -15,22 +16,21 @@ import {
 
 
 export const Home = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.mainContainer}>
-        <div className={classes.container} >
-            <Container maxWidth="sm" className={classes.welcome} >
+    <Box sx={{...classes.mainContainer}}>
+        <Box sx={{...classes.container}}>
+            <Container maxWidth="sm" sx={{...classes.welcome}} >
                 <Typography variant="h2" align="center" sx={{color:"white"}} gutterBorrom>
                     No-Code data science platform
                 </Typography>
                 <Typography variant="h5" align="center" sx={{color:"white"}} paragraph>
                     Welcome to your data-driven solution. 
                 </Typography>
-                <div className={classes.buttons}>
+                <Box sx={{...classes.buttons}}>
                     <Stack direction="row" justifyContent="center" spacing={2}>
                         <Button variant="contained" color="primary">
                             <Link component={RouterLink} to="/login" sx={{color:"white"}}>
-															Get started
+                                Get started
                             </Link>
                         </Button> 
 
@@ -40,12 +40,12 @@ export const Home = () => {
                             </Link>
                         </Button>
                     </Stack>
-                </div>
+                </Box>
             </Container>
-        </div>
+        </Box>
 
-        <div className={classes.container} style={{ marginTop: "20px" }} >
-            <Container maxWidth="sm" className={classes.tutorial} >
+        <Box sx={{...classes.container}} style={{ marginTop: "20px" }} >
+            <Container maxWidth="sm" sx={{...classes.tutorial}} >
                 <Stack direction="row" justifyContent="center" spacing={2} >
                     <iframe width="220" height="215" src="https://www.youtube.com/watch?v=RBSUwFGa6Fk"></iframe>
                     <Typography variant="h5" align="center" sx={{color:"white"}} paragraph>
@@ -54,10 +54,10 @@ export const Home = () => {
                     </Typography>
                 </Stack>
             </Container>
-        </div>
+        </Box>
       
         <Footer />
-    </div> 
+    </Box> 
   )
 }
 

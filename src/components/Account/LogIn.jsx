@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Footer } from '../Footer';
-import useStyles from "../../styles/mainStyles";
+import classes from "../../styles/mainStyles";
 
 import {
   Link as RouterLink,
@@ -35,7 +35,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const LogIn = () => {
-  const classes = useStyles();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -98,12 +97,12 @@ export const LogIn = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to="#" sx={{color:"black", textDecoration: "none"}} className={classes.optionLinks}>
+                <Link to="#" style={{color:"black", textDecoration: "none"}} sx={{...classes.optionLinks}}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to="/signup" sx={{color:"black", textDecoration: "none"}} className={classes.optionLinks}>
+                <Link component={RouterLink} to="/signup" sx={{color:"black", textDecoration: "none"}} sx={{...classes.optionLinks}}>
                   Don't have an account? Sign Up
                 </Link>
               </Grid>

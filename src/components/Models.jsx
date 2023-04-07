@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid, Typography, Stack, Container, Button } from "@mui/material";
-import useStyles from "../styles/dashboardStyles";
+import classes from "../styles/dashboardStyles";
 import Link from '@mui/material/Link';
 import {
   Link as RouterLink,
@@ -36,11 +36,10 @@ const models = [
 const statusColors = {"Deployed": "green", "Failed": "red", "Training": "orange"}
 
 export const Models = () => {
-  const classes = useStyles();
 
   return (
     <>
-      <Box className={classes.topPanel}>
+      <Box sx={{...classes.topPanel}}>
         <Typography>
           Dashboard
         </Typography>
@@ -50,9 +49,9 @@ export const Models = () => {
           </Link>
         </Button> 
       </Box>
-      <Box className={classes.modelsContainer}>
+      <Box sx={{...classes.modelsContainer}}>
           {models.map((model, index) => (
-            <Box display="flex" flexDirection="column" justifyContent="space-between" className={classes.model}key={index}>
+            <Box display="flex" flexDirection="column" justifyContent="space-between" sx={{...classes.model}}key={index}>
               <Box>
                 <Typography variant="h5" style={{fontWeight:"bold"}}>
                   {model.name}

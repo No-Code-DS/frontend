@@ -1,7 +1,7 @@
-import { makeStyles } from '@mui/styles';
+import { css } from '@mui/system';
 
-const useStyles = makeStyles({
-	  topPanel: {
+const classes = {
+	  topPanel: css({
 			backgroundColor: "white", 
 			padding: "10px",
 			paddingLeft: "50px",
@@ -9,22 +9,22 @@ const useStyles = makeStyles({
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center"
-		},
-    stack: {
+		}),
+    stack: css({
 			backgroundColor: 'white',
 			height: "100vh",
-    },
-    sideBar: {
+    }),
+    sideBar: css({
 			borderRight: "1px solid",
 			padding: "0px"
-    },
-    listItem: {
+    }),
+    listItem: css({
 			borderBottom: "1px solid"
-    },
-    board: {
+    }),
+    board: css({
         // padding: "auto",
-    },
-    modelsContainer: {
+    }),
+    modelsContainer: css({
 			padding: "50px", 
 			backgroundColor: "#eee",
 			display: "flex",
@@ -34,9 +34,9 @@ const useStyles = makeStyles({
 			height: "100vh",
 			alignItems: "flex-start",
 			alignContent: "flex-start"
-    },
+    }),
 
-		model: {
+		model: css({
 			height: "240px",
 			width: "480px",
 			borderRadius: "5px",
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 			backgroundColor: "white",
 			// margin: "20px"
 			marginBottom: "40px"
-		}
-})
+		})
+}
 
-export default useStyles;
+export default classes;

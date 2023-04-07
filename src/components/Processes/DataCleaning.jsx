@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Clean from '../Dashboard/icons/Clean';
 import { Box, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Typography, Button, Container } from "@mui/material";
 import { Modal } from '@mui/material';
-import useStyles from '../../styles/processStyles';
+import classes from '../../styles/processStyles';
 import CloseIcon from '@mui/icons-material/Close';
 import { 
 	Table, TableBody, 
@@ -14,7 +14,6 @@ import {
 
 export const DataCleaning = () => {
 	const [open, setOpen] = useState(false);
-	const classes = useStyles();
 
 	const handleOpen = () => {
     setOpen(true);
@@ -30,9 +29,10 @@ export const DataCleaning = () => {
 		<Clean style={{ transform: 'scale(3.3)' }} />
 	</IconButton>
 	<Dialog open={open} maxWidth={false} fullWidth={false}>
-		<DialogTitle className={classes.title}>Dialog Box Title</DialogTitle>
+		<DialogTitle sx={{...classes.title}}>Dialog Box Title</DialogTitle>
 
-		<DialogContent dividers className={classes.cleanWindowContainer}>
+		<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
+
 			<div>
 				<TableContainer component={Paper} PaperProps={{ style: { backgroundColor: '#F5F5F5 !important' } }}>
 					<Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
