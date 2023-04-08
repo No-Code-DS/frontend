@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classes from "../styles/mainStyles";
 import { Footer } from './Footer';
 import { Box } from '@mui/material';
@@ -16,6 +16,13 @@ import {
 
 
 export const Home = () => {
+    // example request
+    useEffect(() => {
+        fetch("http://localhost:8000/")
+        .then(response => response.json())
+        .then(data=> console.log(data))
+        .catch(err => console.log(err))
+    }, [])
   return (
     <Box sx={{...classes.mainContainer}}>
         <Box sx={{...classes.container}}>
