@@ -14,7 +14,7 @@ jobs:
       packages: write
 
     env:
-      IMAGE_NAME: core-engine
+      IMAGE_NAME: frontend
       REPO: no-code-ds
 
     steps:
