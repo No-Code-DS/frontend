@@ -102,7 +102,7 @@ export const LogIn = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to="/signup" sx={{color:"black", textDecoration: "none"}} sx={{...classes.optionLinks}}>
+                <Link component={RouterLink} to="/signup" style={{color:"black", textDecoration: "none"}} sx={{...classes.optionLinks}}>
                   Don't have an account? Sign Up
                 </Link>
               </Grid>

@@ -7,7 +7,6 @@ export const DataUpload = () => {
 
   const handleFileInput = (event) => {
     fileInputRef.current.click();
-    const file = event.target.files[0];
   };
 
   return (

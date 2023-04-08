@@ -3,8 +3,7 @@ import { Box, Stack } from '@mui/material';
 import classes from "../../styles/dashboardStyles";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
-export const Board = ({activeProcesses, nextProcess}) => {
-  const [currentProcess, setCurrentProcess] = useState(nextProcess)
+export const Board = ({activeProcesses}) => {
 
   return (
     <Box flex={2} p={20} >

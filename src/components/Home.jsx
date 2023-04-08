@@ -37,7 +37,7 @@ export const Home = () => {
                     <Stack direction="row" justifyContent="center" spacing={2}>
                         <Button variant="contained" color="primary">
                             <Link component={RouterLink} to="/login" sx={{color:"white"}}>
-                                Get started
+                                Get started 
                             </Link>
                         </Button> 
 
@@ -54,7 +54,7 @@ export const Home = () => {
         <Box sx={{...classes.container}} style={{ marginTop: "20px" }} >
             <Container maxWidth="sm" sx={{...classes.tutorial}} >
                 <Stack direction="row" justifyContent="center" spacing={2} >
-                    <iframe width="220" height="215" src="https://www.youtube.com/watch?v=RBSUwFGa6Fk"></iframe>
+                    <iframe title="tutorial" width="220" height="215" src="https://www.youtube.com/watch?v=RBSUwFGa6Fk"></iframe>
                     <Typography variant="h5" align="center" sx={{color:"white"}} paragraph>
                         this tutorial will help you get started on the basics 
                         of our platform

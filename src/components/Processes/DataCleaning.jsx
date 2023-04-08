@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Clean from '../Dashboard/icons/Clean';
-import { Box, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Typography, Button, Container } from "@mui/material";
-import { Modal } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Container } from "@mui/material";
 import classes from '../../styles/processStyles';
-import CloseIcon from '@mui/icons-material/Close';
 import { 
 	Table, TableBody, 
 	TableContainer, TableRow,  

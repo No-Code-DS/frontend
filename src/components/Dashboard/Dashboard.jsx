@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Sidebar } from './Sidebar';
 import { Board } from './Board';
 import classes from "../../styles/dashboardStyles";
 
 export const Dashboard = () => {
-  const [nextProcess, setNextProcess] = useState(0)
   const [activeProcesses, setActiveProcesses] = useState([])
 
   function handleProcessChange(nextProc){
@@ -21,7 +20,7 @@ export const Dashboard = () => {
       sx={{...classes.stack}}
     >
       <Sidebar handleButtonClick={handleProcessChange} />
-      <Board activeProcesses={activeProcesses} nextProcess={nextProcess}/>
+      <Board activeProcesses={activeProcesses} />
     </Stack>
   )
 }

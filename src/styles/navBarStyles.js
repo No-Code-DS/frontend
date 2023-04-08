@@ -1,4 +1,4 @@
-import { css, StylesProvider } from '@mui/system';
+import { css } from '@mui/system';
 
 const classes = {
   innerBox: css({
