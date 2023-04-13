@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -30,13 +31,23 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setEmailError(false)
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailError(emailRegex.test(email));
+    console.log(emailRegex.test(email));
+
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    console.log(email);
   };
 
   return (
@@ -51,12 +62,15 @@ export const SignUp = () => {
             alignItems: 'center',
           }}
         >
+
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
+
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -68,8 +82,12 @@ export const SignUp = () => {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={!emailError}
+                  helperText={!emailError ? "This is not a valid email" : ""}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -81,6 +99,7 @@ export const SignUp = () => {
                   autoComplete="new-password"
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -88,6 +107,7 @@ export const SignUp = () => {
                 />
               </Grid>
             </Grid>
+
             <Button
               type="submit"
               fullWidth
