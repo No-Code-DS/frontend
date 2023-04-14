@@ -31,16 +31,38 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const SignUp = () => {
+  const formRef = React.useRef();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState([false, ""]);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState([false, ""]);
+
+  function checkEmail() {
+    if (!email) {
+      setEmailError([true, "This field is required"])
+    }
+    else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setEmailError([!emailRegex.test(email), "This is not a valid email"]);
+    }
+  }
+
+  function checkPassword() {
+    if (!password) {
+      setPasswordError([true, "This field can't be empty"])
+    }
+    else {
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+      setPasswordError([!passwordRegex.test(password), "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit."]);
+    }
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setEmailError(false)
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setEmailError(emailRegex.test(email));
-    console.log(emailRegex.test(email));
+    setEmailError([false, ""])
+    setPasswordError([false, ""])
+    checkEmail()
+    checkPassword()
 
     const data = new FormData(event.currentTarget);
     console.log({
@@ -71,7 +93,7 @@ export const SignUp = () => {
             Sign up
           </Typography>
 
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box ref={formRef} component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -83,8 +105,8 @@ export const SignUp = () => {
                   autoComplete="email"
                   autoFocus
                   onChange={(e) => setEmail(e.target.value)}
-                  error={!emailError}
-                  helperText={!emailError ? "This is not a valid email" : ""}
+                  error={emailError[0]}
+                  helperText={emailError[0] ? emailError[1] : ""}
                 />
               </Grid>
 
@@ -97,15 +119,18 @@ export const SignUp = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={passwordError[0]}
+                  helperText={passwordError[0] ? passwordError[1] : ""}
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Button
@@ -113,6 +138,7 @@ export const SignUp = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => formRef.current.reportValidity()}
             >
               Sign Up
             </Button>
