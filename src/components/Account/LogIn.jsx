@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -35,8 +36,23 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const LogIn = () => {
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState([false, ""]);
+
+
+  function checkEmail() {
+    if (!email) {
+      setEmailError([true, "This field is required"])
+    }
+    else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setEmailError([!emailRegex.test(email), "This is not a valid email"]);
+    }
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
+    setEmailError([false, ""])
+    checkEmail()
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -64,7 +80,6 @@ export const LogIn = () => {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
-              margin="normal"
               required
               fullWidth
               id="email"
@@ -72,7 +87,11 @@ export const LogIn = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError[0]}
+              helperText={emailError[0] ? emailError[1] : ""}
             />
+
             <TextField
               margin="normal"
               required
