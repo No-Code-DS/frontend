@@ -39,7 +39,6 @@ export const LogIn = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
 
-
   function checkEmail() {
     if (!email) {
       setEmailError([true, "This field is required"])
