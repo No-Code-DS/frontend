@@ -6,8 +6,14 @@ import classes from "../../styles/dashboardStyles";
 
 export const Dashboard = () => {
   const [activeProcesses, setActiveProcesses] = useState([])
-  function handleProcessChange(nextProc){
+
+  function handleProcessChange(nextProc) {
     setActiveProcesses(current => [...current, nextProc]);
+  }
+
+  function handleProcessCancel() {
+    setActiveProcesses(activeProcesses.slice(0, -1))
+    console.log("cancelling")
   }
 
   return (
@@ -15,11 +21,10 @@ export const Dashboard = () => {
       direction="row" 
       spacing={2} 
       justifyContent="space-between"
-      // className={classes.stack}
       sx={{...classes.stack}}
     >
-      <Sidebar lastProcessOrder={activeProcesses.length} handleButtonClick={handleProcessChange} />
-      <Board activeProcesses={activeProcesses} />
+      <Sidebar lastProcessOrder={activeProcesses.length} handleButtonClick={handleProcessChange} handleProcessCancel={handleProcessCancel} />
+      <Board activeProcesses={activeProcesses} handleProcessCancel={handleProcessCancel} />
     </Stack>
   )
 }

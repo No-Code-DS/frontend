@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react'
 import IconButton from '@mui/material/IconButton';
+import { Box } from '@mui/material';
 import DataSource from '../Dashboard/icons/DataSource';
+import classes from "../../styles/processStyles";
 
-export const DataUpload = () => {
+export const DataUpload = ({handleProcessCancel}) => {
 	const [file, setFile] = useState();
 	const fileInputRef = useRef(null);
 
@@ -27,7 +29,7 @@ export const DataUpload = () => {
 	};
 
   return (
-    <>
+    <Box sx={{...classes.processBox}}>
 			<input
 				type="file"
 				ref={fileInputRef}
@@ -35,9 +37,11 @@ export const DataUpload = () => {
 				onChange={handleFileUpload}
 				// accept=".csv" 
 			/>
-			<IconButton onClick={handleFileInput} style={{ width: "40px" }}>
+	
+			<IconButton onClick={handleFileInput}>
 				<DataSource style={{ transform: 'scale(2.7)' }} />
 			</IconButton>
-    </>
+	
+    </Box>
   )
 }

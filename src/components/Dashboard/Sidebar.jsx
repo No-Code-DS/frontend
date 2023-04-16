@@ -19,8 +19,8 @@ import {
     ListItemText,
 } from "@mui/material";
 
-export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
-  console.log(lastProcessOrder)
+export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel}) => {
+
   function handleAddProcess(nextProcessOrder, component) {
     if (nextProcessOrder == (lastProcessOrder + 1)) {
       handleButtonClick({
@@ -39,13 +39,14 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
               </ListItemIcon>
               <ListItemText primary="Upload data" />
             </ListItemButton>
           </ListItem>
+
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => handleAddProcess(2, <DataCleaning />)
             }>
@@ -55,6 +56,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
               <ListItemText primary="Clean data" />
             </ListItemButton>
           </ListItem>
+
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
@@ -63,6 +65,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
               <ListItemText primary="Feature engineering" />
             </ListItemButton>
           </ListItem>
+
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
@@ -71,6 +74,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
               <ListItemText primary="Model" />
             </ListItemButton>
           </ListItem>
+
           <ListItem sx={{...classes.istItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
@@ -79,6 +83,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
               <ListItemText primary="Deployment" />
             </ListItemButton>
           </ListItem>
+
         </List>
     </Box>
   )
