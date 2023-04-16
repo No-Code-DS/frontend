@@ -8,7 +8,6 @@ import uuid from 'react-uuid';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import data from "./mockData.json";
 
-
 export const DataCleaning = () => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);

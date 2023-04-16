@@ -10,10 +10,10 @@ export const Board = ({activeProcesses}) => {
       <Box sx={{...classes.board}}>
         <Stack direction="row" spacing={4}>
           {activeProcesses.map((proc, index) => (
-              <Stack direction="row" spacing={3} key={index}>
-                {proc}
-                <ArrowRightAltIcon style={{ marginTop: "10px", transform: 'scale(1.8)', }} />
-              </Stack> 
+            <Stack direction="row" spacing={3} key={index}>
+              {proc["component"]}
+              <ArrowRightAltIcon style={{ marginTop: "10px", transform: 'scale(1.8)', }} />
+            </Stack> 
           ))}
         </Stack>
       </Box>

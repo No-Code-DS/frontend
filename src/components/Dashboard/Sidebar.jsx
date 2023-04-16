@@ -19,7 +19,16 @@ import {
     ListItemText,
 } from "@mui/material";
 
-export const Sidebar = ({nextProcess, handleButtonClick}) => {
+export const Sidebar = ({lastProcessOrder, handleButtonClick}) => {
+  console.log(lastProcessOrder)
+  function handleAddProcess(nextProcessOrder, component) {
+    if (nextProcessOrder == (lastProcessOrder + 1)) {
+      handleButtonClick({
+        "order": nextProcessOrder,
+        "component": component
+      })
+    }
+  }
 
   return (
     <Box 
@@ -30,7 +39,7 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleButtonClick(<DataUpload />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
               </ListItemIcon>
@@ -38,7 +47,8 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
             </ListItemButton>
           </ListItem>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleButtonClick(<DataCleaning />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(2, <DataCleaning />)
+            }>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
@@ -70,7 +80,6 @@ export const Sidebar = ({nextProcess, handleButtonClick}) => {
             </ListItemButton>
           </ListItem>
         </List>
-      {/* </Box> */}
     </Box>
   )
 }
