@@ -51,7 +51,8 @@ export const Models = () => {
       </Box>
       <Box sx={{...classes.modelsContainer}}>
           {models.map((model, index) => (
-            <Box display="flex" flexDirection="column" justifyContent="space-between" sx={{...classes.model}}key={index}>
+            <Box sx={{...classes.model}} key={index}>
+
               <Box>
                 <Typography variant="h5" style={{fontWeight:"bold"}}>
                   {model.name}
@@ -60,6 +61,7 @@ export const Models = () => {
                   {model.type}
                 </Typography>
               </Box>
+
               <Box display="flex" justifyContent="space-between">
                 <Typography style={{ color: "#6c6c6c", fontWeight: "bold"}}>
                   Created at: <br/>
@@ -70,6 +72,7 @@ export const Models = () => {
                   {model.status}
                 </Typography>
               </Box>
+
             </Box>
           ))}
       </Box>

@@ -24,7 +24,6 @@ export const DataCleaning = () => {
 		console.log("s")
 	}, [])
 
-
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };

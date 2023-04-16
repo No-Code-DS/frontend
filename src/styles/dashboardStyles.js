@@ -37,6 +37,9 @@ const classes = {
     }),
 
 		model: css({
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "space-between",
 			height: "240px",
 			width: "480px",
 			borderRadius: "5px",

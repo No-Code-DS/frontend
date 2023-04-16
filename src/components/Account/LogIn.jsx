@@ -38,6 +38,8 @@ const theme = createTheme();
 export const LogIn = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState([false, ""]);
 
   function checkEmail() {
     if (!email) {
@@ -48,10 +50,19 @@ export const LogIn = () => {
       setEmailError([!emailRegex.test(email), "This is not a valid email"]);
     }
   }
+
+ function checkPassword() {
+    if (!password) {
+      setPasswordError([true, "This field can't be empty"])
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setEmailError([false, ""])
     checkEmail()
+    setPasswordError([false, ""])
+    checkPassword()
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -79,7 +90,6 @@ export const LogIn = () => {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
-              required
               fullWidth
               id="email"
               label="Email Address"
@@ -93,11 +103,13 @@ export const LogIn = () => {
 
             <TextField
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Password"
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordError[0]}
+              helperText={passwordError[0] ? passwordError[1] : ""}
               id="password"
               autoComplete="current-password"
             />
