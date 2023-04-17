@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import DataSource from '../Dashboard/icons/DataSource';
 import classes from "../../styles/processStyles";
 
-export const DataUpload = ({handleProcessCancel}) => {
+export const DataUpload = ({isLast}) => {
 	const [file, setFile] = useState();
 	const fileInputRef = useRef(null);
 

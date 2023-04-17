@@ -8,7 +8,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePag
 import uuid from 'react-uuid';
 import data from "./mockData.json";
 
-export const DataCleaning = () => {
+export const DataCleaning = ({isLast}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
