@@ -18,6 +18,7 @@ import classes from "../../styles/mainStyles";
 
 import {
   Link as RouterLink,
+  useNavigate 
 } from "react-router-dom";
 
 function Copyright(props) {
@@ -36,10 +37,16 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const LogIn = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState([false, ""]);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  if (loggedIn) {
+    navigate("/");
+  }
 
   function checkEmail() {
     if (!email) {
@@ -51,25 +58,51 @@ export const LogIn = () => {
     }
   }
 
- function checkPassword() {
+  function checkPassword() {
     if (!password) {
       setPasswordError([true, "This field can't be empty"])
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setEmailError([false, ""])
-    checkEmail()
-    setPasswordError([false, ""])
-    checkPassword()
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+
+    checkPassword();
+    const formData = new FormData(event.currentTarget);
+
+    const jsonDataString = {};
+    formData.forEach(function(value, key){
+      jsonDataString[key] = value;
     });
+
+    let jsonData = JSON.stringify(jsonDataString)
+
+    if (!emailError[0]) {
+      try {
+        const response = await fetch('http://localhost:8000/users/login', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'accepts': 'application/json',
+          },
+          body: jsonData,
+        });
+        if (response.ok) {
+          setLoggedIn(true);
+        }
+        console.log(response)
+        if (response.status == 409) {
+          const responseData = await response.json();
+          setEmailError([true, responseData.detail])
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
   };
 
+ 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -99,6 +132,7 @@ export const LogIn = () => {
               onChange={(e) => setEmail(e.target.value)}
               error={emailError[0]}
               helperText={emailError[0] ? emailError[1] : ""}
+              onBlur={() => checkEmail()}
             />
 
             <TextField

@@ -13,6 +13,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Footer } from '../Footer';
 
+import {
+  useNavigate 
+} from "react-router-dom";
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,12 +33,14 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const SignUp = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState([false, ""]);
   const [password2, setPassword2] = useState('');
   const [password2Error, setPassword2Error] = useState([false, ""]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function checkEmail() {
     if (!email) {
@@ -70,7 +76,6 @@ export const SignUp = () => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    console.log(formData)
 
     const jsonDataString = {};
     formData.forEach(function(value, key){
@@ -78,7 +83,6 @@ export const SignUp = () => {
     });
 
     let jsonData = JSON.stringify(jsonDataString)
-    console.log(jsonData)
 
     if (!(passwordError[0] && password2Error[0] && emailError[0])) {
       try {
@@ -90,12 +94,13 @@ export const SignUp = () => {
           },
           body: jsonData,
         });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        if (response.ok) {
+          navigate("/");
         }
-        console.log("sadas")
-        const responseData = await response.json();
-        console.log(responseData);
+        if (response.status == 409) {
+          const responseData = await response.json();
+          setEmailError([true, responseData.detail])
+        }
       } catch (error) {
         console.error(error);
       }
