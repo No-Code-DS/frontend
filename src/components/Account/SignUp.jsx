@@ -29,7 +29,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const SignUp = () => {
-  const formRef = React.useRef();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
   const [password, setPassword] = useState('');
@@ -67,18 +66,40 @@ export const SignUp = () => {
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setEmailError([false, ""])
-    setPasswordError([false, ""])
-    checkEmail()
-    checkPassword()
 
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    const formData = new FormData(event.currentTarget);
+    console.log(formData)
+
+    const jsonDataString = {};
+    formData.forEach(function(value, key){
+      jsonDataString[key] = value;
     });
+
+    let jsonData = JSON.stringify(jsonDataString)
+    console.log(jsonData)
+
+    if (!(passwordError[0] && password2Error[0] && emailError[0])) {
+      try {
+        const response = await fetch('http://localhost:8000/users/signup', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'accepts': 'application/json',
+          },
+          body: jsonData,
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log("sadas")
+        const responseData = await response.json();
+        console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -94,94 +115,94 @@ export const SignUp = () => {
           }}
         >
 
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
 
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
 
-          <Box ref={formRef} component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={(e) => setEmail(e.target.value)}
-                  error={emailError[0]}
-                  helperText={emailError[0] ? emailError[1] : ""}
-                  onBlur={() => checkEmail()}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  error={passwordError[0]}
-                  helperText={passwordError[0] ? passwordError[1] : ""}
-                  onBlur={() => checkPassword()}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="passwordConfirm"
-                  label="Repeat Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e) => setPassword2(e.target.value)}
-                  error={password2Error[0]}
-                  helperText={password2Error[0] ? password2Error[1] : ""}
-                  onBlur={() => checkPasswordConfirm()}
-                />
-              </Grid>
-
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+                error={emailError[0]}
+                helperText={emailError[0] ? emailError[1] : ""}
+                onBlur={() => checkEmail()}
+              />
             </Grid>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={() => formRef.current.reportValidity()}
-            >
-              Sign Up
-            </Button>
-            {/* <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid> */}
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password1"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
+                error={passwordError[0]}
+                helperText={passwordError[0] ? passwordError[1] : ""}
+                onBlur={() => checkPassword()}
+              />
+            </Grid>
 
-      <Footer />
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password2"
+                label="Repeat Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                onChange={(e) => setPassword2(e.target.value)}
+                error={password2Error[0]}
+                helperText={password2Error[0] ? password2Error[1] : ""}
+                onBlur={() => checkPasswordConfirm()}
+              />
+            </Grid>
+
+            {/* <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive inspiration, marketing promotions and updates via email."
+              />
+            </Grid> */}
+          </Grid>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            // onClick={() => formRef.current.reportValidity()}
+          >
+            Sign Up
+          </Button>
+          {/* <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="#" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid> */}
+        </Box>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
+
+    <Footer />
     </ThemeProvider>
   );
 }
