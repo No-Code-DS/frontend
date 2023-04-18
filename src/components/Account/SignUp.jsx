@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -36,6 +34,8 @@ export const SignUp = () => {
   const [emailError, setEmailError] = useState([false, ""]);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState([false, ""]);
+  const [password2, setPassword2] = useState('');
+  const [password2Error, setPassword2Error] = useState([false, ""]);
 
   function checkEmail() {
     if (!email) {
@@ -56,6 +56,16 @@ export const SignUp = () => {
       setPasswordError([!passwordRegex.test(password), "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit."]);
     }
   }
+  
+  function checkPasswordConfirm() {
+    console.log(password2, password)
+    if (password2 != password) {
+      setPassword2Error([true, "Passwords don't match"])
+    }
+    else {
+      console.log("sadsa")
+    }
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -69,7 +79,6 @@ export const SignUp = () => {
       email: data.get('email'),
       password: data.get('password'),
     });
-    console.log(email);
   };
 
   return (
@@ -107,6 +116,7 @@ export const SignUp = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   error={emailError[0]}
                   helperText={emailError[0] ? emailError[1] : ""}
+                  onBlur={() => checkEmail()}
                 />
               </Grid>
 
@@ -122,6 +132,23 @@ export const SignUp = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   error={passwordError[0]}
                   helperText={passwordError[0] ? passwordError[1] : ""}
+                  onBlur={() => checkPassword()}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="passwordConfirm"
+                  label="Repeat Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  onChange={(e) => setPassword2(e.target.value)}
+                  error={password2Error[0]}
+                  helperText={password2Error[0] ? password2Error[1] : ""}
+                  onBlur={() => checkPasswordConfirm()}
                 />
               </Grid>
 

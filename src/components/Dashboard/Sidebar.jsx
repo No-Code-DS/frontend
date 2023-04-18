@@ -22,7 +22,7 @@ import {
 export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel}) => {
 
   function handleAddProcess(nextProcessOrder, component) {
-    if (nextProcessOrder == (lastProcessOrder + 1)) {
+    if (nextProcessOrder === (lastProcessOrder + 1)) {
       handleButtonClick({
         "order": nextProcessOrder,
         "component": component
