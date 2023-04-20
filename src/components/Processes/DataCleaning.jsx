@@ -8,7 +8,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePag
 import uuid from 'react-uuid';
 import data from "./mockData.json";
 
-export const DataCleaning = ({isLast}) => {
+export const DataCleaning = () => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -20,7 +20,6 @@ export const DataCleaning = ({isLast}) => {
 			data.rows[i].push(uuid());
 		}
 		dataFetchedRef.current = true;
-		console.log("s")
 	}, [])
 
 	const handleChangePage = (event, newPage) => {
@@ -46,10 +45,11 @@ export const DataCleaning = ({isLast}) => {
 				<Clean style={{ transform: 'scale(3.3)' }} />
 			</IconButton>
 
-			<Dialog open={open} maxWidth={false} fullWidth={false}>
-			<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
+			<Dialog open={open} maxWidth={false} fullWidth={true} maxHeight={false} fullHeight={true}>
+				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
+
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
-					<Paper sx={{ width: '100%' }}>
+					<Paper sx={{ width: '100%', height: '100%' }}>
 						<TableContainer sx={{ maxHeight: 440 }}>
 							<Table stickyHeader aria-label="sticky table">
 							<TableHead>
@@ -83,21 +83,23 @@ export const DataCleaning = ({isLast}) => {
 								</TableBody>
 							</Table>
 							</TableContainer>
-						<TablePagination
-							rowsPerPageOptions={[10, 25, 100]}
-						component="div"
-						count={data.rows.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
+							<TablePagination
+								rowsPerPageOptions={[10, 25, 100]}
+								component="div"
+								count={data.rows.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								onPageChange={handleChangePage}
+								onRowsPerPageChange={handleChangeRowsPerPage}
+							/>
 					</Paper>
 				</DialogContent>
+
 				<DialogActions>
 					<Button onClick={() => handleClose(false)} color="primary">Close</Button>
 					<Button color="primary" autoFocus>Save changes</Button>
 				</DialogActions>
+
 			</Dialog>
 
 		</Box>

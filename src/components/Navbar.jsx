@@ -7,13 +7,15 @@ import Link from '@mui/material/Link';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Box } from '@mui/material';
 import classes from '../styles/navBarStyles';
+import { Cookies } from 'react-cookie';
 
 import {
   Link as RouterLink,
 } from "react-router-dom";
 
-
 export const Navbar = () => {
+	const cookies = new Cookies();
+  const tokenCookie = cookies.get("token");
 
   return (
     <AppBar
@@ -52,15 +54,23 @@ export const Navbar = () => {
                 <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                   Models
                 </Link>
-                <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
-                  <Link component={RouterLink} to="/login" sx={{color:"white"}}>
-                    Login
-                  </Link>
-                </Button> 
+
+                {tokenCookie ? 
+                  <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }} onClick={() => cookies.remove("token")}>
+                    <Link component={RouterLink} to="/" sx={{color:"white"}}>
+                      Logout
+                    </Link>
+                  </Button> 
+                  :
+                  <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }}>
+                    <Link component={RouterLink} to="/login" sx={{color:"white"}}>
+                      Login
+                    </Link>
+                  </Button> 
+                }
             </nav>
           </Box>
         </Toolbar>
-
       </AppBar>
   );
 }

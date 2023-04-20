@@ -4,16 +4,16 @@ import { Box } from '@mui/material';
 import DataSource from '../Dashboard/icons/DataSource';
 import classes from "../../styles/processStyles";
 
-export const DataUpload = ({isLast}) => {
+export const DataUpload = () => {
 	const [file, setFile] = useState();
 	const fileInputRef = useRef(null);
 
   function handleFileInput (event) {
     fileInputRef.current.click();
   };
+
 	function handleFileUpload (event) {
 		setFile(event.target.files[0]);
-		console.log(event.target.files);
 		const formData = new FormData();
 		fetch(
 			'url',
@@ -30,6 +30,7 @@ export const DataUpload = ({isLast}) => {
 
   return (
     <Box sx={{...classes.processBox}}>
+		
 			<input
 				type="file"
 				ref={fileInputRef}

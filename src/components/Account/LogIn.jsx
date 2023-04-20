@@ -15,6 +15,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Footer } from '../Footer';
 import classes from "../../styles/mainStyles";
+import { useCookies } from 'react-cookie';
 
 import {
   Link as RouterLink,
@@ -43,9 +44,10 @@ export const LogIn = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState([false, ""]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [cookies, setCookie] = useCookies(['token']);
 
   if (loggedIn) {
-    navigate("/");
+    navigate("/")
   }
 
   function checkEmail() {
@@ -87,21 +89,23 @@ export const LogIn = () => {
           },
           body: jsonData,
         });
+
+        const responseData = await response.json();
+        console.log(responseData);
+
         if (response.ok) {
           setLoggedIn(true);
+          setCookie('token', responseData, { path: '/' });
         }
-        console.log(response)
+
         if (response.status == 409) {
-          const responseData = await response.json();
           setEmailError([true, responseData.detail])
         }
       } catch (error) {
         console.error(error);
       }
     }
-    
   };
-
  
   return (
     <ThemeProvider theme={theme}>

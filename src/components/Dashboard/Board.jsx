@@ -9,26 +9,29 @@ export const Board = ({activeProcesses, handleProcessCancel}) => {
 
   return (
     <Box flex={2} p={20} >
-      <Box sx={{...dashboardClasses.board}}>
-        <Stack direction="row" spacing={4} >
+      <Box sx={{...dashboardClasses.board}} >
+        <Stack direction="row" spacing={3} style={{}} >
           {activeProcesses.map((proc, index) => (
-            <Stack direction="column" spacing={2} key={index}>
-              {/* check if its the last element and pass the prop telling it its the last one */}
-              <Stack direction="row" spacing={0} key={index+1}>
-                <Stack direction="column" spacing={1}>
+            <Stack direction="column" spacing={1} key={index} style={{ height:"100px", width:"100px"}}>
+              <Stack direction="row" spacing={1} key={index+1} style={{height:"300px", width:"500px"}}>
+                <Stack direction="column" alignItems="center" spacing={2} sx={{height:"70px", width:"70px"}}>
+
                   {proc.component}
+
                   {
                     index === activeProcesses.length - 1 ? 
-                    <Button sx={{...processClasses.cancelButton}} onClick={() => handleProcessCancel()} startIcon={<DeleteIcon />}>
+                    // <Button sx={{...processClasses.cancelButton}} onClick={() => handleProcessCancel()} startIcon={<DeleteIcon />}>
+                    <Button sx={{...processClasses.cancelButton}} onClick={() => handleProcessCancel()} >
                       Cancel
                     </Button>
                     :
                     null 
                   }
+
                 </Stack>
+
                 <ArrowRightAltIcon style={{ marginTop: "10px", transform: 'scale(1.8)', }} />
               </Stack>
-
             </Stack> 
           ))}
         </Stack>

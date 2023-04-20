@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 
 const App = () => {
+	const loggedIn = true;
 	return (
 		<>
 			<CssBaseline />
