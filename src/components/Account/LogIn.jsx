@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Footer } from '../Footer';
 import classes from "../../styles/mainStyles";
 import { useCookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 
 import {
   Link as RouterLink,
@@ -37,16 +38,18 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export const LogIn = () => {
+export const LogIn = ({loginStatus, setLoginStatus}) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState([false, ""]);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [cookies, setCookie] = useCookies(['token']);
+	const storedCookies = new Cookies();
+  const tokenCookie = storedCookies.get("token");
 
-  if (loggedIn) {
+  console.log(loginStatus)
+  if (tokenCookie) {
     navigate("/")
   }
 
@@ -68,7 +71,6 @@ export const LogIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     checkPassword();
     const formData = new FormData(event.currentTarget);
 
@@ -94,8 +96,8 @@ export const LogIn = () => {
         console.log(responseData);
 
         if (response.ok) {
-          setLoggedIn(true);
           setCookie('token', responseData, { path: '/' });
+          setLoginStatus(true);
         }
 
         if (response.status == 409) {

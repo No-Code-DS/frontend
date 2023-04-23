@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from '../../styles/dashboardStyles';
-
 import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
 import FeatureEngineering from './icons/FeatureEngineering';
 import Model from './icons/Model';
 import Deployment from './icons/Demployment';
-
 import { DataUpload } from '../Processes/DataUpload';
 import { DataCleaning } from '../Processes/DataCleaning';
 
@@ -20,6 +18,7 @@ import {
 } from "@mui/material";
 
 export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel}) => {
+	const [data, setData] = useState({});
 
   function handleAddProcess(nextProcessOrder, component) {
     if (nextProcessOrder === (lastProcessOrder + 1)) {
@@ -28,6 +27,10 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
         "component": component
       })
     }
+  }
+
+  function handleSetData(newData) {
+    setData(newData);
   }
 
   return (
@@ -39,16 +42,21 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} setData={(data) => setData(data)} />)}>
               <ListItemIcon>
-                <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}}/>
+                <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}} />
               </ListItemIcon>
               <ListItemText primary="Upload data" />
             </ListItemButton>
           </ListItem>
 
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(2, <DataCleaning />)
+            <ListItemButton component="button" onClick={() => {
+              console.log()
+              if (JSON.stringify(data) !== '{}') {
+                handleAddProcess(2, <DataCleaning setData={setData} data={data}/>)
+              }
+            }
             }>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>

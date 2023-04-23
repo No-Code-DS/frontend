@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useState } from 'react'; 
 
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
@@ -15,17 +15,18 @@ import {
 } from "react-router-dom";
 
 const App = () => {
-	const loggedIn = true;
+  const [loginStatus, setLoginStatus] = useState(false);
+
 	return (
 		<>
 			<CssBaseline />
-			<Navbar />
+			<Navbar loginStatus={loginStatus} setLoginStatus={(status) => setLoginStatus(status)} />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/pricing" element={<Pricing />} />
 				<Route path="/models" element={<Models />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/login" element={<LogIn loginStatus={loginStatus} setLoginStatus={(status) => setLoginStatus(status)} />} />
 				<Route path="/signup" element={<SignUp />} />
 			</Routes>
 		</>

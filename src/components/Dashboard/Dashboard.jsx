@@ -13,7 +13,6 @@ export const Dashboard = () => {
 
   function handleProcessCancel() {
     setActiveProcesses(activeProcesses.slice(0, -1))
-    console.log("cancelling")
   }
 
   return (

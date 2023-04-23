@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,9 +13,8 @@ import {
   Link as RouterLink,
 } from "react-router-dom";
 
-export const Navbar = () => {
-	const cookies = new Cookies();
-  const tokenCookie = cookies.get("token");
+export const Navbar = ({loginStatus, setLoginStatus}) => {
+	const storedCookies = new Cookies();
 
   return (
     <AppBar
@@ -51,12 +50,19 @@ export const Navbar = () => {
                   Pricing
                 </Link>
 
-                <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
-                  Models
-                </Link>
-
-                {tokenCookie ? 
-                  <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }} onClick={() => cookies.remove("token")}>
+                {loginStatus ?
+                  <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                    Models
+                  </Link>
+                  :
+                  null
+                }
+               
+                {loginStatus ? 
+                  <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }} onClick={() => {
+                    storedCookies.remove("token");
+                    setLoginStatus(false);
+                  }}>
                     <Link component={RouterLink} to="/" sx={{color:"white"}}>
                       Logout
                     </Link>

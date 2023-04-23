@@ -23,6 +23,9 @@ const classes = {
     cleanWindowContainer: css({
         height: "80%",
         // width: "70%",
+    }),
+    uploadDialogContainer: css({
+        // width: "400px"
     })
 };
 

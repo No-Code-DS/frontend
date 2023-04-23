@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import Clean from '../Dashboard/icons/Clean';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import classes from '../../styles/processStyles';
 import { Box } from '@mui/material';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
-import uuid from 'react-uuid';
-import data from "./mockData.json";
 
-export const DataCleaning = () => {
+export const DataCleaning = ({data, setData}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-	const dataFetchedRef = useRef(false);
 
 	useEffect(() => {
-		if (dataFetchedRef.current) return;
-		for (let i = 0; i < data.rows.length; i++) {
-			data.rows[i].push(uuid());
-		}
-		dataFetchedRef.current = true;
+		// if (dataFetchedRef.current) return;
+		// let curData = mockData;
+		// for (let i = 0; i < data.rows.length; i++) {
+		// 	curData.rows[i].push(uuid());
+		// }
+		// setData(curData);
+		// dataFetchedRef.current = true;
+		// console.log("useffect")
 	}, [])
 
 	const handleChangePage = (event, newPage) => {
@@ -39,13 +39,14 @@ export const DataCleaning = () => {
     setOpen(false);
   };
 
+	
   return (
 		<Box sx={{...classes.processBox}}>
 			<IconButton onClick={handleOpen}>
 				<Clean style={{ transform: 'scale(3.3)' }} />
 			</IconButton>
 
-			<Dialog open={open} maxWidth={false} fullWidth={true} maxHeight={false} fullHeight={true}>
+			<Dialog open={open} maxWidth={false} fullWidth={true} >
 				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
