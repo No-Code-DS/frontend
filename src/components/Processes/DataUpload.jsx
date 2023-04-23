@@ -7,27 +7,38 @@ import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export const DataUpload = ({setData}) => {
-	const [file, setFile] = useState();
-	const fileInputRef = useRef(null);
 	const fileReader = new FileReader();
+	const [file, setFile] = useState();
+	const [array, setArray] = useState([]);
+	const fileInputRef = useRef(null);
 	const [csvData, setCsvData] = useState([]);
 	const [open, setOpen] = useState(false);
 
+	function csvFileToArray (string) {
+    const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
+    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+
+    const array = csvRows.map(i => {
+      const values = i.split(",");
+      const obj = csvHeader.reduce((object, header, index) => {
+        object[header] = values[index];
+        return object;
+      }, {});
+      return obj;
+    });
+    setArray(array);
+  };
+
 	function handleFileUpload (event) {
-		setFile(event.target.files[0]);
-		console.log(file)
-		// const formData = new FormData();
-		// fetch(
-		// 	'url',
-		// 	{
-		// 		method: "POST",
-		// 		body: formData
-		// 	}
-		// ).then((response) => response.json()).then(
-		// 	(result) => {
-		// 		console.log('success', result)
-		// 	}
-		// )
+		if (file) {
+			fileReader.onload = function (event) {
+					const text = event.target.result;
+					csvFileToArray(text);
+			};
+
+			fileReader.readAsText(file);
+		}
+		console.log(array)
 	};
 
 	function handleUploadDialog (event) {
@@ -37,14 +48,6 @@ export const DataUpload = ({setData}) => {
   return (
     <Box sx={{...classes.processBox}}>
 		
-			{/* <input
-				type="file"
-				ref={fileInputRef}
-				style={{ display: 'none' }}
-				onChange={handleUploadDialog}
-				// accept=".csv" 
-			/> */}
-	
 			<IconButton onClick={() => setOpen(true)}>
 				<DataSource style={{ transform: 'scale(2.7)' }} />
 			</IconButton>
@@ -72,13 +75,13 @@ export const DataUpload = ({setData}) => {
 							</IconButton>
 						</Box>
 
-						<input type="file" ref={fileInputRef} style={{ display: 'none' }} />
+						<input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
 					</Stack>
 				</DialogContent>
 
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
-					<Button color="primary" autoFocus>Save changes</Button>
+					<Button color="primary" onClick={() => handleFileUpload()} autoFocus>Save</Button>
 				</DialogActions>
 			</Dialog >
 			
