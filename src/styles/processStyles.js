@@ -24,9 +24,6 @@ const classes = {
         height: "80%",
         // width: "70%",
     }),
-    uploadDialogContainer: css({
-        // width: "400px"
-    })
 };
 
 export default classes;

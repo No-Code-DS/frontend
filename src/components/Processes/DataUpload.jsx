@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import IconButton from '@mui/material/IconButton';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Stack } from '@mui/material';
 import DataSource from '../Dashboard/icons/DataSource';
 import classes from "../../styles/processStyles";
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
@@ -37,37 +37,43 @@ export const DataUpload = ({setData}) => {
   return (
     <Box sx={{...classes.processBox}}>
 		
-			<input
+			{/* <input
 				type="file"
 				ref={fileInputRef}
 				style={{ display: 'none' }}
 				onChange={handleUploadDialog}
 				// accept=".csv" 
-			/>
+			/> */}
 	
 			<IconButton onClick={() => setOpen(true)}>
 				<DataSource style={{ transform: 'scale(2.7)' }} />
 			</IconButton>
 	
 			<Dialog open={open} maxWidth="lg" fullWidth={false} >
-				<DialogTitle sx={{...classes.uploadTitle}}>Data</DialogTitle>
+				<DialogTitle sx={{...classes.uploadTitle}}> Upload data source </DialogTitle>
+						
 
 				<DialogContent dividers sx={{...classes.uploadDialogContainer}} >
-					<Typography variant="h5">
-						Data source name:
-					</Typography>
-					<TextField size="small" sx={{width:"500px"}} id="outlined-basic" variant="outlined" />
-					<br/>
+					<Stack spacing={4}>
+						<Box>
+							<Typography variant="h5">
+								Data source name:
+							</Typography>
+							<TextField size="small" sx={{width:"600px"}} id="outlined-basic" variant="outlined" />
+						</Box>
 
-					<Typography variant="h5">
-						Choose file source:
-					</Typography>
-					
-					<IconButton onClick={() => setOpen(true)}>
-						<CloudUploadIcon />
-					</IconButton>
+						<Box>
+							<Typography variant="h5">
+								Choose file source:
+							</Typography>
+							
+							<IconButton onClick={() => fileInputRef.current.click()}>
+								<CloudUploadIcon />
+							</IconButton>
+						</Box>
 
-					<input type="file" style={{ display: 'none' }} />
+						<input type="file" ref={fileInputRef} style={{ display: 'none' }} />
+					</Stack>
 				</DialogContent>
 
 				<DialogActions>
