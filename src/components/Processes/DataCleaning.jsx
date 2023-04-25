@@ -58,8 +58,8 @@ export const DataCleaning = ({data, setData}) => {
 									{data.columns.map((column) => (
 										<TableCell
 											key={column}
-											// align={column.align}
-											// style={{ minWidth: column.minWidth }}
+											// align={"middle"}
+											style={{ minWidth: "200px" }}
 										>
 											{column}
 										</TableCell>
@@ -68,12 +68,12 @@ export const DataCleaning = ({data, setData}) => {
 							</TableHead>
 							<TableBody>
 								{data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-									.map((row, index) => {
+									.map((row, rowIndex) => {
 										return (
-											<TableRow hover role="checkbox" tabIndex={-1} key={row[row.length-1]}>
-												{row.slice(0, row.length-1).map((cell) => {
+											<TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
+												{row.slice(0, row.length-1).map((cell, cellIndex) => {
 													return (
-														<TableCell key={row[row.length-1]+cell}>
+														<TableCell key={cellIndex}>
 															{cell}
 														</TableCell>
 													)
