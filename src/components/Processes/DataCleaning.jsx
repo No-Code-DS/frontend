@@ -20,6 +20,7 @@ export const DataCleaning = ({data, setData}) => {
 		// setData(curData);
 		// dataFetchedRef.current = true;
 		// console.log("useffect")
+		console.log(data)
 	}, [])
 
 	const handleChangePage = (event, newPage) => {
@@ -39,7 +40,6 @@ export const DataCleaning = ({data, setData}) => {
     setOpen(false);
   };
 
-	
   return (
 		<Box sx={{...classes.processBox}}>
 			<IconButton onClick={handleOpen}>

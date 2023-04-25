@@ -5,14 +5,27 @@ import DataSource from '../Dashboard/icons/DataSource';
 import classes from "../../styles/processStyles";
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import uuid from "react-uuid";
 
 export const DataUpload = ({setData}) => {
 	const fileReader = new FileReader();
 	const [file, setFile] = useState();
-	const [array, setArray] = useState([]);
+	// const [array, setArray] = useState([]);
 	const fileInputRef = useRef(null);
 	const [csvData, setCsvData] = useState([]);
 	const [open, setOpen] = useState(false);
+
+	
+	function arrayToObject(arr) {
+		const columns = Object.keys(arr[0]);
+		const rows = arr.map(obj => {
+			return Object.values(obj);
+		});
+		return {
+			columns,
+			rows,
+		};
+	}
 
 	function csvFileToArray (string) {
     const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
@@ -26,8 +39,15 @@ export const DataUpload = ({setData}) => {
       }, {});
       return obj;
     });
-    setArray(array);
+		let dataResult = arrayToObject(array);
+			dataResult.rows.map(row => {
+				row.push(uuid());
+			}
+		)
+    setData(dataResult);
+		console.log(dataResult);
   };
+
 
 	function handleFileUpload (event) {
 		if (file) {
@@ -38,7 +58,6 @@ export const DataUpload = ({setData}) => {
 
 			fileReader.readAsText(file);
 		}
-		console.log(array)
 	};
 
 	function handleUploadDialog (event) {
@@ -81,7 +100,10 @@ export const DataUpload = ({setData}) => {
 
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
-					<Button color="primary" onClick={() => handleFileUpload()} autoFocus>Save</Button>
+					<Button color="primary" onClick={() => {
+						handleFileUpload();
+						setOpen(false);
+					}} autoFocus>Save</Button>
 				</DialogActions>
 			</Dialog >
 			
