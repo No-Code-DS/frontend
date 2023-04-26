@@ -128,6 +128,7 @@ export const SignUp = () => {
           Sign up
         </Typography>
 
+        {/* this doesnt need to be a form maybe change it later */}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>

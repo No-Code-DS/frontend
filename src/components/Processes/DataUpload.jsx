@@ -10,11 +10,11 @@ import uuid from "react-uuid";
 export const DataUpload = ({setData}) => {
 	const fileReader = new FileReader();
 	const [file, setFile] = useState();
+	const [name, setName] = useState();
 	// const [array, setArray] = useState([]);
 	const fileInputRef = useRef(null);
 	const [csvData, setCsvData] = useState([]);
 	const [open, setOpen] = useState(false);
-
 	
 	function arrayToObject(arr) {
 		const columns = Object.keys(arr[0]);
@@ -40,29 +40,31 @@ export const DataUpload = ({setData}) => {
       return obj;
     });
 		let dataResult = arrayToObject(array);
-			dataResult.rows.map(row => {
-				row.push(uuid());
-			}
-		)
-    setData(dataResult);
-		console.log(dataResult);
+		return dataResult;
   };
 
+	async function sendFile(name, file) {
+		// const response = await fetch('http://localhost:8000/projects/login', {
+		// 	method: 'POST',
+		// 	headers: { 
+		// 		'Content-Type': 'application/json',
+		// 		'accepts': 'application/json',
+		// 	},
+		// 	body: jsonData,
+		// });
+	}
 
 	function handleFileUpload (event) {
 		if (file) {
 			fileReader.onload = function (event) {
-					const text = event.target.result;
-					csvFileToArray(text);
+				const text = event.target.result;
+				let dataResult = csvFileToArray(text);
+				setData(dataResult);
+				sendFile(name, dataResult);
 			};
-
 			fileReader.readAsText(file);
 		}
 	};
-
-	function handleUploadDialog (event) {
-
-	}
 
   return (
     <Box sx={{...classes.processBox}}>
@@ -74,14 +76,13 @@ export const DataUpload = ({setData}) => {
 			<Dialog open={open} maxWidth="lg" fullWidth={false} >
 				<DialogTitle sx={{...classes.uploadTitle}}> Upload data source </DialogTitle>
 						
-
 				<DialogContent dividers sx={{...classes.uploadDialogContainer}} >
 					<Stack spacing={4}>
 						<Box>
 							<Typography variant="h5">
 								Data source name:
 							</Typography>
-							<TextField size="small" sx={{width:"600px"}} id="outlined-basic" variant="outlined" />
+							<TextField size="small" sx={{width:"600px"}} id="outlined-basic" variant="outlined" onChange={(e) => setName(e.target.value)} />
 						</Box>
 
 						<Box>

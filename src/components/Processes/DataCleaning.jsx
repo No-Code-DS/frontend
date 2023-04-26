@@ -11,18 +11,6 @@ export const DataCleaning = ({data, setData}) => {
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-	useEffect(() => {
-		// if (dataFetchedRef.current) return;
-		// let curData = mockData;
-		// for (let i = 0; i < data.rows.length; i++) {
-		// 	curData.rows[i].push(uuid());
-		// }
-		// setData(curData);
-		// dataFetchedRef.current = true;
-		// console.log("useffect")
-		console.log(data)
-	}, [])
-
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -32,17 +20,9 @@ export const DataCleaning = ({data, setData}) => {
     setPage(0);
   };
 	
-	const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
 		<Box sx={{...classes.processBox}}>
-			<IconButton onClick={handleOpen}>
+			<IconButton onClick={() => setOpen(true)}>
 				<Clean style={{ transform: 'scale(3.3)' }} />
 			</IconButton>
 
@@ -97,7 +77,7 @@ export const DataCleaning = ({data, setData}) => {
 				</DialogContent>
 
 				<DialogActions>
-					<Button onClick={() => handleClose(false)} color="primary">Close</Button>
+					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
 					<Button color="primary" autoFocus>Save changes</Button>
 				</DialogActions>
 
