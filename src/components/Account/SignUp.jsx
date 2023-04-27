@@ -67,9 +67,6 @@ export const SignUp = () => {
     if (password2 != password) {
       setPassword2Error([true, "Passwords don't match"])
     }
-    else {
-      console.log("sadsa")
-    }
   }
 
   const handleSubmit = async (event) => {
@@ -89,6 +86,7 @@ export const SignUp = () => {
         const response = await fetch('http://localhost:8000/users/signup', {
           method: 'POST',
           headers: { 
+            'Access-Control-Allow-Origin': "*",
             'Content-Type': 'application/json',
             'accepts': 'application/json',
           },

@@ -51,7 +51,7 @@ export const DataCleaning = ({data, setData}) => {
 									.map((row, rowIndex) => {
 										return (
 											<TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
-												{row.slice(0, row.length-1).map((cell, cellIndex) => {
+												{row.map((cell, cellIndex) => {
 													return (
 														<TableCell key={cellIndex}>
 															{cell}

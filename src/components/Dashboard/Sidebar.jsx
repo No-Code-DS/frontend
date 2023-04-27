@@ -17,7 +17,7 @@ import {
     ListItemText,
 } from "@mui/material";
 
-export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel}) => {
+export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel, projectId}) => {
 	const [data, setData] = useState({});
 
   function handleAddProcess(nextProcessOrder, component) {
@@ -42,7 +42,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} setData={(data) => setData(data)} />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setData={(data) => setData(data)} />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}} />
               </ListItemIcon>

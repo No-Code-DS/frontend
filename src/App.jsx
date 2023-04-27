@@ -16,6 +16,7 @@ import {
 
 const App = () => {
   const [loginStatus, setLoginStatus] = useState(false);
+	const [projectId, setProjectId] = useState(0);
 
 	return (
 		<>
@@ -23,9 +24,9 @@ const App = () => {
 			<Navbar loginStatus={loginStatus} setLoginStatus={(status) => setLoginStatus(status)} />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/dashboard" element={<Dashboard projectId={projectId} />} />
 				<Route path="/pricing" element={<Pricing />} />
-				<Route path="/models" element={<Models />} />
+				<Route path="/models" element={<Models projectId={projectId} setProjectId={(id) => setProjectId(id)} />} />
         <Route path="/login" element={<LogIn loginStatus={loginStatus} setLoginStatus={(status) => setLoginStatus(status)} />} />
 				<Route path="/signup" element={<SignUp />} />
 			</Routes>

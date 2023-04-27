@@ -15,6 +15,7 @@ import {
 
 export const Navbar = ({loginStatus, setLoginStatus}) => {
 	const storedCookies = new Cookies();
+	const tokenCookie = storedCookies.get("token");
 
   return (
     <AppBar
@@ -50,7 +51,7 @@ export const Navbar = ({loginStatus, setLoginStatus}) => {
                   Pricing
                 </Link>
 
-                {loginStatus ?
+                {tokenCookie ?
                   <Link component={RouterLink} to="/models" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
                     Models
                   </Link>
@@ -58,10 +59,12 @@ export const Navbar = ({loginStatus, setLoginStatus}) => {
                   null
                 }
                
-                {loginStatus ? 
+                {tokenCookie ? 
                   <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }} onClick={() => {
                     storedCookies.remove("token");
+                    console.log(loginStatus);
                     setLoginStatus(false);
+                    console.log(loginStatus);
                   }}>
                     <Link component={RouterLink} to="/" sx={{color:"white"}}>
                       Logout

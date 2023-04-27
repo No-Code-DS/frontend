@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -39,6 +39,13 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const LogIn = ({loginStatus, setLoginStatus}) => {
+
+  useEffect(() => {
+    if (tokenCookie) {
+      navigate("/")
+    }
+  }, [loginStatus])
+
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState([false, ""]);
@@ -48,7 +55,6 @@ export const LogIn = ({loginStatus, setLoginStatus}) => {
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
 
-  console.log(loginStatus)
   if (tokenCookie) {
     navigate("/")
   }
@@ -93,7 +99,6 @@ export const LogIn = ({loginStatus, setLoginStatus}) => {
         });
 
         const responseData = await response.json();
-        console.log(responseData);
 
         if (response.ok) {
           setCookie('token', responseData, { path: '/' });

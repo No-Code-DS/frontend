@@ -4,7 +4,7 @@ import { Sidebar } from './Sidebar';
 import { Board } from './Board';
 import classes from "../../styles/dashboardStyles";
 
-export const Dashboard = () => {
+export const Dashboard = ({projectId}) => {
   const [activeProcesses, setActiveProcesses] = useState([])
 
   function handleProcessChange(nextProc) {
@@ -22,7 +22,7 @@ export const Dashboard = () => {
       justifyContent="space-between"
       sx={{...classes.stack}}
     >
-      <Sidebar lastProcessOrder={activeProcesses.length} handleButtonClick={handleProcessChange} handleProcessCancel={handleProcessCancel} />
+      <Sidebar projectId={projectId} lastProcessOrder={activeProcesses.length} handleButtonClick={handleProcessChange} handleProcessCancel={handleProcessCancel} />
       <Board activeProcesses={activeProcesses} handleProcessCancel={handleProcessCancel} />
     </Stack>
   )

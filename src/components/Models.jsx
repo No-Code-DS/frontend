@@ -4,6 +4,7 @@ import {
  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow,
 } from "@mui/material";
 
+import { Cookies } from 'react-cookie';
 import classes from "../styles/dashboardStyles";
 import Link from '@mui/material/Link';
 import {
@@ -39,14 +40,14 @@ const models = [
 
 const statusColors = {"Deployed": "green", "Failed": "red", "Training": "orange"}
 
-export const Models = () => {
+export const Models = ({setProjectId}) => {
 	const [open, setOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
+	const storedCookies = new Cookies();
+  const tokenCookie = storedCookies.get("token");
 
   async function createProject() {
-    console.log(name)
-    console.log(description)
     const jsonData = JSON.stringify({"project_name": name, "description": description})
     try {
       const response = await fetch('http://localhost:8000/projects/create', {
@@ -54,15 +55,18 @@ export const Models = () => {
         headers: { 
           'Content-Type': 'application/json',
           'accepts': 'application/json',
+          'Authorization': 'Bearer ' + tokenCookie.access_token
         },
         body: jsonData,
       });
-      // if (response.ok) {
-      //   navigate("/");
-      // }
-      // if (response.status == 409) {
-      //   const responseData = await response.json();
-      // }
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setProjectId(responseData.id)
+      }
+      if (response.status == 409) {
+        const responseData = await response.json();
+      }
     }
     catch (error) {
       console.error(error);

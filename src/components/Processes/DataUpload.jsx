@@ -5,9 +5,11 @@ import DataSource from '../Dashboard/icons/DataSource';
 import classes from "../../styles/processStyles";
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import uuid from "react-uuid";
+import { Cookies } from 'react-cookie';
 
-export const DataUpload = ({setData}) => {
+export const DataUpload = ({setData, projectId}) => {
+	const storedCookies = new Cookies();
+  const tokenCookie = storedCookies.get("token");
 	const fileReader = new FileReader();
 	const [file, setFile] = useState();
 	const [name, setName] = useState();
@@ -27,6 +29,23 @@ export const DataUpload = ({setData}) => {
 		};
 	}
 
+	async function sendFile() {
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('data_source_name', name);
+
+		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
+			method: 'POST',
+			headers: { 
+				// 'Content-Type': 'application/json',
+				'accepts': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+			body: formData,
+		});
+		console.log(response)
+	}
+
 	function csvFileToArray (string) {
     const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
     const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
@@ -42,17 +61,6 @@ export const DataUpload = ({setData}) => {
 		let dataResult = arrayToObject(array);
 		return dataResult;
   };
-
-	async function sendFile(name, file) {
-		// const response = await fetch('http://localhost:8000/projects/login', {
-		// 	method: 'POST',
-		// 	headers: { 
-		// 		'Content-Type': 'application/json',
-		// 		'accepts': 'application/json',
-		// 	},
-		// 	body: jsonData,
-		// });
-	}
 
 	function handleFileUpload (event) {
 		if (file) {
