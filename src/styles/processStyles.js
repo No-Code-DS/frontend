@@ -20,10 +20,23 @@ const classes = {
         // minWidth: 650,
         backgroundColor: "grey"
     }),
+    cleanDialogContainer: css({
+        width: "80%",
+        margin: "auto"
+    }),
     cleanWindowContainer: css({
-        height: "80%",
+        minHeight: "80%",
+        // backgroundColor: "grey"
         // width: "70%",
     }),
+    cleanFunctionsContainer: css({
+        marginTop: "50px",
+    }),
+    chosenColumn: css({
+        width: "50px",
+        height: "40px",
+    })
+
 };
 
 export default classes;

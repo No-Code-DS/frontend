@@ -61,7 +61,6 @@ export const Models = ({setProjectId}) => {
       });
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
         setProjectId(responseData.id)
       }
       if (response.status == 409) {

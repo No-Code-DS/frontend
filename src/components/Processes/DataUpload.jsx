@@ -43,7 +43,6 @@ export const DataUpload = ({setData, projectId}) => {
 			},
 			body: formData,
 		});
-		console.log(response)
 	}
 
 	function csvFileToArray (string) {
