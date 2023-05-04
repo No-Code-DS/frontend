@@ -11,8 +11,7 @@ export const DataCleaning = ({data, setData}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [columns, setColumns] = useState([]);
-	const [cleaningType, setCleaningType] = useState([]);
+  const [selectedColumns, setSelectedColumns] = useState([]);
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -23,6 +22,11 @@ export const DataCleaning = ({data, setData}) => {
     setPage(0);
   };
 	
+	function addColumn() {
+		let x = {"columnName": "das"};
+		setSelectedColumns([...selectedColumns, x])
+	}
+
   return (
 		<Box sx={{...classes.processBox}}>
 			<IconButton onClick={() => setOpen(true)}>
@@ -36,7 +40,7 @@ export const DataCleaning = ({data, setData}) => {
 					<Paper sx={{ width: '100%', height: '100%', }}>
 						<TableContainer sx={{ maxHeight: 440 }}>
 							<Table stickyHeader aria-label="sticky table">
-							<TableHead > 
+							<TableHead> 
 								<TableRow>
 									{data.columns.map((column) => (
 										<TableCell
@@ -47,8 +51,7 @@ export const DataCleaning = ({data, setData}) => {
 											{column}
 											{/* <IconButton style={{marginBottom: "3px"}} > */}
 											<IconButton style={{marginBottom: "3px"}} onClick={() => {
-												console.log(columns)
-												setColumns(prev => [...prev, column])
+												setSelectedColumns(prev => [...prev, {"columnName": column}])
 											}}>
 												<AddIcon />
 											</IconButton>
@@ -87,46 +90,65 @@ export const DataCleaning = ({data, setData}) => {
 					</Paper>
 					
 					<br/>
+
 					<div>Click on the arrow next to a column to select it</div>
 					<Paper style={{marginTop: "10px"}}>
 						<TableContainer sx={{ maxHeight: 440 }}>
 							<Table>
 								<TableHead> 
 									<TableRow>
-										<TableCell style={{width: 500}} color={{ backgroundColor: "#c1bdbc" }}>
+										<TableCell sx={{width:"33%"}} color={{ backgroundColor: "#c1bdbc" }}>
 											Columns
 										</TableCell>
-										<TableCell color={{ backgroundColor: "#c1bdbc" }}>
+										<TableCell sx={{width:"33%"}} color={{ backgroundColor: "#c1bdbc" }}>
 											Type
 										</TableCell>
-										<TableCell color={{ backgroundColor: "#c1bdbc" }}>
+										<TableCell sx={{width:"33%"}} color={{ backgroundColor: "#c1bdbc" }}>
 											Function
 										</TableCell>
 									</TableRow>
 								</TableHead>	
 
-								<TableBody sx={{backgroundColor: "#e7e5e4" }}>
-										{columns.map((col, index) => {
+								<TableBody >
+										{selectedColumns.map((col, index) => {
 											return (
-												<TableRow key={index} role="checkbox" tabIndex={-1}>
+												<TableRow key={index} tabIndex={-1}>
 													<TableCell sx={{...classes.chosenColumn}}>
-														{col}
+														{col.columnName}
 													</TableCell>
 
-													<TableCell sx={{...classes.chosenColumn}}>
-														<FormControl fullWidth>
+													<TableCell>
+														<FormControl variant="standard" sx={{width: "100px"}}>
 															<InputLabel id="demo-simple-select-label">Type</InputLabel>
-															<Select
-																labelId="demo-simple-select-label"
-																id="demo-simple-select"
-																value={cleaningType}
-																label="Age"
-																onChange={(event) => setCleaningType(event.target.value)}
-															>
-																<MenuItem value={10}>Ten</MenuItem>
-																<MenuItem value={20}>Twenty</MenuItem>
-																<MenuItem value={30}>Thirty</MenuItem>
-															</Select>
+																<Select
+																	labelId="demo-simple-select-label"
+																	id="demo-simple-select"
+																	value={10}
+																	label="Age"
+																	// onChange={(event) => setCleaningType(event.target.value)}
+																>
+																	<MenuItem value={1}>Type 1</MenuItem>
+																	<MenuItem value={2}>Type 2</MenuItem>
+																	<MenuItem value={3}>Type 3</MenuItem>
+																</Select>
+														</FormControl>
+													</TableCell>
+
+													<TableCell>
+														<FormControl variant="standard" sx={{width: "100px"}}>
+															<InputLabel sx={{border:"none"}}id="demo-simple-select-label">Action</InputLabel>
+																<Select
+																	labelId="demo-simple-select-label"
+																	id="demo-simple-select"
+																	value={10}
+																	label="Age"
+																	// onChange={(event) => setCleaningType(event.target.value)}
+																	sx={{border:"none"}}
+																>
+																	<MenuItem value={1}>Function 1</MenuItem>
+																	<MenuItem value={2}>Function 2</MenuItem>
+																	<MenuItem value={3}>Function 3</MenuItem>
+																</Select>
 														</FormControl>
 													</TableCell>
 												</TableRow>
