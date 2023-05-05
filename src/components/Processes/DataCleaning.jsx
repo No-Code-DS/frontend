@@ -12,6 +12,12 @@ export const DataCleaning = ({data, setData}) => {
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedColumns, setSelectedColumns] = useState([]);
+  const [cleaningType, setCleaningType] = useState(1);
+  const [cleaningFunction, setCleaningFunction] = useState(1);
+
+	useEffect(() => {
+		// console.log(cleaningType)
+	});
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -22,9 +28,25 @@ export const DataCleaning = ({data, setData}) => {
     setPage(0);
   };
 	
-	function addColumn() {
-		let x = {"columnName": "das"};
-		setSelectedColumns([...selectedColumns, x])
+	function handleTypeChange(columnName) {
+		const updatedSelectedColumns = selectedColumns.map(col => {
+			if (col.columnName === columnName) {
+				return {...col, "cleaningTypeFunction": cleaningType}
+			}
+			return col;
+		})
+		setSelectedColumns(updatedSelectedColumns);
+		console.log(selectedColumns)
+	}
+
+	function handleFunctionChange(columnName) {
+		const updatedSelectedColumns = selectedColumns.map(col => {
+			if (col.columnName === columnName) {
+				return {...col, "cleaningFunction": cleaningFunction}
+			}
+			return col;
+		})
+		setSelectedColumns(updatedSelectedColumns);
 	}
 
   return (
@@ -123,9 +145,12 @@ export const DataCleaning = ({data, setData}) => {
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={10}
+																	value={cleaningType}
 																	label="Age"
-																	// onChange={(event) => setCleaningType(event.target.value)}
+																	onChange={(event) => {
+																		setCleaningType(event.target.value);
+																		handleTypeChange(col.columnName, event.target.value);
+																	}}
 																>
 																	<MenuItem value={1}>Type 1</MenuItem>
 																	<MenuItem value={2}>Type 2</MenuItem>
@@ -140,9 +165,12 @@ export const DataCleaning = ({data, setData}) => {
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={10}
+																	value={1}
 																	label="Age"
-																	// onChange={(event) => setCleaningType(event.target.value)}
+																	onChange={(event) => {
+																		setCleaningFunction(event.target.value);
+																		handleFunctionChange(col.columnName);
+																	}}
 																	sx={{border:"none"}}
 																>
 																	<MenuItem value={1}>Function 1</MenuItem>
