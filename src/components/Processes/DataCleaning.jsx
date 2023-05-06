@@ -6,17 +6,16 @@ import classes from '../../styles/processStyles';
 import { Box } from '@mui/material';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export const DataCleaning = ({data, setData}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedColumns, setSelectedColumns] = useState([]);
-  const [cleaningType, setCleaningType] = useState(1);
-  const [cleaningFunction, setCleaningFunction] = useState(1);
 
 	useEffect(() => {
-		// console.log(cleaningType)
+		console.log(selectedColumns)
 	});
 
 	const handleChangePage = (event, newPage) => {
@@ -28,25 +27,31 @@ export const DataCleaning = ({data, setData}) => {
     setPage(0);
   };
 	
-	function handleTypeChange(columnName) {
+	function handleTypeChange(columnName, type) {
 		const updatedSelectedColumns = selectedColumns.map(col => {
 			if (col.columnName === columnName) {
-				return {...col, "cleaningTypeFunction": cleaningType}
+				return {...col, "cleaningType": type}
 			}
 			return col;
 		})
 		setSelectedColumns(updatedSelectedColumns);
-		console.log(selectedColumns)
+		// console.log(selectedColumns)
 	}
 
-	function handleFunctionChange(columnName) {
+	function handleActionChange(columnName, action) {
 		const updatedSelectedColumns = selectedColumns.map(col => {
 			if (col.columnName === columnName) {
-				return {...col, "cleaningFunction": cleaningFunction}
+				return {...col, "cleaningAction": action}
 			}
 			return col;
 		})
 		setSelectedColumns(updatedSelectedColumns);
+	}
+
+	function handleColumnCancel(columnName) {
+		const updatedSelectedColumns = selectedColumns.filter(col => col.columnName !== columnName)
+		setSelectedColumns(updatedSelectedColumns);
+		console.log("dsad")
 	}
 
   return (
@@ -73,7 +78,7 @@ export const DataCleaning = ({data, setData}) => {
 											{column}
 											{/* <IconButton style={{marginBottom: "3px"}} > */}
 											<IconButton style={{marginBottom: "3px"}} onClick={() => {
-												setSelectedColumns(prev => [...prev, {"columnName": column}])
+												setSelectedColumns(prev => [...prev, {"columnName": column, "cleaningType": "Empty", "cleaningAction": "Delete"}])
 											}}>
 												<AddIcon />
 											</IconButton>
@@ -113,7 +118,7 @@ export const DataCleaning = ({data, setData}) => {
 					
 					<br/>
 
-					<div>Click on the arrow next to a column to select it</div>
+					<div>Click on the plus next to a column to select it</div>
 					<Paper style={{marginTop: "10px"}}>
 						<TableContainer sx={{ maxHeight: 440 }}>
 							<Table>
@@ -145,39 +150,43 @@ export const DataCleaning = ({data, setData}) => {
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={cleaningType}
-																	label="Age"
+																	value={selectedColumns.find(selectedCol => selectedCol.columnName == col.columnName).cleaningType}
+																	// label="Age"
 																	onChange={(event) => {
-																		setCleaningType(event.target.value);
 																		handleTypeChange(col.columnName, event.target.value);
 																	}}
 																>
-																	<MenuItem value={1}>Type 1</MenuItem>
-																	<MenuItem value={2}>Type 2</MenuItem>
-																	<MenuItem value={3}>Type 3</MenuItem>
+																	<MenuItem value={"Empty"}>Empty</MenuItem>
+																	<MenuItem value={"Outlier"}>Outlier</MenuItem>
+																	{/* <MenuItem value={3}>Type 3</MenuItem> */}
 																</Select>
 														</FormControl>
 													</TableCell>
 
 													<TableCell>
-														<FormControl variant="standard" sx={{width: "100px"}}>
+														<FormControl variant="standard" sx={{width: "130px"}}>
 															<InputLabel sx={{border:"none"}}id="demo-simple-select-label">Action</InputLabel>
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={1}
-																	label="Age"
+																	value={
+																		selectedColumns.find(selectedCol => selectedCol.columnName == col.columnName).cleaningAction
+																	}
 																	onChange={(event) => {
-																		setCleaningFunction(event.target.value);
-																		handleFunctionChange(col.columnName);
+																		handleActionChange(col.columnName, event.target.value);
 																	}}
 																	sx={{border:"none"}}
 																>
-																	<MenuItem value={1}>Function 1</MenuItem>
-																	<MenuItem value={2}>Function 2</MenuItem>
-																	<MenuItem value={3}>Function 3</MenuItem>
+																	<MenuItem value={"Delete"}>Delete</MenuItem>
+																	<MenuItem value={"Mean"}>Mean</MenuItem>
 																</Select>
 														</FormControl>
+													</TableCell>
+
+													<TableCell>
+														<IconButton onClick={() => handleColumnCancel(col.columnName)} sx={{color: "red"}}> 
+															<ClearIcon />
+														</IconButton>
 													</TableCell>
 												</TableRow>
 											)
