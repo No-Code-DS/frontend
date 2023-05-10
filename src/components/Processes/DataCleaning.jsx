@@ -84,14 +84,20 @@ export const DataCleaning = ({data, setData, projectId}) => {
 		return key;
 	}
 
-	function handleActionChange(columnName, action) {
-		const updatedSelectedColumns = selectedColumns.map(col => {
-			if (col.columnName === columnName) {
-				return {...col, "cleaningAction": action}
+	function handleActionChange(action, index) {
+		console.log("balls")
+		const updatedSelectedColumns = selectedColumns.operations.map((col, index2) => {
+			let newObj = col;
+			if (index === index2) {
+				for (let i in col.config) {
+					if (col.config[i] != false) {
+						newObj.config[i] = action
+					}
+				}
 			}
-			return col;
+			return newObj;
 		})
-		setSelectedColumns(updatedSelectedColumns);
+		setSelectedColumns({"operations": updatedSelectedColumns});
 	}
 
 	function handleActionValueChange(index) {
