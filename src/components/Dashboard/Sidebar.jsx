@@ -54,7 +54,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
             <ListItemButton component="button" onClick={() => {
               console.log()
               if (JSON.stringify(data) !== '{}') {
-                handleAddProcess(2, <DataCleaning setData={setData} data={data}/>)
+                handleAddProcess(2, <DataCleaning setData={setData} data={data} projectId={projectId} />)
               }
             }
             }>

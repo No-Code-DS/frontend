@@ -7,16 +7,32 @@ import { Box } from '@mui/material';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Cookies } from 'react-cookie';
 
-export const DataCleaning = ({data, setData}) => {
+export const DataCleaning = ({data, setData, projectId}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedColumns, setSelectedColumns] = useState([]);
+  const [selectedColumns, setSelectedColumns] = useState({"operations":[]});
+	const storedCookies = new Cookies();
+  const tokenCookie = storedCookies.get("token");
+	const [cleaningOptions, setCleaningOptions] = useState()
+	const cleaningOptionsValues = ["Duplicates", "Missing number", "Missing category", "Encode category", "Extract datetime", "Outliers"]
+
+	async function getCleaningOptions() {
+		const response = await fetch("http://localhost:8000/projects/cleaning_map", {
+			headers: {
+				'accepts': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			}
+		});
+		let jsonData = await response.json();
+		setCleaningOptions(jsonData);
+	}
 
 	useEffect(() => {
-		console.log(selectedColumns)
-	});
+		getCleaningOptions();
+	}, []);
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -26,16 +42,49 @@ export const DataCleaning = ({data, setData}) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-	
-	function handleTypeChange(columnName, type) {
-		const updatedSelectedColumns = selectedColumns.map(col => {
-			if (col.columnName === columnName) {
-				return {...col, "cleaningType": type}
-			}
-			return col;
-		})
-		setSelectedColumns(updatedSelectedColumns);
+
+	function handleColumnAdd(columnName) {
+		let newCol = {"column_subset": [
+        columnName
+      ],
+      "config": {
+        "duplicates": "auto",
+        "missing_num": false,
+        "missing_categ": false,
+        "encode_categ": false,
+        "extract_datetime": false,
+        "outliers": false,
+        "outlier_param": 1.5
+      }
+    }
+    setSelectedColumns(prev => ({...prev, "operations": [...prev.operations, newCol]}));
+	}
+
+	function handleOptionChange(option, index) {
 		// console.log(selectedColumns)
+
+		const updatedSelectedColumns = selectedColumns.operations.map((col, index2) => {
+			let newObj = col;
+			for (let i in col.config) {
+				if (col.config[i] === "auto") {
+					newObj.config[i] = false;
+				}
+				if (index2 == index) {
+					newObj.config[option] =  "auto";
+				}
+			}
+			return newObj;
+		})
+		let res = {"operations": updatedSelectedColumns};
+		console.log(res);
+		// setSelectedColumns(res);
+	}
+
+	function handleOptionValueChange(index) {
+		let obj = selectedColumns.operations[index].config;
+		let key = Object.keys(obj).find(key => obj[key] === "auto");
+		// console.log(key)
+		return key;
 	}
 
 	function handleActionChange(columnName, action) {
@@ -51,7 +100,29 @@ export const DataCleaning = ({data, setData}) => {
 	function handleColumnCancel(columnName) {
 		const updatedSelectedColumns = selectedColumns.filter(col => col.columnName !== columnName)
 		setSelectedColumns(updatedSelectedColumns);
-		console.log("dsad")
+	}
+
+	async function handleClean() {
+		const dataToClean = {
+			"data_source_id": data.dataSourceId,
+		}
+
+    const jsonData = JSON.stringify()
+		try {
+        const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'accepts': 'application/json',
+          },
+          body: jsonData,
+        });
+
+        const responseData = await response.json();
+
+      } catch (error) {
+        console.error(error);
+      }
 	}
 
   return (
@@ -69,17 +140,14 @@ export const DataCleaning = ({data, setData}) => {
 							<Table stickyHeader aria-label="sticky table">
 							<TableHead> 
 								<TableRow>
-									{data.columns.map((column) => (
+									{data.data.columns.map((column, index) => (
 										<TableCell
 											style={{ minWidth: "200px", height: "40px" }}
 											color={{ backgroundColor: "#c1bdbc" }}
-											key={column}
+											key={index}
 										>
 											{column}
-											{/* <IconButton style={{marginBottom: "3px"}} > */}
-											<IconButton style={{marginBottom: "3px"}} onClick={() => {
-												setSelectedColumns(prev => [...prev, {"columnName": column, "cleaningType": "Empty", "cleaningAction": "Delete"}])
-											}}>
+											<IconButton style={{marginBottom: "3px"}} onClick={() => handleColumnAdd(column)}>
 												<AddIcon />
 											</IconButton>
 										</TableCell>
@@ -88,7 +156,7 @@ export const DataCleaning = ({data, setData}) => {
 							</TableHead>
 
 							<TableBody sx={{backgroundColor: "#e7e5e4" }}>
-								{data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								{data.data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 									.map((row, rowIndex) => {
 										return (
 											<TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
@@ -108,7 +176,7 @@ export const DataCleaning = ({data, setData}) => {
 							<TablePagination
 								rowsPerPageOptions={[10, 25, 100]}
 								component="div"
-								count={data.rows.length}
+								count={data.data.rows.length}
 								rowsPerPage={rowsPerPage}
 								page={page}
 								onPageChange={handleChangePage}
@@ -137,11 +205,10 @@ export const DataCleaning = ({data, setData}) => {
 								</TableHead>	
 
 								<TableBody >
-										{selectedColumns.map((col, index) => {
-											return (
+										{selectedColumns.operations.map((col, index) => (
 												<TableRow key={index} tabIndex={-1}>
 													<TableCell sx={{...classes.chosenColumn}}>
-														{col.columnName}
+														{col.column_subset[0]}
 													</TableCell>
 
 													<TableCell>
@@ -150,14 +217,14 @@ export const DataCleaning = ({data, setData}) => {
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={selectedColumns.find(selectedCol => selectedCol.columnName == col.columnName).cleaningType}
-																	// label="Age"
+																	value={handleOptionValueChange(index)}
 																	onChange={(event) => {
-																		handleTypeChange(col.columnName, event.target.value);
+																		handleOptionChange(event.target.value, index);
 																	}}
 																>
-																	<MenuItem value={"Empty"}>Empty</MenuItem>
-																	<MenuItem value={"Outlier"}>Outlier</MenuItem>
+																	{Object.keys(cleaningOptions).map((op, index) => (
+																		<MenuItem value={op} key={index}>{cleaningOptionsValues[index]}</MenuItem>
+																	))}
 																	{/* <MenuItem value={3}>Type 3</MenuItem> */}
 																</Select>
 														</FormControl>
@@ -169,11 +236,9 @@ export const DataCleaning = ({data, setData}) => {
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={
-																		selectedColumns.find(selectedCol => selectedCol.columnName == col.columnName).cleaningAction
-																	}
+																	value={""}
 																	onChange={(event) => {
-																		handleActionChange(col.columnName, event.target.value);
+																		handleActionChange(event.target.value, index);
 																	}}
 																	sx={{border:"none"}}
 																>
@@ -189,8 +254,8 @@ export const DataCleaning = ({data, setData}) => {
 														</IconButton>
 													</TableCell>
 												</TableRow>
-											)
-										})} 
+											))
+										} 
 
 								</TableBody>
 							</Table>
@@ -200,7 +265,7 @@ export const DataCleaning = ({data, setData}) => {
 
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
-					<Button color="primary" autoFocus>Save changes</Button>
+					<Button color="primary" autoFocus onClick={handleClean}>Clean</Button>
 				</DialogActions>
 
 			</Dialog>

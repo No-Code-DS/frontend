@@ -17,16 +17,28 @@ export const DataUpload = ({setData, projectId}) => {
 	const fileInputRef = useRef(null);
 	const [csvData, setCsvData] = useState([]);
 	const [open, setOpen] = useState(false);
-	
-	function arrayToObject(arr) {
-		const columns = Object.keys(arr[0]);
-		const rows = arr.map(obj => {
-			return Object.values(obj);
+
+	function convertDataFormat(inputObj) {
+		const entries = Object.entries(inputObj);
+		const columns = entries.map(([key, value]) => key);
+		const rows = entries[0][1].map((_, rowIndex) => entries.map(([_, value]) => value[rowIndex]));
+		return { columns, rows };
+	}
+
+	async function getFile(dataSourceId) {
+		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
+			// method: 'POST',
+			headers: { 
+				// 'Content-Type': 'application/json',
+				'accepts': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+			// body: formData,
 		});
-		return {
-			columns,
-			rows,
-		};
+		let jsonData = await response.json();
+		let formattedData = convertDataFormat(jsonData);
+		console.log(jsonData)
+		setData({"id": dataSourceId, "data": formattedData});
 	}
 
 	async function sendFile() {
@@ -43,35 +55,9 @@ export const DataUpload = ({setData, projectId}) => {
 			},
 			body: formData,
 		});
+		let responseData = await response.json()
+		getFile(responseData.id);
 	}
-
-	function csvFileToArray (string) {
-    const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
-    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
-
-    const array = csvRows.map(i => {
-      const values = i.split(",");
-      const obj = csvHeader.reduce((object, header, index) => {
-        object[header] = values[index];
-        return object;
-      }, {});
-      return obj;
-    });
-		let dataResult = arrayToObject(array);
-		return dataResult;
-  };
-
-	function handleFileUpload (event) {
-		if (file) {
-			fileReader.onload = function (event) {
-				const text = event.target.result;
-				let dataResult = csvFileToArray(text);
-				setData(dataResult);
-				sendFile(name, dataResult);
-			};
-			fileReader.readAsText(file);
-		}
-	};
 
   return (
     <Box sx={{...classes.processBox}}>
@@ -109,7 +95,8 @@ export const DataUpload = ({setData, projectId}) => {
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
 					<Button color="primary" onClick={() => {
-						handleFileUpload();
+						sendFile();
+						getFile();
 						setOpen(false);
 					}} autoFocus>Save</Button>
 				</DialogActions>
