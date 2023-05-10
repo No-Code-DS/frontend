@@ -61,8 +61,6 @@ export const DataCleaning = ({data, setData, projectId}) => {
 	}
 
 	function handleOptionChange(option, index) {
-		// console.log(selectedColumns)
-
 		const updatedSelectedColumns = selectedColumns.operations.map((col, index2) => {
 			let newObj = col;
 			for (let i in col.config) {
@@ -76,13 +74,12 @@ export const DataCleaning = ({data, setData, projectId}) => {
 			return newObj;
 		})
 		let res = {"operations": updatedSelectedColumns};
-		console.log(res);
-		// setSelectedColumns(res);
+		setSelectedColumns(res);
 	}
 
 	function handleOptionValueChange(index) {
 		let obj = selectedColumns.operations[index].config;
-		let key = Object.keys(obj).find(key => obj[key] === "auto");
+		let key = Object.keys(obj).find(key => obj[key] != false);
 		// console.log(key)
 		return key;
 	}
@@ -95,6 +92,12 @@ export const DataCleaning = ({data, setData, projectId}) => {
 			return col;
 		})
 		setSelectedColumns(updatedSelectedColumns);
+	}
+
+	function handleActionValueChange(index) {
+		let obj = selectedColumns.operations[index].config;
+		let value = Object.values(obj).find(i => i !== false);
+		return value;
 	}
 
 	function handleColumnCancel(columnName) {
@@ -236,14 +239,15 @@ export const DataCleaning = ({data, setData, projectId}) => {
 																<Select
 																	labelId="demo-simple-select-label"
 																	id="demo-simple-select"
-																	value={""}
+																	value={handleActionValueChange(index)}
 																	onChange={(event) => {
 																		handleActionChange(event.target.value, index);
 																	}}
 																	sx={{border:"none"}}
 																>
-																	<MenuItem value={"Delete"}>Delete</MenuItem>
-																	<MenuItem value={"Mean"}>Mean</MenuItem>
+																	{cleaningOptions[handleOptionValueChange(index)].map((op, index) => (
+																		<MenuItem value={op} key={index}>{op}</MenuItem>
+																	))}
 																</Select>
 														</FormControl>
 													</TableCell>
