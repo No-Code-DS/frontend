@@ -63,14 +63,15 @@ export const DataCleaning = ({data, setData, projectId}) => {
 	function handleOptionChange(option, index) {
 		const updatedSelectedColumns = selectedColumns.operations.map((col, index2) => {
 			let newObj = col;
-			for (let i in col.config) {
-				if (col.config[i] === "auto") {
-					newObj.config[i] = false;
+			if (index2 == index) {
+				for (let i in col.config) {
+					if (col.config[i] === "auto") {
+						newObj.config[i] = false;
+					}
 				}
-				if (index2 == index) {
-					newObj.config[option] =  "auto";
-				}
+				newObj.config[option] =  "auto";
 			}
+			
 			return newObj;
 		})
 		let res = {"operations": updatedSelectedColumns};
@@ -82,7 +83,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 		let obj = selectedColumns.operations[index].config;
 		let key = Object.keys(obj).find(key => obj[key] != false && obj[key] !== 1.5);
 		// key === "outliers_param" ? "outliers" : 
-		console.log(selectedColumns.operations)
+		console.log(selectedColumns.operations[index])
 		return key;
 	}
 
