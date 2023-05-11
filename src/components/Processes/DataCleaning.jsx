@@ -74,23 +74,24 @@ export const DataCleaning = ({data, setData, projectId}) => {
 			return newObj;
 		})
 		let res = {"operations": updatedSelectedColumns};
+		// console.log(updatedSelectedColumns[index])
 		setSelectedColumns(res);
 	}
 
 	function handleOptionValueChange(index) {
 		let obj = selectedColumns.operations[index].config;
-		let key = Object.keys(obj).find(key => obj[key] != false);
-		// console.log(key)
+		let key = Object.keys(obj).find(key => obj[key] != false && obj[key] !== 1.5);
+		// key === "outliers_param" ? "outliers" : 
+		console.log(selectedColumns.operations)
 		return key;
 	}
 
 	function handleActionChange(action, index) {
-		console.log("balls")
 		const updatedSelectedColumns = selectedColumns.operations.map((col, index2) => {
 			let newObj = col;
 			if (index === index2) {
 				for (let i in col.config) {
-					if (col.config[i] != false) {
+					if (col.config[i] != false && col.config[i] != 1.5) {
 						newObj.config[i] = action
 					}
 				}
