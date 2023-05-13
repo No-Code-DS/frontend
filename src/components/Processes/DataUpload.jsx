@@ -10,12 +10,9 @@ import { Cookies } from 'react-cookie';
 export const DataUpload = ({setData, projectId}) => {
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
-	const fileReader = new FileReader();
 	const [file, setFile] = useState();
 	const [name, setName] = useState();
-	// const [array, setArray] = useState([]);
 	const fileInputRef = useRef(null);
-	const [csvData, setCsvData] = useState([]);
 	const [open, setOpen] = useState(false);
 
 	function convertDataFormat(inputObj) {
@@ -27,17 +24,13 @@ export const DataUpload = ({setData, projectId}) => {
 
 	async function getFile(dataSourceId) {
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
-			// method: 'POST',
 			headers: { 
-				// 'Content-Type': 'application/json',
 				'accepts': 'application/json',
 				'Authorization': 'Bearer ' + tokenCookie.access_token,
 			},
-			// body: formData,
 		});
 		let jsonData = await response.json();
 		let formattedData = convertDataFormat(jsonData);
-		console.log(jsonData)
 		setData({"id": dataSourceId, "data": formattedData});
 	}
 
@@ -49,7 +42,6 @@ export const DataUpload = ({setData, projectId}) => {
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
 			method: 'POST',
 			headers: { 
-				// 'Content-Type': 'application/json',
 				'accepts': 'application/json',
 				'Authorization': 'Bearer ' + tokenCookie.access_token,
 			},

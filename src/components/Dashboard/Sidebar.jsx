@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import classes from '../../styles/dashboardStyles';
 import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
-import FeatureEngineering from './icons/FeatureEngineering';
+import FeatureEngineeringIcon from './icons/FeatureEngineeringIcon';
 import Model from './icons/Model';
 import Deployment from './icons/Demployment';
 import { DataUpload } from '../Processes/DataUpload';
 import { DataCleaning } from '../Processes/DataCleaning';
+import { FeatureEngineering } from '../Processes/FeatureEngineering';
 
 import {
     Box,
@@ -52,7 +53,6 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
 
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => {
-              console.log()
               if (JSON.stringify(data) !== '{}') {
                 handleAddProcess(2, <DataCleaning setData={setData} data={data} projectId={projectId} />)
               }
@@ -66,9 +66,9 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
           </ListItem>
 
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button">
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <FeatureEngineering />)}>
               <ListItemIcon>
-                <FeatureEngineering style={{transform: "scale(1.8)"}}/>
+                <FeatureEngineeringIcon style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
               <ListItemText primary="Feature engineering" />
             </ListItemButton>

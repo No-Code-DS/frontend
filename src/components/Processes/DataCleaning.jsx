@@ -13,11 +13,33 @@ export const DataCleaning = ({data, setData, projectId}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedColumns, setSelectedColumns] = useState({"operations":[]});
+  const [selectedColumns, setSelectedColumns] = useState({data_source_id:0, "operations":[]});
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
-	const [cleaningOptions, setCleaningOptions] = useState()
-	const cleaningOptionsValues = ["Duplicates", "Missing number", "Missing category", "Encode category", "Extract datetime", "Outliers"]
+	const [cleaningOptions, setCleaningOptions] = useState();
+	const cleaningOptionsValues = ["Duplicates", "Missing number", "Missing category", "Encode category", "Extract datetime", "Outliers"];
+	
+	const d = {"data_source_id":145,"operations":[{"column_subset":["Email"],"config":{"duplicates":false,"missing_num":false,"missing_categ":"auto","encode_categ":false,"extract_datetime":false,"outliers":false,"outlier_param":false}}]}
+	async function handleClean() {
+    // const jsonData = JSON.stringify({"data_source_id": data.id, "operations": selectedColumns.operations});
+    const jsonData = JSON.stringify(d);
+		try {
+        const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'accepts': 'application/json',
+						'Authorization': 'Bearer ' + tokenCookie.access_token,
+          },
+          body: jsonData,
+        });
+
+        const responseData = await response.json();
+				console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+	}
 
 	async function getCleaningOptions() {
 		const response = await fetch("http://localhost:8000/projects/cleaning_map", {
@@ -65,7 +87,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 			let newObj = col;
 			if (index2 == index) {
 				for (let i in col.config) {
-					if (col.config[i] === "auto") {
+					if (col.config[i] != false) {
 						newObj.config[i] = false;
 					}
 				}
@@ -83,7 +105,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 		let obj = selectedColumns.operations[index].config;
 		let key = Object.keys(obj).find(key => obj[key] != false && obj[key] !== 1.5);
 		// key === "outliers_param" ? "outliers" : 
-		console.log(selectedColumns.operations[index])
+		console.log(selectedColumns)
 		return key;
 	}
 
@@ -113,28 +135,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 		setSelectedColumns(updatedSelectedColumns);
 	}
 
-	async function handleClean() {
-		const dataToClean = {
-			"data_source_id": data.dataSourceId,
-		}
-
-    const jsonData = JSON.stringify()
-		try {
-        const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'accepts': 'application/json',
-          },
-          body: jsonData,
-        });
-
-        const responseData = await response.json();
-
-      } catch (error) {
-        console.error(error);
-      }
-	}
+	
 
   return (
 		<Box sx={{...classes.processBox}}>
