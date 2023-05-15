@@ -88,7 +88,6 @@ export const DataUpload = ({setData, projectId}) => {
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
 					<Button color="primary" onClick={() => {
 						sendFile();
-						getFile();
 						setOpen(false);
 					}} autoFocus>Save</Button>
 				</DialogActions>
