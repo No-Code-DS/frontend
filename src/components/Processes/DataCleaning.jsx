@@ -19,10 +19,8 @@ export const DataCleaning = ({data, setData, projectId}) => {
 	const [cleaningOptions, setCleaningOptions] = useState();
 	const cleaningOptionsValues = ["Duplicates", "Missing number", "Missing category", "Encode category", "Extract datetime", "Outliers"];
 	
-	const d = {"data_source_id":145,"operations":[{"column_subset":["Email"],"config":{"duplicates":false,"missing_num":false,"missing_categ":"auto","encode_categ":false,"extract_datetime":false,"outliers":false,"outlier_param":false}}]}
 	async function handleClean() {
-    // const jsonData = JSON.stringify({"data_source_id": data.id, "operations": selectedColumns.operations});
-    const jsonData = JSON.stringify(d);
+    const jsonData = JSON.stringify({"data_source_id": data.id, "operations": selectedColumns.operations});
 		try {
         const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
           method: 'POST',
