@@ -9,17 +9,16 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
 
-export const DataCleaning = ({projectId}) => {
+export const DataCleaning = ({projectId, dataSourceId}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
-	const [curData, setCurData] = useState();
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedColumns, setSelectedColumns] = useState({data_source_id:0, "operations":[]});
+  const [selectedColumns, setSelectedColumns] = useState({operations:[]});
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
 	const [cleaningOptions, setCleaningOptions] = useState();
 	const cleaningOptionsValues = ["Duplicates", "Missing number", "Missing category", "Encode category", "Extract datetime", "Outliers"];
-	const [data, setData] = useState({"projectId": projectId, "data": []});
+	const [data, setData] = useState({columns: [], rows: []});
 
 	function convertDataFormat(inputObj) {
 		const entries = Object.entries(inputObj);
@@ -41,7 +40,8 @@ export const DataCleaning = ({projectId}) => {
 	}
 
 	async function handleClean() {
-    const jsonData = JSON.stringify({"data_source_id": data.id, "operations": selectedColumns.operations});
+    const jsonData = JSON.stringify({"data_source_id": dataSourceId, "operations": selectedColumns.operations});
+		console.log(jsonData)
 		try {
         const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
           method: 'POST',
@@ -54,7 +54,7 @@ export const DataCleaning = ({projectId}) => {
         });
 
         const responseData = await response.json();
-				// setData(prev => ({...prev, data: "fuck"}));
+				setData(convertDataFormat(responseData));
 				console.log(responseData)
       } catch (error) {
         console.error(error);
@@ -100,7 +100,8 @@ export const DataCleaning = ({projectId}) => {
         "outlier_param": 1.5
       }
     }
-    setSelectedColumns(prev => ({...prev, "operations": [...prev.operations, newCol]}));
+		console.log("handlecolumnadd", )
+    setSelectedColumns(prev => ({"operations": [...prev.operations, newCol]}));
 	}
 
 	function handleOptionChange(option, index) {
@@ -117,9 +118,9 @@ export const DataCleaning = ({projectId}) => {
 			
 			return newObj;
 		})
-		let res = {"operations": updatedSelectedColumns};
 		// console.log(updatedSelectedColumns[index])
-		setSelectedColumns(res);
+		// setSelectedColumns(res);
+    setSelectedColumns({operations: updatedSelectedColumns});
 	}
 
 	function handleOptionValueChange(index) {
@@ -141,7 +142,7 @@ export const DataCleaning = ({projectId}) => {
 			}
 			return newObj;
 		})
-		setSelectedColumns({"operations": updatedSelectedColumns});
+    setSelectedColumns({operations: updatedSelectedColumns});
 	}
 
 	function handleActionValueChange(index) {
@@ -155,13 +156,12 @@ export const DataCleaning = ({projectId}) => {
 		setSelectedColumns(updatedSelectedColumns);
 	}
 
-
   return (
 		<Box sx={{...classes.processBox}}>
 			<IconButton onClick={() => setOpen(true)}>
 				<Clean style={{ transform: 'scale(3.3)' }} />
 			</IconButton>
-
+ 
 			<Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
 				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
 
@@ -171,7 +171,7 @@ export const DataCleaning = ({projectId}) => {
 							<Table stickyHeader aria-label="sticky table">
 							<TableHead> 
 								<TableRow>
-									{data.data.columns.map((column, index) => (
+									{data && data.columns.map((column, index) => (
 										<TableCell
 											style={{ minWidth: "200px", height: "40px" }}
 											color={{ backgroundColor: "#c1bdbc" }}
@@ -187,7 +187,7 @@ export const DataCleaning = ({projectId}) => {
 							</TableHead>
 
 							<TableBody sx={{backgroundColor: "#e7e5e4" }}>
-								{data.data.length && data.data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								{data && data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 									.map((row, rowIndex) => {
 										return (
 											<TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
@@ -207,7 +207,7 @@ export const DataCleaning = ({projectId}) => {
 							<TablePagination
 								rowsPerPageOptions={[10, 25, 100]}
 								component="div"
-								count={data.data.rows.length}
+								count={data.rows.length}
 								rowsPerPage={rowsPerPage}
 								page={page}
 								onPageChange={handleChangePage}

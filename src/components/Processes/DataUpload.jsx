@@ -7,7 +7,7 @@ import { TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button } 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Cookies } from 'react-cookie';
 
-export const DataUpload = ({setData, projectId, temp, setTemp}) => {
+export const DataUpload = ({setData, projectId, setDataSourceId}) => {
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
 	const [file, setFile] = useState();
@@ -47,7 +47,8 @@ export const DataUpload = ({setData, projectId, temp, setTemp}) => {
 			},
 			body: formData,
 		});
-		let responseData = await response.json()
+		let responseData = await response.json();
+		setDataSourceId(responseData.id)
 	}
 
   return (
@@ -58,8 +59,6 @@ export const DataUpload = ({setData, projectId, temp, setTemp}) => {
 			</IconButton>
 	
 			<Dialog open={open} maxWidth="lg" fullWidth={false} >
-				{temp}
-				<button onClick={() => setTemp(2)}>increment</button>
 				<DialogTitle sx={{...classes.uploadTitle}}> Upload data source </DialogTitle>
 						
 				<DialogContent dividers sx={{...classes.uploadDialogContainer}} >

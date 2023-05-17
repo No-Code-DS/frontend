@@ -20,6 +20,7 @@ import {
 
 export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel, projectId}) => {
 	const [data, setData] = useState({});
+	const [dataSourceId, setDataSourceId] = useState({});
 	const [temp, setTemp] = useState(0);
 
   function handleAddProcess(nextProcessOrder, component) {
@@ -31,7 +32,6 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
     }
   }
 
-
   return (
     <Box 
       flex={0.6} 
@@ -41,7 +41,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setData={(data) => setData(data)} temp={temp} setTemp={(t) => setTemp(t)} />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setDataSourceId={setDataSourceId} />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}} />
               </ListItemIcon>
@@ -51,7 +51,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
 
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => {
-                handleAddProcess(2, <DataCleaning projectId={projectId} />)
+                handleAddProcess(2, <DataCleaning projectId={projectId} dataSourceId={dataSourceId}/>)
               }}>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
