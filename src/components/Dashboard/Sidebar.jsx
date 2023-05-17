@@ -61,9 +61,9 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
           </ListItem>
 
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <FeatureEngineering />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(3, <FeatureEngineering projectId={projectId} dataSourceId={dataSourceId}/>)}>
               <ListItemIcon>
-                <FeatureEngineeringIcon style={{transform: "scale(1.8)"}}/>
+                <FeatureEngineeringIcon style={{transform: "scale(1.8)"}}  />
               </ListItemIcon>
               <ListItemText primary="Feature engineering" />
             </ListItemButton>

@@ -13,7 +13,7 @@ export const Board = ({activeProcesses, handleProcessCancel}) => {
           {activeProcesses.map((proc, index) => (
             <Stack direction="column" spacing={1} key={index} style={{ height:"100px", width:"100px"}}>
               <Stack direction="row" spacing={1} key={index+1} style={{height:"300px", width:"500px"}}>
-                <Stack direction="column" alignItems="center" spacing={2} sx={{height:"70px", width:"70px"}}>
+                <Stack direction="column" alignItems="center" spacing={3} sx={{height:"70px", width:"70px"}}>
                   {proc.component}
                   {
                     index === activeProcesses.length - 1 ? 
