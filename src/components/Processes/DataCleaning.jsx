@@ -9,16 +9,37 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
 
-export const DataCleaning = ({data, setData, projectId}) => {
+export const DataCleaning = ({projectId}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
+	const [curData, setCurData] = useState();
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedColumns, setSelectedColumns] = useState({data_source_id:0, "operations":[]});
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
 	const [cleaningOptions, setCleaningOptions] = useState();
 	const cleaningOptionsValues = ["Duplicates", "Missing number", "Missing category", "Encode category", "Extract datetime", "Outliers"];
-	
+	const [data, setData] = useState({"projectId": projectId, "data": []});
+
+	function convertDataFormat(inputObj) {
+		const entries = Object.entries(inputObj);
+		const columns = entries.map(([key, value]) => key);
+		const rows = entries[0][1].map((_, rowIndex) => entries.map(([_, value]) => value[rowIndex]));
+		return { columns, rows };
+	}
+
+	async function getData() {
+		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
+			headers: { 
+				'accepts': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+		});
+		let jsonData = await response.json();
+		let formattedData = convertDataFormat(jsonData);
+		setData(formattedData);
+	}
+
 	async function handleClean() {
     const jsonData = JSON.stringify({"data_source_id": data.id, "operations": selectedColumns.operations});
 		try {
@@ -33,7 +54,8 @@ export const DataCleaning = ({data, setData, projectId}) => {
         });
 
         const responseData = await response.json();
-				console.log(responseData);
+				// setData(prev => ({...prev, data: "fuck"}));
+				console.log(responseData)
       } catch (error) {
         console.error(error);
       }
@@ -51,6 +73,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 	}
 
 	useEffect(() => {
+		getData();
 		getCleaningOptions();
 	}, []);
 
@@ -103,7 +126,6 @@ export const DataCleaning = ({data, setData, projectId}) => {
 		let obj = selectedColumns.operations[index].config;
 		let key = Object.keys(obj).find(key => obj[key] != false && obj[key] !== 1.5);
 		// key === "outliers_param" ? "outliers" : 
-		console.log(selectedColumns)
 		return key;
 	}
 
@@ -133,7 +155,6 @@ export const DataCleaning = ({data, setData, projectId}) => {
 		setSelectedColumns(updatedSelectedColumns);
 	}
 
-	
 
   return (
 		<Box sx={{...classes.processBox}}>
@@ -166,7 +187,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 							</TableHead>
 
 							<TableBody sx={{backgroundColor: "#e7e5e4" }}>
-								{data.data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								{data.data.length && data.data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 									.map((row, rowIndex) => {
 										return (
 											<TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
@@ -235,7 +256,7 @@ export const DataCleaning = ({data, setData, projectId}) => {
 																	{Object.keys(cleaningOptions).map((op, index) => (
 																		<MenuItem value={op} key={index}>{cleaningOptionsValues[index]}</MenuItem>
 																	))}
-																	{/* <MenuItem value={3}>Type 3</MenuItem> */}
+																	<MenuItem value={3}>Type 3</MenuItem>
 																</Select>
 														</FormControl>
 													</TableCell>
@@ -265,14 +286,12 @@ export const DataCleaning = ({data, setData, projectId}) => {
 														</IconButton>
 													</TableCell>
 												</TableRow>
-											))
-										} 
-
+										))}
 								</TableBody>
 							</Table>
 						</TableContainer>
 					</Paper>
-				</DialogContent>
+				</DialogContent> 
 
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>

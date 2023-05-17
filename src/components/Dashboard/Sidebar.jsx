@@ -20,6 +20,7 @@ import {
 
 export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel, projectId}) => {
 	const [data, setData] = useState({});
+	const [temp, setTemp] = useState(0);
 
   function handleAddProcess(nextProcessOrder, component) {
     if (nextProcessOrder === (lastProcessOrder + 1)) {
@@ -30,9 +31,6 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
     }
   }
 
-  function handleSetData(newData) {
-    setData(newData);
-  }
 
   return (
     <Box 
@@ -43,7 +41,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setData={(data) => setData(data)} />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setData={(data) => setData(data)} temp={temp} setTemp={(t) => setTemp(t)} />)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}} />
               </ListItemIcon>
@@ -53,11 +51,8 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
 
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => {
-              if (JSON.stringify(data) !== '{}') {
-                handleAddProcess(2, <DataCleaning setData={setData} data={data} projectId={projectId} />)
-              }
-            }
-            }>
+                handleAddProcess(2, <DataCleaning projectId={projectId} />)
+              }}>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
