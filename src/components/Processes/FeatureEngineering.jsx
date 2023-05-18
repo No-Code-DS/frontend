@@ -12,7 +12,8 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState({columns: [], rows: []});
-	const [selectedColumns, setSelectedColumns] = useState([]);
+	const operations = useState(["+", "-", "*", "/"]);
+	const [selectedColumns, setSelectedColumns] = useState([1]);
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -24,9 +25,28 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 		return { columns, rows };
 	}
 
-	function handleColumnAdd() {
-		
-	}
+	function handleColumnAdd(columnName) {
+		setSelectedColumns((prevState) => {
+			const lastObject = prevState[prevState.length - 1];
+			if (lastObject.left && !lastObject.right) {
+				return [
+					...prevState.slice(0, -1),
+					{ ...lastObject, right: columnName }
+				];
+			}
+			else {
+				return [
+					...prevState,
+					{
+						left: columnName,
+						right: "",
+						operation_symbol: "",
+						name: ""
+					}
+				];
+			}
+		});
+	};
 
 	async function getData() {
 		console.log(projectId)
@@ -67,8 +87,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 											key={index}
 										>
 											{column}
-											{/* <IconButton style={{marginBottom: "3px"}} onClick={() => handleColumnAdd(column)}> */}
-											<IconButton style={{marginBottom: "3px"}}>
+											<IconButton style={{marginBottom: "3px"}} onClick={() => handleColumnAdd(column)}>
 												<AddIcon />
 											</IconButton>
 										</TableCell>
@@ -126,7 +145,41 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 								</TableHead>	
 
 								<TableBody >
-										
+									{selectedColumns.map((col, index) => (
+											<TableRow key={index} tabIndex={-1}>
+												<TableCell sx={{...classes.chosenColumn}}>
+													{/* {col} */}
+												</TableCell>
+
+												<TableCell>
+													<FormControl variant="standard" sx={{width: "100px"}}>
+														<InputLabel id="demo-simple-select-label">Operation</InputLabel>
+															<Select
+																labelId="demo-simple-select-label"
+																id="demo-simple-select"
+																value={"+"}
+																// onChange={(event) => {
+																// 	handleOptionChange(event.target.value, index);
+																// }}
+															>
+																{["+", "-", "*", "/"].map((op, index) => (
+																	<MenuItem value={op} key={index}>{op}</MenuItem>
+																))}
+															</Select>
+													</FormControl>
+												</TableCell>
+
+												<TableCell>
+													
+												</TableCell>
+
+												<TableCell>
+													{/* <IconButton onClick={() => handleColumnCancel(col.columnName)} sx={{color: "red"}}> 
+														<ClearIcon /> */}
+													{/* </IconButton> */}
+												</TableCell>
+											</TableRow>
+									))}
 								</TableBody>
 							</Table>
 						</TableContainer>

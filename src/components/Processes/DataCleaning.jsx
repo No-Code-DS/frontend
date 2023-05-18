@@ -256,7 +256,6 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 																	{Object.keys(cleaningOptions).map((op, index) => (
 																		<MenuItem value={op} key={index}>{cleaningOptionsValues[index]}</MenuItem>
 																	))}
-																	<MenuItem value={3}>Type 3</MenuItem>
 																</Select>
 														</FormControl>
 													</TableCell>
