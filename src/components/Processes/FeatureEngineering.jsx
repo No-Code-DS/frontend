@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import FeatureEngineeringIcon from '../Dashboard/icons/FeatureEngineeringIcon';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem, TextField, BottomNavigation } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
@@ -12,8 +12,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState({columns: [], rows: []});
-	const operations = useState(["+", "-", "*", "/"]);
-	const [selectedColumns, setSelectedColumns] = useState([1]);
+	const [selectedColumns, setSelectedColumns] = useState([]);
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -28,7 +27,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 	function handleColumnAdd(columnName) {
 		setSelectedColumns((prevState) => {
 			const lastObject = prevState[prevState.length - 1];
-			if (lastObject.left && !lastObject.right) {
+			if (lastObject && lastObject.left && !lastObject.right) {
 				return [
 					...prevState.slice(0, -1),
 					{ ...lastObject, right: columnName }
@@ -39,8 +38,8 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 					...prevState,
 					{
 						left: columnName,
-						right: "",
-						operation_symbol: "",
+						right: 0,
+						operation_symbol: 0,
 						name: ""
 					}
 				];
@@ -48,8 +47,28 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 		});
 	};
 
+	function handleChange(value, index, field) {
+		const updatedSelectedColumns = selectedColumns.map((col, index2) => {
+			let newObj = col;
+			console.log(newObj);
+			if (index2 == index) {
+				newObj[[field]] = value;
+			}
+			return newObj;
+		});
+		setSelectedColumns(updatedSelectedColumns);
+	}
+		
+	function getValue(index) {
+		return ;
+	}
+
+	function handleCancelColumn(index) {
+		const updatedSelectedColumns = selectedColumns.filter((col, index2) => index2 !== index);
+		setSelectedColumns(updatedSelectedColumns);
+	}
+
 	async function getData() {
-		console.log(projectId)
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
 			headers: { 
 				'accepts': 'application/json',
@@ -61,9 +80,30 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 		setData(formattedData);
 	}
 
+	async function handleSubmit() {
+    const jsonData = JSON.stringify(selectedColumns);
+		const response = await fetch(`http://localhost:8000/projects/${projectId}/fe`, {
+			method: "POST",
+			headers: { 
+				'accepts': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+			body: jsonData,
+		});
+		let responseJson = await response.json();
+		console.log(jsonData)
+		console.log(responseJson)
+		let formattedData = convertDataFormat(responseJson);
+		setData(formattedData);
+	}
+
 	useEffect(() => {
 		getData();
 	}, []);
+
+	function check() {
+		console.log(selectedColumns);
+	}
 
   return (
     <Box sx={{...classes.processBox}}>
@@ -72,6 +112,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 			</IconButton>
 
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
+				<button onClick={() => check()}>click</button>
 				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
@@ -129,7 +170,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 					<div>Click on the plus next to a column to select it</div>
 					<Paper style={{marginTop: "10px"}}>
 						<TableContainer sx={{ maxHeight: 440 }}>
-							<Table>
+							<Table >
 								<TableHead> 
 									<TableRow>
 										<TableCell sx={{width:"33%"}} color={{ backgroundColor: "#c1bdbc" }}>
@@ -141,14 +182,17 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 										<TableCell sx={{width:"33%"}} color={{ backgroundColor: "#c1bdbc" }}>
 											Column 2
 										</TableCell>
+										<TableCell sx={{width:"33%"}} color={{ backgroundColor: "#c1bdbc" }}>
+											Name
+										</TableCell>
 									</TableRow>
 								</TableHead>	
 
 								<TableBody >
-									{selectedColumns.map((col, index) => (
+									{selectedColumns && selectedColumns.map((col, index) => (
 											<TableRow key={index} tabIndex={-1}>
 												<TableCell sx={{...classes.chosenColumn}}>
-													{/* {col} */}
+													{col.left}
 												</TableCell>
 
 												<TableCell>
@@ -157,10 +201,10 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 															<Select
 																labelId="demo-simple-select-label"
 																id="demo-simple-select"
-																value={"+"}
-																// onChange={(event) => {
-																// 	handleOptionChange(event.target.value, index);
-																// }}
+																value={selectedColumns[index].operation_symbol}
+																onChange={(event) => {
+																	handleChange(event.target.value, index, "operation_symbol");
+																}}
 															>
 																{["+", "-", "*", "/"].map((op, index) => (
 																	<MenuItem value={op} key={index}>{op}</MenuItem>
@@ -170,13 +214,16 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 												</TableCell>
 
 												<TableCell>
-													
+													{col.right}
 												</TableCell>
 
 												<TableCell>
-													{/* <IconButton onClick={() => handleColumnCancel(col.columnName)} sx={{color: "red"}}> 
-														<ClearIcon /> */}
-													{/* </IconButton> */}
+													<TextField onChange={(e) => handleChange(e.target.value, index, "name")} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" />
+												</TableCell>
+												<TableCell>
+													<IconButton onClick={() => handleCancelColumn(index)} sx={{color: "red"}}> 
+														<ClearIcon />
+													</IconButton>
 												</TableCell>
 											</TableRow>
 									))}
@@ -188,7 +235,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
-					<Button color="primary" autoFocus >Clean</Button>
+					<Button onClick={() => handleSubmit()} color="primary" autoFocus >Submit</Button>
 				</DialogActions>
 
 			</Dialog>
