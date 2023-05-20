@@ -41,7 +41,8 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 
 	async function handleClean() {
     const jsonData = JSON.stringify({"data_source_id": dataSourceId, "operations": selectedColumns.operations});
-		console.log(jsonData)
+		console.log(projectId)
+		console.log(dataSourceId)
 		try {
         const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
           method: 'POST',
@@ -59,6 +60,7 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
       } catch (error) {
         console.error(error);
       }
+		setSelectedColumns({operations:[]});
 	}
 
 	async function getCleaningOptions() {
@@ -100,7 +102,6 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
         "outlier_param": 1.5
       }
     }
-		console.log("handlecolumnadd", )
     setSelectedColumns(prev => ({"operations": [...prev.operations, newCol]}));
 	}
 
@@ -151,9 +152,12 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 		return value;
 	}
 
+	// THIS DOESNT WORK
 	function handleColumnCancel(columnName) {
-		const updatedSelectedColumns = selectedColumns.filter(col => col.columnName !== columnName)
-		setSelectedColumns(updatedSelectedColumns);
+		console.log(columnName)
+		const updatedSelectedColumns = selectedColumns.operations.filter(col => col.column_subset[0] !== columnName)
+		console.log(updatedSelectedColumns)
+		setSelectedColumns(prev => ({...prev, "operations": updatedSelectedColumns}));
 	}
 
   return (
@@ -280,7 +284,7 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 													</TableCell>
 
 													<TableCell>
-														<IconButton onClick={() => handleColumnCancel(col.columnName)} sx={{color: "red"}}> 
+														<IconButton onClick={() => handleColumnCancel(col.column_subset[0])} sx={{color: "red"}}> 
 															<ClearIcon />
 														</IconButton>
 													</TableCell>

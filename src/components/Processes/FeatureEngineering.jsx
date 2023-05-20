@@ -59,10 +59,6 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 		setSelectedColumns(updatedSelectedColumns);
 	}
 		
-	function getValue(index) {
-		return ;
-	}
-
 	function handleCancelColumn(index) {
 		const updatedSelectedColumns = selectedColumns.filter((col, index2) => index2 !== index);
 		setSelectedColumns(updatedSelectedColumns);
@@ -82,9 +78,11 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 
 	async function handleSubmit() {
     const jsonData = JSON.stringify(selectedColumns);
+		console.log(projectId)
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/fe`, {
 			method: "POST",
 			headers: { 
+				'Content-Type': 'application/json',
 				'accepts': 'application/json',
 				'Authorization': 'Bearer ' + tokenCookie.access_token,
 			},
@@ -101,10 +99,6 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 		getData();
 	}, []);
 
-	function check() {
-		console.log(selectedColumns);
-	}
-
   return (
     <Box sx={{...classes.processBox}}>
       <IconButton onClick={() => setOpen(true)}>
@@ -112,7 +106,6 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 			</IconButton>
 
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
-				<button onClick={() => check()}>click</button>
 				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
