@@ -50,7 +50,6 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 	function handleChange(value, index, field) {
 		const updatedSelectedColumns = selectedColumns.map((col, index2) => {
 			let newObj = col;
-			console.log(newObj);
 			if (index2 == index) {
 				newObj[[field]] = value;
 			}
@@ -78,7 +77,6 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 
 	async function handleSubmit() {
     const jsonData = JSON.stringify(selectedColumns);
-		console.log(projectId)
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/fe`, {
 			method: "POST",
 			headers: { 
@@ -89,8 +87,6 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 			body: jsonData,
 		});
 		let responseJson = await response.json();
-		console.log(jsonData)
-		console.log(responseJson)
 		let formattedData = convertDataFormat(responseJson);
 		setData(formattedData);
 	}
@@ -106,7 +102,7 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 			</IconButton>
 
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
-				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
+				<DialogTitle sx={{...classes.title}}>Feature Engineering</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
 					<Paper sx={{ width: '100%', height: '100%', }}>

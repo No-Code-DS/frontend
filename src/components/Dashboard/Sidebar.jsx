@@ -3,11 +3,12 @@ import classes from '../../styles/dashboardStyles';
 import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
 import FeatureEngineeringIcon from './icons/FeatureEngineeringIcon';
-import Model from './icons/Model';
+import ModelIcon from './icons/ModelIcon';
 import Deployment from './icons/Demployment';
 import { DataUpload } from '../Processes/DataUpload';
 import { DataCleaning } from '../Processes/DataCleaning';
 import { FeatureEngineering } from '../Processes/FeatureEngineering';
+import { Model } from '../Processes/Model';
 
 import {
     Box,
@@ -70,9 +71,9 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
           </ListItem>
 
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button">
+            <ListItemButton component="button" onClick={() => handleAddProcess(4, <Model />)}>
               <ListItemIcon>
-                <Model style={{transform: "scale(1.8)"}}/>
+                <ModelIcon style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
               <ListItemText primary="Model" />
             </ListItemButton>

@@ -60,7 +60,7 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
       } catch (error) {
         console.error(error);
       }
-		setSelectedColumns({operations:[]});
+		// setSelectedColumns({operations:[]});
 	}
 
 	async function getCleaningOptions() {
@@ -152,7 +152,6 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 		return value;
 	}
 
-	// THIS DOESNT WORK
 	function handleColumnCancel(columnName) {
 		console.log(columnName)
 		const updatedSelectedColumns = selectedColumns.operations.filter(col => col.column_subset[0] !== columnName)
@@ -167,7 +166,7 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 			</IconButton>
  
 			<Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
-				<DialogTitle sx={{...classes.title}}>Data</DialogTitle>
+				<DialogTitle sx={{...classes.title}}>Data Cleaning</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
 					<Paper sx={{ width: '100%', height: '100%', }}>

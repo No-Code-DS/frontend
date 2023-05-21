@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon } from '@mui/material';
 
-export default function Model(props) {
+export default function ModelIcon(props) {
     return (
         <SvgIcon 
             {...props}
