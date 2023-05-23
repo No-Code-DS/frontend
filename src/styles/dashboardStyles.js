@@ -30,13 +30,14 @@ const classes = {
 			display: "flex",
 			flexWrap: "wrap",
 			flexDirection: "row",
-			justifyContent: "space-between",
+			// justifyContent: "space-between",
 			height: "100vh",
 			alignItems: "flex-start",
 			alignContent: "flex-start"
     }),
 
 		model: css({
+			// flex: "0 0 360px",
 			display: "flex",
 			flexDirection: "column",
 			justifyContent: "space-between",
@@ -46,8 +47,8 @@ const classes = {
 			boxShadow: "5px 7px 18px #888888",
 			padding: "20px", 
 			backgroundColor: "white",
-			// margin: "20px"
-			marginBottom: "40px"
+			margin: "6px",
+			// marginBottom: "40px"
 		})
 }
 

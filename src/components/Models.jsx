@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
  Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, Typography, Button, Stack,
- Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow,
 } from "@mui/material";
 
 import { Cookies } from 'react-cookie';
@@ -11,41 +10,36 @@ import {
   Link as RouterLink,
 } from "react-router-dom";
 
-const models = [
-  {
-    "name": "Weather prediction",
-    "type": "Random forest",
-    "date": "23-4-2023",
-    "status": "Deployed"
-  },
-  {
-    "name": "House price prediction",
-    "type": "Linear regression",
-    "date": "23-4-2023",
-    "status": "Training"
-  },
-  {
-    "name": "Weather prediction 2",
-    "type": "Random forest",
-    "date": "23-4-2023",
-    "status": "Deployed"
-  },
-  {
-    "name": "Weather prediction",
-    "type": "Linear regresion",
-    "date": "23-4-2023",
-    "status": "Failed"
-  },
-]
-
 const statusColors = {"Deployed": "green", "Failed": "red", "Training": "orange"}
 
 export const Models = ({setProjectId}) => {
 	const [open, setOpen] = useState(false);
 	const [name, setName] = useState("");
+	const [projects, setProjects] = useState([]);
 	const [description, setDescription] = useState("");
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
+
+  async function fetchProject(projectId="") {
+    let url = "http://localhost:8000/projects/";
+    // url += projectId;
+    console.log(url)
+    const response = await fetch(url, {
+      headers: { 
+				'Content-Type': 'application/json',
+        'accepts': 'application/json',
+        'Authorization': 'Bearer ' + tokenCookie.access_token,
+      },
+    });
+    let jsonData = await response.json();
+    console.log(jsonData)
+    setProjects(jsonData);
+  }
+
+  useEffect(() => {
+    fetchProject()
+    console.log()
+  }, [])
 
   async function createProject() {
     const jsonData = JSON.stringify({"project_name": name, "description": description})
@@ -118,27 +112,33 @@ export const Models = ({setProjectId}) => {
         </Dialog>
 
       </Box>
-      <Box sx={{...classes.modelsContainer}}>
-          {models.map((model, index) => (
-            <Box sx={{...classes.model}} key={index}>
-
+      <Box sx={{...classes.modelsContainer}} >
+          {projects.map((model, index) => (
+            <Box sx={{...classes.model}} key={index} >
               <Box>
                 <Typography variant="h5" style={{fontWeight:"bold"}}>
-                  {model.name}
+                  {model.project_name}
                 </Typography>
                 <Typography>
-                  {model.type}
+                  {model.description}
                 </Typography>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
                 <Typography style={{ color: "#6c6c6c", fontWeight: "bold"}}>
                   Created at: <br/>
-                  {model.date}
+                  {model.created_at.replace("T", " ").split(".")[0]}
                 </Typography>
                 <Typography variant="h7" style={{ color: statusColors[model.status], fontWeight: "bold" }}>
                   <br/>
-                  {model.status}
+                  {/* {model.status} */}
+                  {/* <Button>Open</Button> */}
+
+                  <Button variant="contained" color="success">
+                    <Link component={RouterLink} to="/dashboard" sx={{color:"white"}} onClick={() => createProject()}>
+                      Open
+                    </Link>
+                  </Button>
                 </Typography>
               </Box>
 

@@ -10,11 +10,10 @@ import classes from '../../styles/processStyles';
 export const Model = () => {
   const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
-	const [data, setData] = useState({columns: [], rows: []});
-	const [selectedColumns, setSelectedColumns] = useState([]);
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
 
   return (
     <Box sx={{...classes.processBox}}>
