@@ -18,7 +18,7 @@ export const Model = () => {
   return (
     <Box sx={{...classes.processBox}}>
       <IconButton onClick={() => setOpen(true)}>
-        <ModelIcon style={{ transform: 'scale(3.3)' }} />
+        <ModelIcon style={{ transform: 'scale(2.7)' }} />
       </IconButton>
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
 				<DialogTitle sx={{...classes.title}}>Model</DialogTitle>
