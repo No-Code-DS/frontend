@@ -7,26 +7,25 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 export const Board = ({activeProcesses, handleProcessCancel}) => {
 
   return (
-    <Box flex={2} p={20} >
+    <Box flex={2} p={20} boxShadow="24px 23px 28px -50px rgba(0,0,0,0.75) inset" style={{ margin: 0}}>
       <Box sx={{...dashboardClasses.board}} >
-        <Stack direction="row" spacing={3} style={{}} >
+        <Stack direction="row" spacing={2} style={{}} >
           {activeProcesses.map((proc, index) => (
-            <Stack direction="column" spacing={1} key={index} style={{ height:"100px", width:"100px"}}>
-              <Stack direction="row" spacing={1} key={index+1} style={{height:"300px", width:"500px"}}>
-                <Stack direction="column" alignItems="center" spacing={3} sx={{height:"70px", width:"70px"}}>
+            <Stack direction="row" spacing={2} key={index} alignItems="center" position="relative">
+              <Stack direction="column" alignItems="center" justifyContent="center" spacing={0} key={index+1} style={{ width: "5rem", height:"6rem", backgroundColor: "#fff", borderRadius:"4px"}}>
+                <Stack direction="column" spacing={0}>
                   {proc.component}
-                  {
-                    index === activeProcesses.length - 1 ? 
-                    <Button sx={{...processClasses.cancelButton}} onClick={() => handleProcessCancel()} >
-                      Cancel
-                    </Button>
-                    :
-                    null 
-                  }
                 </Stack>
-
-                <ArrowRightAltIcon style={{ marginTop: "10px", transform: 'scale(1.8)', }} />
+              {
+                index === activeProcesses.length - 1 ? 
+                <Button sx={{...processClasses.cancelButton, marginTop: "100px"}} onClick={() => handleProcessCancel()} >
+                  Cancel
+                </Button>
+                :
+                null 
+              }
               </Stack>
+             <ArrowRightAltIcon style={{ transform: 'scale(1.5)', }} />
             </Stack> 
           ))}
         </Stack>

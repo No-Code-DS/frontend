@@ -11,10 +11,10 @@ const classes = {
         color: "red",
         border: "1px solid",
         padding: "0px",
-        margin: "0",
         height: "20px",
         width: "20px",
-        // position: "absolute"
+        position: "absolute",
+        bottom: -30,
     }),
     table: css({
         // minWidth: 650,
