@@ -62,9 +62,7 @@ export const Navbar = ({loginStatus, setLoginStatus}) => {
                 {tokenCookie ? 
                   <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }} onClick={() => {
                     storedCookies.remove("token");
-                    console.log(loginStatus);
                     setLoginStatus(false);
-                    console.log(loginStatus);
                   }}>
                     <Link component={RouterLink} to="/" sx={{color:"white"}}>
                       Logout

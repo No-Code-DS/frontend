@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classes from '../../styles/dashboardStyles';
 import DataSource from './icons/DataSource';
 import Clean from './icons/Clean';
@@ -19,19 +19,36 @@ import {
     ListItemText,
 } from "@mui/material";
 
-export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCancel, projectId}) => {
-	const [data, setData] = useState({});
+export const Sidebar = ({activeProcesses, lastProcessOrder, handleButtonClick, handleProcessCancel, projectId, project=false}) => {
 	const [dataSourceId, setDataSourceId] = useState({});
-	const [temp, setTemp] = useState(0);
+  const hasEffectRun = useRef(false);
 
-  function handleAddProcess(nextProcessOrder, component) {
-    if (nextProcessOrder === (lastProcessOrder + 1)) {
+  
+  function handleAddProcess(nextProcessOrder=false, component=false, existingProject=false) {
+    if (existingProject) {
+      handleButtonClick(existingProject)
+    }
+    else if (nextProcessOrder === (activeProcesses.length + 1)) {
       handleButtonClick({
         "order": nextProcessOrder,
         "component": component
       })
     }
   }
+
+  useEffect(() => {
+    if (!hasEffectRun.current) {
+      if (project) {
+        let processes = [];
+        processes.push({"order":1, "component": <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setDataSourceId={setDataSourceId} />});
+        if (project.cleaning != null) {
+          processes.push({"order": 2, "component": <DataCleaning projectId={projectId} dataSourceId={dataSourceId}/>});
+        }
+        handleAddProcess(false, false, processes);
+      }
+      hasEffectRun.current = true;
+    }
+  }, [])
 
   return (
     <Box 
@@ -79,7 +96,7 @@ export const Sidebar = ({lastProcessOrder, handleButtonClick, handleProcessCance
             </ListItemButton>
           </ListItem>
 
-          <ListItem sx={{...classes.istItem}}>
+          <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button">
               <ListItemIcon>
                 <Deployment style={{transform: "scale(1.8)"}}/>

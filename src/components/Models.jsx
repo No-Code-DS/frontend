@@ -38,7 +38,6 @@ export const Models = ({setProjectId}) => {
 
   useEffect(() => {
     fetchProject()
-    console.log()
   }, [])
 
   async function createProject() {
@@ -135,10 +134,11 @@ export const Models = ({setProjectId}) => {
                   {/* <Button>Open</Button> */}
 
                   <Button variant="contained" color="success">
-                    <Link component={RouterLink} to="/dashboard" sx={{color:"white"}} onClick={() => createProject()}>
+                    <Link component={RouterLink} to='/dashboard' state={{"project": projects[index]}} sx={{color:"white"}}>
                       Open
                     </Link>
                   </Button>
+                  
                 </Typography>
               </Box>
 
