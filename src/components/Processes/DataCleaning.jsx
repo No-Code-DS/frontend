@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
 
-export const DataCleaning = ({projectId, dataSourceId}) => {
+export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=false}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -37,12 +37,14 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 		let jsonData = await response.json();
 		let formattedData = convertDataFormat(jsonData);
 		setData(formattedData);
+		console.log("existing columns", existingSelectedColumns);
+		if (existingSelectedColumns) {
+			setSelectedColumns({"operations": existingSelectedColumns})
+		}
 	}
 
 	async function handleClean() {
     const jsonData = JSON.stringify({"data_source_id": dataSourceId, "operations": selectedColumns.operations});
-		console.log(projectId)
-		console.log(dataSourceId)
 		try {
         const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
           method: 'POST',
@@ -60,7 +62,6 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
       } catch (error) {
         console.error(error);
       }
-		// setSelectedColumns({operations:[]});
 	}
 
 	async function getCleaningOptions() {
@@ -153,10 +154,12 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 	}
 
 	function handleColumnCancel(columnName) {
-		console.log(columnName)
 		const updatedSelectedColumns = selectedColumns.operations.filter(col => col.column_subset[0] !== columnName)
-		console.log(updatedSelectedColumns)
 		setSelectedColumns(prev => ({...prev, "operations": updatedSelectedColumns}));
+	}
+
+	function check() {
+		console.log("selected columns", selectedColumns);
 	}
 
   return (
@@ -168,6 +171,7 @@ export const DataCleaning = ({projectId, dataSourceId}) => {
 			<Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
 				<DialogTitle sx={{...classes.title}}>Data Cleaning</DialogTitle>
 
+			<button onClick={() => check()}>click</button>
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
 					<Paper sx={{ width: '100%', height: '100%', }}>
 						<TableContainer sx={{ maxHeight: 440 }}>

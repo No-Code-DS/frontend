@@ -8,7 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
 import classes from '../../styles/processStyles';
 
-export const FeatureEngineering = ({dataSourceId, projectId}) => {
+export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedColumns=false}) => {
 	const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState({columns: [], rows: []});
@@ -73,6 +73,9 @@ export const FeatureEngineering = ({dataSourceId, projectId}) => {
 		let jsonData = await response.json();
 		let formattedData = convertDataFormat(jsonData);
 		setData(formattedData);
+		if (existingSelectedColumns) {
+			setSelectedColumns({"operations": existingSelectedColumns})
+		}
 	}
 
 	async function handleSubmit() {

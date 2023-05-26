@@ -19,11 +19,11 @@ import {
     ListItemText,
 } from "@mui/material";
 
-export const Sidebar = ({activeProcesses, lastProcessOrder, handleButtonClick, handleProcessCancel, projectId, project=false}) => {
+export const Sidebar = ({activeProcesses, handleButtonClick, handleProcessCancel, projectId, project=false}) => {
 	const [dataSourceId, setDataSourceId] = useState({});
   const hasEffectRun = useRef(false);
+  const curProjectId = project && project.id ? project.id : projectId;
 
-  
   function handleAddProcess(nextProcessOrder=false, component=false, existingProject=false) {
     if (existingProject) {
       handleButtonClick(existingProject)
@@ -40,9 +40,13 @@ export const Sidebar = ({activeProcesses, lastProcessOrder, handleButtonClick, h
     if (!hasEffectRun.current) {
       if (project) {
         let processes = [];
-        processes.push({"order":1, "component": <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setDataSourceId={setDataSourceId} />});
+
+        processes.push({"order":1, "component": <DataUpload handleProcessCancel={handleProcessCancel} projectId={curProjectId} setDataSourceId={setDataSourceId} />});
         if (project.cleaning != null) {
-          processes.push({"order": 2, "component": <DataCleaning projectId={projectId} dataSourceId={dataSourceId}/>});
+          processes.push({"order": 2, "component": <DataCleaning projectId={curProjectId} dataSourceId={project.data_source.id} existingSelectedColumns={project.cleaning.operations}/>});
+        }
+        if (project.feature_engineering != null) {
+          processes.push({"order": 3, "component": <FeatureEngineering projectId={curProjectId} existingSelectedColumns={project.cleaning.operations}/>});
         }
         handleAddProcess(false, false, processes);
       }
@@ -59,7 +63,7 @@ export const Sidebar = ({activeProcesses, lastProcessOrder, handleButtonClick, h
     >
         <List>
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={projectId} setDataSourceId={setDataSourceId} />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(1, <DataUpload handleProcessCancel={handleProcessCancel} projectId={curProjectId} setDataSourceId={setDataSourceId}/>)}>
               <ListItemIcon>
                 <DataSource style={{paddingRight: "7px", transform: `scale(1.7)`}} />
               </ListItemIcon>
@@ -69,7 +73,7 @@ export const Sidebar = ({activeProcesses, lastProcessOrder, handleButtonClick, h
 
           <ListItem sx={{...classes.listItem}}>
             <ListItemButton component="button" onClick={() => {
-                handleAddProcess(2, <DataCleaning projectId={projectId} dataSourceId={dataSourceId}/>)
+                handleAddProcess(2, <DataCleaning projectId={curProjectId} dataSourceId={dataSourceId}/>)
               }}>
               <ListItemIcon>
                 <Clean style={{transform: "scale(1.8)"}}/>
@@ -79,7 +83,7 @@ export const Sidebar = ({activeProcesses, lastProcessOrder, handleButtonClick, h
           </ListItem>
 
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(3, <FeatureEngineering projectId={projectId} dataSourceId={dataSourceId}/>)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(3, <FeatureEngineering projectId={curProjectId} dataSourceId={dataSourceId}/>)}>
               <ListItemIcon>
                 <FeatureEngineeringIcon style={{transform: "scale(1.8)"}}  />
               </ListItemIcon>
