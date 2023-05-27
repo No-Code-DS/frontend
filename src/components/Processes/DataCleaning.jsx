@@ -37,9 +37,9 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 		let jsonData = await response.json();
 		let formattedData = convertDataFormat(jsonData);
 		setData(formattedData);
-		console.log("existing columns", existingSelectedColumns);
+		// console.log("existing columns", existingSelectedColumns);
 		if (existingSelectedColumns) {
-			setSelectedColumns({"operations": existingSelectedColumns})
+			setSelectedColumns({operations: []})
 		}
 	}
 
@@ -78,6 +78,7 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 	useEffect(() => {
 		getData();
 		getCleaningOptions();
+		// console.log(selectedColumns)
 	}, []);
 
 	const handleChangePage = (event, newPage) => {

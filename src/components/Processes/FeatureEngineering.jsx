@@ -74,7 +74,7 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
 		let formattedData = convertDataFormat(jsonData);
 		setData(formattedData);
 		if (existingSelectedColumns) {
-			setSelectedColumns({"operations": existingSelectedColumns})
+			setSelectedColumns(existingSelectedColumns)
 		}
 	}
 

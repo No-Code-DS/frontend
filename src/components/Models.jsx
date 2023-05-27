@@ -23,7 +23,6 @@ export const Models = ({setProjectId}) => {
   async function fetchProject(projectId="") {
     let url = "http://localhost:8000/projects/";
     // url += projectId;
-    console.log(url)
     const response = await fetch(url, {
       headers: { 
 				'Content-Type': 'application/json',
@@ -32,7 +31,6 @@ export const Models = ({setProjectId}) => {
       },
     });
     let jsonData = await response.json();
-    console.log(jsonData)
     setProjects(jsonData);
   }
 
