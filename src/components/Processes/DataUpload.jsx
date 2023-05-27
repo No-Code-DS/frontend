@@ -55,7 +55,7 @@ export const DataUpload = ({setData, projectId, setDataSourceId}) => {
     <Box sx={{...classes.processBox}}>
 		
 			<IconButton onClick={() => setOpen(true)}>
-				<DataSource style={{ transform: 'scale(2.7)' }} />
+				<DataSource style={{ transform: 'scale(2.4)' }} />
 			</IconButton>
 	
 			<Dialog open={open} maxWidth="lg" fullWidth={false} >

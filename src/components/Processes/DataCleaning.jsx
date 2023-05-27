@@ -166,7 +166,7 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
   return (
 		<Box sx={{...classes.processBox}}>
 			<IconButton onClick={() => setOpen(true)}>
-				<Clean style={{ transform: 'scale(3.3)' }} />
+				<Clean style={{ transform: 'scale(2.5)' }} />
 			</IconButton>
  
 			<Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>

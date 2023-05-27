@@ -11,15 +11,12 @@ const classes = {
 			alignItems: "center"
 		}),
     stack: css({
-			backgroundColor: 'white',
+			backgroundColor: '#eee',
 			height: "100vh",
     }),
     sideBar: css({
-			borderRight: "1px solid",
-			padding: "0px"
-    }),
-    listItem: css({
-			borderBottom: "1px solid"
+			// padding: "0px",
+			backgroundColor: "#fff",
     }),
     board: css({
         // padding: "auto",
