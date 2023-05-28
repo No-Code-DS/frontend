@@ -92,7 +92,7 @@ export const Sidebar = ({activeProcesses, handleButtonClick, handleProcessCancel
           </ListItem>
 
           <ListItem sx={{...classes.listItem}}>
-            <ListItemButton component="button" onClick={() => handleAddProcess(4, <Model />)}>
+            <ListItemButton component="button" onClick={() => handleAddProcess(4, <Model projectId={curProjectId} />)}>
               <ListItemIcon>
                 <ModelIcon style={{transform: "scale(1.8)"}}/>
               </ListItemIcon>
