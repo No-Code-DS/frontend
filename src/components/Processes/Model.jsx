@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import ModelIcon from '../Dashboard/icons/ModelIcon';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem, TextField, BottomNavigation } from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem, TextField, BottomNavigation, FormControlLabel, Checkbox} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
@@ -15,8 +15,13 @@ export const Model = ({projectId}) => {
   const tokenCookie = storedCookies.get("token");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [modelOptions, setModelOptions] = useState([]);
-  const [selectedModelOptions, setSelectedModelOptions] = useState({});
   const [data, setData] = useState({columns: [], rows: []});
+  const [selectedColumn, setSelectedColumn] = useState();
+  const [selectedOption, setSelectedOption] = useState("LinearRegression");
+  const [selectedOptionParams, setSelectedOptionParams] = useState([]);
+  const [selectedModelOptions, setSelectedModelOptions] = useState({});
+  const [selectedParam, setSelectedParam] = useState();
+  const [name, setName] = useState();
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -33,19 +38,6 @@ export const Model = ({projectId}) => {
 		return { columns, rows };
 	}
 
-	function handleColumnAdd(columnName) {
-		let options =  {
-			"name": columnName,
-			"prediction_field": "string",
-			"params": {
-				"fit_intercept": true,
-				"positive": false
-			}
-		}
-		
-    setSelectedModelOptions(options);
-	}
-
 	async function getModelOptions() {
 		const response = await fetch(`http://localhost:8000/projects/model_map`, {
 			headers: { 
@@ -55,7 +47,6 @@ export const Model = ({projectId}) => {
 		});
 		let jsonData = await response.json();
 		setModelOptions(jsonData);
-		console.log(modelOptions);
 	}
 
 	async function getData() {
@@ -68,6 +59,29 @@ export const Model = ({projectId}) => {
 		let jsonData = await response.json();
 		let formattedData = convertDataFormat(jsonData);
 		setData(formattedData);
+	}
+
+	function handleColumnAdd(columnName) {
+		setSelectedColumn(columnName);
+		let options =  {
+			"name": columnName,
+			"prediction_field": "string",
+			"params": {
+				"fit_intercept": true,
+				"positive": false
+			}
+		}
+    setSelectedModelOptions(options);
+	}
+
+	function handleModelOptionChange(option) {
+		console.log(modelOptions.find((item) => item.name === option).params)
+		setSelectedOptionParams(modelOptions.find((item) => item.name === option).params)
+		setSelectedOption(option)
+	}
+
+	function handleNameChange(name) {
+		setName(name);
 	}
 
 	useEffect(() => {
@@ -134,25 +148,61 @@ export const Model = ({projectId}) => {
 					</Paper>
 
 					<Paper sx={{ width: '100%', height: '100%', }}>
-								<TableRow tabIndex={-1}>
+						<TableContainer>
+							<Table>
+								<TableBody>
+									<TableRow>
+									{selectedColumn && (
+										<>
+										<TableCell>
+											{selectedModelOptions.name}
+										</TableCell>
 
-									<TableCell>
-										<FormControl variant="standard" sx={{width: "100px"}}>
-											<InputLabel id="demo-simple-select-label">Operation</InputLabel>
-												<Select
-													// labelId="demo-simple-select-label"
-													// id="demo-simple-select"
-													// value={}
-													// onChange={}
-												>
-												{modelOptions && modelOptions.map((col, index) => (
-													<MenuItem value={"asd"} key={index}>{col.name}</MenuItem>
-												))}
-												</Select>
-										</FormControl>
-									</TableCell>
+										<TableCell>
+											<FormControl variant="standard" sx={{width: "100px"}}>
+												<InputLabel id="demo-simple-select-label">Operation</InputLabel>
+													<Select
+														// labelId="demo-simple-select-label"
+														// id="demo-simple-select"
+														value={selectedOption}
+														onChange={(e) => handleModelOptionChange(e.target.value)}
+													>
+													{modelOptions && modelOptions.map((col, index) => (
+														<MenuItem value={col.name} key={index}>{col.name}</MenuItem>
+													))}
+													</Select>
+											</FormControl>
+										</TableCell>
 
-									{/* <TableCell>
+										<TableCell>
+											{selectedOption && (
+												<div>
+													{selectedOption === 'LinearRegression' ? (
+														<>
+															<FormControlLabel
+																control={<Checkbox />}
+																label="fit intercept"
+															/>
+															<FormControlLabel
+																control={<Checkbox />}
+																label="positive"
+															/>
+														</>
+													) : (
+														<TextField type="number" label="Number Input" />
+													)}
+												</div>
+												// <MenuItem value={col.name} key={index}>{col.name}</MenuItem>
+											)}
+										</TableCell>
+
+										<TableCell>
+											<TextField onChange={(e) => handleNameChange(e.target.value)} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" />
+										</TableCell>
+										</>
+									)}
+								
+							{/* <TableCell>
 										{col.right}
 									</TableCell>
 
@@ -165,6 +215,10 @@ export const Model = ({projectId}) => {
 										</IconButton>
 									</TableCell> */}
 								</TableRow>
+							</TableBody>
+						</Table>
+					</TableContainer>
+
 					</Paper>
 				</DialogContent>
 
