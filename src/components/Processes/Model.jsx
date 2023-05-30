@@ -78,12 +78,19 @@ export const Model = ({projectId}) => {
 		console.log(modelOptions.find((item) => item.name === option).params)
 		setSelectedOptionParams(modelOptions.find((item) => item.name === option).params)
 		setSelectedOption(option)
+		if (option === "LinearRegression") {
+			setSelectedParam({})
+		}
 	}
+
 
 	function handleNameChange(name) {
 		setName(name);
 	}
 
+	function temp() {
+		console.log(selectedParam);
+	}
 	useEffect(() => {
 		getData();
 		getModelOptions()
@@ -95,6 +102,7 @@ export const Model = ({projectId}) => {
         <ModelIcon style={{ transform: 'scale(2.7)' }} />
       </IconButton>
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
+				<button onClick={temp}>click</button>
 				<DialogTitle sx={{...classes.title}}>Model</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
@@ -182,14 +190,18 @@ export const Model = ({projectId}) => {
 															<FormControlLabel
 																control={<Checkbox />}
 																label="fit intercept"
+																onChange={(e) => setSelectedParam(prev => ({...prev, fit_intercept
+																:e.target.checked}))}
 															/>
 															<FormControlLabel
 																control={<Checkbox />}
 																label="positive"
+																onChange={(e) => setSelectedParam(prev => ({...prev, positive
+																:e.target.checked}))}
 															/>
 														</>
 													) : (
-														<TextField type="number" label="Number Input" />
+														<TextField type="number" label="Estimator" />
 													)}
 												</div>
 												// <MenuItem value={col.name} key={index}>{col.name}</MenuItem>
@@ -197,7 +209,7 @@ export const Model = ({projectId}) => {
 										</TableCell>
 
 										<TableCell>
-											<TextField onChange={(e) => handleNameChange(e.target.value)} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" />
+											<TextField onChange={(e) => handleNameChange(e.target.value)} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" label="Name" />
 										</TableCell>
 										</>
 									)}
