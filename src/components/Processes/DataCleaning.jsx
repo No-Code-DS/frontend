@@ -30,7 +30,7 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 	async function getData() {
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
 			headers: { 
-				'accepts': 'application/json',
+				'Accept': 'application/json',
 				'Authorization': 'Bearer ' + tokenCookie.access_token,
 			},
 		});

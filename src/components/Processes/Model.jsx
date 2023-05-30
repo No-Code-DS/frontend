@@ -18,9 +18,9 @@ export const Model = ({projectId}) => {
   const [data, setData] = useState({columns: [], rows: []});
   const [selectedColumn, setSelectedColumn] = useState();
   const [selectedOption, setSelectedOption] = useState("LinearRegression");
-  const [selectedOptionParams, setSelectedOptionParams] = useState([]);
+  // const [selectedOptionParams, setSelectedOptionParams] = useState([]);
   const [selectedModelOptions, setSelectedModelOptions] = useState({});
-  const [selectedParam, setSelectedParam] = useState();
+  const [selectedParam, setSelectedParam] = useState({"fit_intercept": false, "positive": false});
   const [name, setName] = useState();
 
 	const handleChangePage = (event, newPage) => {
@@ -75,22 +75,40 @@ export const Model = ({projectId}) => {
 	}
 
 	function handleModelOptionChange(option) {
-		console.log(modelOptions.find((item) => item.name === option).params)
-		setSelectedOptionParams(modelOptions.find((item) => item.name === option).params)
+		// setSelectedOptionParams(modelOptions.find((item) => item.name === option).params)
 		setSelectedOption(option)
 		if (option === "LinearRegression") {
-			setSelectedParam({})
+			setSelectedParam({"fit_intercept": false, "positive": false})
 		}
 	}
-
 
 	function handleNameChange(name) {
 		setName(name);
 	}
 
+	async function handleSubmit() {
+		let obj = {
+			"name": name,
+			"prediction_field": selectedColumn,
+			"params": selectedParam,
+		}
+    const jsonData = JSON.stringify(obj);
+		const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
+			method: 'POST',
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+			body: jsonData
+		});
+		const responseData = await response.json();
+	}
+
 	function temp() {
 		console.log(selectedParam);
 	}
+
 	useEffect(() => {
 		getData();
 		getModelOptions()
@@ -201,7 +219,7 @@ export const Model = ({projectId}) => {
 															/>
 														</>
 													) : (
-														<TextField type="number" label="Estimator" />
+														<TextField type="number" label="Estimator" onChange={(e) => setSelectedParam(e.target.value)}/>
 													)}
 												</div>
 												// <MenuItem value={col.name} key={index}>{col.name}</MenuItem>
@@ -236,7 +254,7 @@ export const Model = ({projectId}) => {
 
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
-					{/* <Button onClick={() => handleSubmit()} color="primary" autoFocus >Submit</Button> */}
+					<Button onClick={() => handleSubmit()} color="primary" autoFocus >Submit</Button>
 				</DialogActions>
 
 			</Dialog>
