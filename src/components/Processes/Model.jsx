@@ -18,10 +18,7 @@ export const Model = ({projectId}) => {
   const [data, setData] = useState({columns: [], rows: []});
   const [selectedColumn, setSelectedColumn] = useState();
   const [selectedOption, setSelectedOption] = useState("LinearRegression");
-  // const [selectedOptionParams, setSelectedOptionParams] = useState([]);
-  const [selectedModelOptions, setSelectedModelOptions] = useState({});
   const [selectedParam, setSelectedParam] = useState({"fit_intercept": false, "positive": false});
-  const [name, setName] = useState();
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -61,9 +58,7 @@ export const Model = ({projectId}) => {
 		setData(formattedData);
 	}
 
-
 	function handleModelOptionChange(option) {
-		// setSelectedOptionParams(modelOptions.find((item) => item.name === option).params)
 		setSelectedOption(option)
 		if (option === "LinearRegression") {
 			setSelectedParam({"fit_intercept": false, "positive": false})
@@ -72,22 +67,22 @@ export const Model = ({projectId}) => {
 
 	async function handleSubmit() {
 		let obj = {
-			"name": name,
+			"name": selectedOption,
 			"prediction_field": selectedColumn,
 			"params": selectedParam,
 		}
 		  console.log(obj)
     const jsonData = JSON.stringify(obj);
-		// const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
-		// 	method: 'POST',
-		// 	headers: { 
-		// 		'Accept': 'application/json',
-		// 		'Content-Type': 'application/json',
-		// 		'Authorization': 'Bearer ' + tokenCookie.access_token,
-		// 	},
-		// 	body: jsonData
-		// });
-		// const responseData = await response.json();
+		const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
+			method: 'POST',
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+			body: jsonData
+		});
+		const responseData = await response.json();
 	}
 
 	function temp() {
@@ -211,9 +206,6 @@ export const Model = ({projectId}) => {
 											)}
 										</TableCell>
 
-										<TableCell>
-											<TextField onChange={(e) => setName(e.target.value)} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" label="Name" />
-										</TableCell>
 										</>
 									)}
 								
