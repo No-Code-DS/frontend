@@ -61,18 +61,6 @@ export const Model = ({projectId}) => {
 		setData(formattedData);
 	}
 
-	function handleColumnAdd(columnName) {
-		setSelectedColumn(columnName);
-		let options =  {
-			"name": columnName,
-			"prediction_field": "string",
-			"params": {
-				"fit_intercept": true,
-				"positive": false
-			}
-		}
-    setSelectedModelOptions(options);
-	}
 
 	function handleModelOptionChange(option) {
 		// setSelectedOptionParams(modelOptions.find((item) => item.name === option).params)
@@ -82,27 +70,24 @@ export const Model = ({projectId}) => {
 		}
 	}
 
-	function handleNameChange(name) {
-		setName(name);
-	}
-
 	async function handleSubmit() {
 		let obj = {
 			"name": name,
 			"prediction_field": selectedColumn,
 			"params": selectedParam,
 		}
+		  console.log(obj)
     const jsonData = JSON.stringify(obj);
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
-			method: 'POST',
-			headers: { 
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + tokenCookie.access_token,
-			},
-			body: jsonData
-		});
-		const responseData = await response.json();
+		// const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
+		// 	method: 'POST',
+		// 	headers: { 
+		// 		'Accept': 'application/json',
+		// 		'Content-Type': 'application/json',
+		// 		'Authorization': 'Bearer ' + tokenCookie.access_token,
+		// 	},
+		// 	body: jsonData
+		// });
+		// const responseData = await response.json();
 	}
 
 	function temp() {
@@ -136,7 +121,7 @@ export const Model = ({projectId}) => {
 											key={index}
 										>
 											{column}
-											<IconButton style={{marginBottom: "3px"}} onClick={() => handleColumnAdd(column)}>
+											<IconButton style={{marginBottom: "3px"}} onClick={() => setSelectedColumn(column)}>
 												<AddIcon />
 											</IconButton>
 										</TableCell>
@@ -181,7 +166,7 @@ export const Model = ({projectId}) => {
 									{selectedColumn && (
 										<>
 										<TableCell>
-											{selectedModelOptions.name}
+											{selectedColumn}
 										</TableCell>
 
 										<TableCell>
@@ -227,7 +212,7 @@ export const Model = ({projectId}) => {
 										</TableCell>
 
 										<TableCell>
-											<TextField onChange={(e) => handleNameChange(e.target.value)} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" label="Name" />
+											<TextField onChange={(e) => setName(e.target.value)} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" label="Name" />
 										</TableCell>
 										</>
 									)}
