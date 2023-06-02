@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
 import classes from '../../styles/processStyles';
+import { getData, convertDataFormat } from './helperFunctions';
 
 export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedColumns=false}) => {
 	const [open, setOpen] = useState(false);
@@ -16,13 +17,6 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
 	const storedCookies = new Cookies();
   const tokenCookie = storedCookies.get("token");
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-	function convertDataFormat(inputObj) {
-		const entries = Object.entries(inputObj);
-		const columns = entries.map(([key, value]) => key);
-		const rows = entries[0][1].map((_, rowIndex) => entries.map(([_, value]) => value[rowIndex]));
-		return { columns, rows };
-	}
 
 	function handleColumnAdd(columnName) {
 		setSelectedColumns((prevState) => {
@@ -63,21 +57,6 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
 		setSelectedColumns(updatedSelectedColumns);
 	}
 
-	async function getData() {
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
-			headers: { 
-				'accepts': 'application/json',
-				'Authorization': 'Bearer ' + tokenCookie.access_token,
-			},
-		});
-		let jsonData = await response.json();
-		let formattedData = convertDataFormat(jsonData);
-		setData(formattedData);
-		if (existingSelectedColumns) {
-			setSelectedColumns(existingSelectedColumns)
-		}
-	}
-
 	async function handleSubmit() {
     const jsonData = JSON.stringify(selectedColumns);
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/fe`, {
@@ -95,7 +74,14 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
 	}
 
 	useEffect(() => {
-		getData();
+		async function fetchData() {
+			let jsonData = await getData(projectId, tokenCookie);
+			setData(jsonData);
+			if (existingSelectedColumns) {
+				setSelectedColumns(existingSelectedColumns)
+			}
+		}
+		fetchData();
 	}, []);
 
   return (

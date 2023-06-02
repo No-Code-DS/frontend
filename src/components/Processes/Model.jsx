@@ -4,9 +4,9 @@ import ModelIcon from '../Dashboard/icons/ModelIcon';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem, TextField, BottomNavigation, FormControlLabel, Checkbox} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import ClearIcon from '@mui/icons-material/Clear';
 import { Cookies } from 'react-cookie';
 import classes from '../../styles/processStyles';
+import { getData } from './helperFunctions';
 
 export const Model = ({projectId}) => {
   const [open, setOpen] = useState(false);
@@ -46,17 +46,6 @@ export const Model = ({projectId}) => {
 		setModelOptions(jsonData);
 	}
 
-	async function getData() {
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
-			headers: { 
-				'accepts': 'application/json',
-				'Authorization': 'Bearer ' + tokenCookie.access_token,
-			},
-		});
-		let jsonData = await response.json();
-		let formattedData = convertDataFormat(jsonData);
-		setData(formattedData);
-	}
 
 	function handleModelOptionChange(option) {
 		setSelectedOption(option)
@@ -71,7 +60,6 @@ export const Model = ({projectId}) => {
 			"prediction_field": selectedColumn,
 			"params": selectedParam,
 		}
-		  console.log(obj)
     const jsonData = JSON.stringify(obj);
 		const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
 			method: 'POST',
@@ -83,6 +71,7 @@ export const Model = ({projectId}) => {
 			body: jsonData
 		});
 		const responseData = await response.json();
+		console.log(responseData)
 	}
 
 	function temp() {
@@ -90,7 +79,11 @@ export const Model = ({projectId}) => {
 	}
 
 	useEffect(() => {
-		getData();
+		async function fetchData() {
+			let jsonData = await getData(projectId, tokenCookie);
+			setData(jsonData);
+		}
+		fetchData();
 		getModelOptions()
 	}, [])	
 
