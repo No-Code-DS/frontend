@@ -28,12 +28,6 @@ export const Model = ({projectId}) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-	function convertDataFormat(inputObj) {
-		const entries = Object.entries(inputObj);
-		const columns = entries.map(([key, value]) => key);
-		const rows = entries[0][1].map((_, rowIndex) => entries.map(([_, value]) => value[rowIndex]));
-		return { columns, rows };
-	}
 
 	async function getModelOptions() {
 		const response = await fetch(`http://localhost:8000/projects/model_map`, {
@@ -45,7 +39,6 @@ export const Model = ({projectId}) => {
 		let jsonData = await response.json();
 		setModelOptions(jsonData);
 	}
-
 
 	function handleModelOptionChange(option) {
 		setSelectedOption(option)

@@ -31,6 +31,7 @@ export const Models = ({setProjectId}) => {
       },
     });
     let jsonData = await response.json();
+    console.log(jsonData)
     setProjects(jsonData);
   }
 
@@ -113,12 +114,14 @@ export const Models = ({setProjectId}) => {
           {projects.map((model, index) => (
             <Box sx={{...classes.model}} key={index} >
               <Box>
-                <Typography variant="h5" style={{fontWeight:"bold"}}>
-                  {model.project_name}
-                </Typography>
-                <Typography>
-                  {model.description}
-                </Typography>
+                <Link component={RouterLink} to='/dashboard' state={{"project": projects[index]}} sx={{textDecoration:"none"}}>
+                  <Typography variant="h5" style={{fontWeight:"bold"}}>
+                    {model.project_name}
+                  </Typography>
+                  <Typography>
+                    {model.description}
+                  </Typography>
+                </Link>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
@@ -126,17 +129,10 @@ export const Models = ({setProjectId}) => {
                   Created at: <br/>
                   {model.created_at.replace("T", " ").split(".")[0]}
                 </Typography>
+
                 <Typography variant="h7" style={{ color: statusColors[model.status], fontWeight: "bold" }}>
                   <br/>
-                  {/* {model.status} */}
-                  {/* <Button>Open</Button> */}
-
-                  <Button variant="contained" color="success">
-                    <Link component={RouterLink} to='/dashboard' state={{"project": projects[index]}} sx={{color:"white"}}>
-                      Open
-                    </Link>
-                  </Button>
-                  
+                  hi
                 </Typography>
               </Box>
 
