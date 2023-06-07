@@ -67,14 +67,11 @@ export const Model = ({projectId}) => {
 		console.log(responseData)
 	}
 
-	function temp() {
-		console.log(selectedParam);
-	}
-
 	useEffect(() => {
 		async function fetchData() {
 			let jsonData = await getData(projectId, tokenCookie);
 			setData(jsonData);
+			setSelectedColumn(jsonData.columns[0]);
 		}
 		fetchData();
 		getModelOptions()
@@ -86,132 +83,75 @@ export const Model = ({projectId}) => {
         <ModelIcon style={{ transform: 'scale(2.7)' }} />
       </IconButton>
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
-				<button onClick={temp}>click</button>
 				<DialogTitle sx={{...classes.title}}>Model</DialogTitle>
 
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
 					<Paper sx={{ width: '100%', height: '100%', }}>
-						<TableContainer sx={{ maxHeight: 440 }}>
-							<Table stickyHeader aria-label="sticky table">
-							<TableHead> 
+					<TableContainer>
+						<Table>
+							<TableBody>
 								<TableRow>
-									{data && data.columns.map((column, index) => (
-										<TableCell
-											style={{ minWidth: "200px", height: "40px" }}
-											color={{ backgroundColor: "#c1bdbc" }}
-											key={index}
-										>
-											{column}
-											<IconButton style={{marginBottom: "3px"}} onClick={() => setSelectedColumn(column)}>
-												<AddIcon />
-											</IconButton>
-										</TableCell>
-									))}
-								</TableRow>
-							</TableHead>
+									<TableCell>
+										<FormControl variant="standard" sx={{width: "130px"}}>
+											<InputLabel sx={{border:"none"}}id="demo-simple-select-label">Column</InputLabel>
+											<Select
+												labelId="demo-simple-select-label"
+												id="demo-simple-select"
+												value={selectedColumn}
+												onChange={(event) => {
+													setSelectedColumn(event.target.value);
+												}}
+												sx={{border:"none"}}
+											>
+												{data.columns.map((col, index) => (
+													<MenuItem value={col} key={index}>{col}</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</TableCell>
 
-							<TableBody sx={{backgroundColor: "#e7e5e4" }}>
-								{data && data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-									.map((row, rowIndex) => {
-										return (
-											<TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
-												{row.map((cell, cellIndex) => {
-													return (
-														<TableCell key={cellIndex}>
-															{cell}
-														</TableCell>
-													)
-												})}
-											</TableRow>
-										);
-									})}
+									<TableCell>
+										<FormControl variant="standard" sx={{width: "100px"}}>
+											<InputLabel id="demo-simple-select-label">Operation</InputLabel>
+												<Select
+													value={selectedOption}
+													onChange={(e) => handleModelOptionChange(e.target.value)}
+												>
+												{modelOptions && modelOptions.map((col, index) => (
+													<MenuItem value={col.name} key={index}>{col.name}</MenuItem>
+												))}
+												</Select>
+										</FormControl>
+									</TableCell>
+
+									<TableCell>
+										{selectedOption && (
+											<div>
+												{selectedOption === 'LinearRegression' ? (
+													<>
+														<FormControlLabel
+															control={<Checkbox />}
+															label="fit intercept"
+															onChange={(e) => setSelectedParam(prev => ({...prev, fit_intercept
+															:e.target.checked}))}
+														/>
+														<FormControlLabel
+															control={<Checkbox />}
+															label="positive"
+															onChange={(e) => setSelectedParam(prev => ({...prev, positive
+															:e.target.checked}))}
+														/>
+													</>
+												) : (
+													<TextField type="number" label="Estimator" onChange={(e) => setSelectedParam({"n_estimators": e.target.value})}/>
+												)}
+											</div>
+										)}
+									</TableCell>
+								</TableRow>
 								</TableBody>
 							</Table>
-							</TableContainer>
-							<TablePagination
-								rowsPerPageOptions={[10, 25, 100]}
-								component="div"
-								count={data.rows.length}
-								rowsPerPage={rowsPerPage}
-								page={page}
-								onPageChange={handleChangePage}
-								onRowsPerPageChange={handleChangeRowsPerPage}
-							/>
-					</Paper>
-
-					<Paper sx={{ width: '100%', height: '100%', }}>
-						<TableContainer>
-							<Table>
-								<TableBody>
-									<TableRow>
-									{selectedColumn && (
-										<>
-										<TableCell>
-											{selectedColumn}
-										</TableCell>
-
-										<TableCell>
-											<FormControl variant="standard" sx={{width: "100px"}}>
-												<InputLabel id="demo-simple-select-label">Operation</InputLabel>
-													<Select
-														// labelId="demo-simple-select-label"
-														// id="demo-simple-select"
-														value={selectedOption}
-														onChange={(e) => handleModelOptionChange(e.target.value)}
-													>
-													{modelOptions && modelOptions.map((col, index) => (
-														<MenuItem value={col.name} key={index}>{col.name}</MenuItem>
-													))}
-													</Select>
-											</FormControl>
-										</TableCell>
-
-										<TableCell>
-											{selectedOption && (
-												<div>
-													{selectedOption === 'LinearRegression' ? (
-														<>
-															<FormControlLabel
-																control={<Checkbox />}
-																label="fit intercept"
-																onChange={(e) => setSelectedParam(prev => ({...prev, fit_intercept
-																:e.target.checked}))}
-															/>
-															<FormControlLabel
-																control={<Checkbox />}
-																label="positive"
-																onChange={(e) => setSelectedParam(prev => ({...prev, positive
-																:e.target.checked}))}
-															/>
-														</>
-													) : (
-														<TextField type="number" label="Estimator" onChange={(e) => setSelectedParam(e.target.value)}/>
-													)}
-												</div>
-												// <MenuItem value={col.name} key={index}>{col.name}</MenuItem>
-											)}
-										</TableCell>
-
-										</>
-									)}
-								
-							{/* <TableCell>
-										{col.right}
-									</TableCell>
-
-									<TableCell>
-										<TextField onChange={(e) => handleChange(e.target.value, index, "name")} size="small" sx={{width:"300px"}} id="outlined-basic" variant="outlined" />
-									</TableCell>
-									<TableCell>
-										<IconButton onClick={() => handleCancelColumn(index)} sx={{color: "red"}}> 
-											<ClearIcon />
-										</IconButton>
-									</TableCell> */}
-								</TableRow>
-							</TableBody>
-						</Table>
 					</TableContainer>
-
 					</Paper>
 				</DialogContent>
 

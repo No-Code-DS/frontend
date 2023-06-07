@@ -144,10 +144,6 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 		setSelectedColumns(prev => ({...prev, "operations": updatedSelectedColumns}));
 	}
 
-	function check() {
-		console.log("selected columns", selectedColumns);
-	}
-
   return (
 		<Box sx={{...classes.processBox}}>
 			<IconButton onClick={() => setOpen(true)}>
@@ -157,7 +153,6 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 			<Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
 				<DialogTitle sx={{...classes.title}}>Data Cleaning</DialogTitle>
 
-			<button onClick={() => check()}>click</button>
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
 					<Paper sx={{ width: '100%', height: '100%', }}>
 						<TableContainer sx={{ maxHeight: 440 }}>

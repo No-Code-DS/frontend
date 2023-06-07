@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,7 +13,7 @@ import {
   Link as RouterLink,
 } from "react-router-dom";
 
-export const Navbar = ({loginStatus, setLoginStatus}) => {
+export const Navbar = ({setLoginStatus}) => {
 	const storedCookies = new Cookies();
 	const tokenCookie = storedCookies.get("token");
 
@@ -22,7 +22,7 @@ export const Navbar = ({loginStatus, setLoginStatus}) => {
         position="static"
         color="default"
         elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, backgroundColor: '#241e53'}}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, backgroundColor: '#486BBDFF'}}
       >
         <Toolbar sx={{display: "flex"}} >
 
@@ -43,11 +43,11 @@ export const Navbar = ({loginStatus, setLoginStatus}) => {
 
           <Box sx={{...classes.innerBox}} style={{marginRight: "auto", justifyContent:"end"}}>
             <nav>
-                <Link component={RouterLink} to="/" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                <Link component={RouterLink} to="/" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none", cursor: "pointer"}}>
                   Home
                 </Link>
 
-                <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", textTransform: "none" }}>
+                <Link component={RouterLink} to="/pricing" sx={{ my: 1, mx: 1.5, color: "white", cursor: "pointer"}}>
                   Pricing
                 </Link>
 
@@ -60,11 +60,11 @@ export const Navbar = ({loginStatus, setLoginStatus}) => {
                 }
                
                 {tokenCookie ? 
-                  <Button variant="outlined" sx={{ my: 1, mx: 1.5, color: "blue", textTransform: "none" }} onClick={() => {
+                  <Button variant="outlined" sx={{ my: 1, mx: 1.5, textTransform: "none", borderColor: "#0033FFFF"}} onClick={() => {
                     storedCookies.remove("token");
                     setLoginStatus(false);
                   }}>
-                    <Link component={RouterLink} to="/" sx={{color:"white"}}>
+                    <Link component={RouterLink} to="/" sx={{color:"white", borderColor: "red"}}>
                       Logout
                     </Link>
                   </Button> 
