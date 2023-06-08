@@ -83,7 +83,7 @@ export const SignUp = () => {
 
     if (!(passwordError[0] && password2Error[0] && emailError[0])) {
       try {
-        const response = await fetch('http://localhost:8000/users/signup', {
+        const response = await fetch('/api/users/signup', {
           method: 'POST',
           headers: { 
             'Access-Control-Allow-Origin': "*",

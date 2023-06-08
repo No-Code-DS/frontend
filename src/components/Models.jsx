@@ -21,7 +21,7 @@ export const Models = ({setProjectId}) => {
   const tokenCookie = storedCookies.get("token");
 
   async function fetchProject(projectId="") {
-    let url = "http://localhost:8000/projects/";
+    let url = "/api/projects/";
     // url += projectId;
     const response = await fetch(url, {
       headers: { 
@@ -42,7 +42,7 @@ export const Models = ({setProjectId}) => {
   async function createProject() {
     const jsonData = JSON.stringify({"project_name": name, "description": description})
     try {
-      const response = await fetch('http://localhost:8000/projects/create', {
+      const response = await fetch('/api/projects/create', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

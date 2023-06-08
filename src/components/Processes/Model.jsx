@@ -30,7 +30,7 @@ export const Model = ({projectId}) => {
   };
 
 	async function getModelOptions() {
-		const response = await fetch(`http://localhost:8000/projects/model_map`, {
+		const response = await fetch(`/api/projects/model_map`, {
 			headers: { 
 				'accept': 'application/json',
 				// 'Authorization': 'Bearer ' + tokenCookie.access_token,
@@ -54,7 +54,7 @@ export const Model = ({projectId}) => {
 			"params": selectedParam,
 		}
     const jsonData = JSON.stringify(obj);
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/model`, {
+		const response = await fetch(`/api/projects/${projectId}/model`, {
 			method: 'POST',
 			headers: { 
 				'Accept': 'application/json',

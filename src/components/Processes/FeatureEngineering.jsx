@@ -59,7 +59,7 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
 
 	async function handleSubmit() {
     const jsonData = JSON.stringify(selectedColumns);
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/fe`, {
+		const response = await fetch(`/api/projects/${projectId}/fe`, {
 			method: "POST",
 			headers: { 
 				'Content-Type': 'application/json',

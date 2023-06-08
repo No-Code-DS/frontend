@@ -23,7 +23,7 @@ export const DataUpload = ({setData, projectId, setDataSourceId}) => {
 	}
 
 	async function getFile(dataSourceId) {
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
+		const response = await fetch(`/api/projects/${projectId}/data_source`, {
 			headers: { 
 				'accepts': 'application/json',
 				'Authorization': 'Bearer ' + tokenCookie.access_token,
@@ -39,7 +39,7 @@ export const DataUpload = ({setData, projectId, setDataSourceId}) => {
 		formData.append('file', file);
 		formData.append('data_source_name', name);
 
-		const response = await fetch(`http://localhost:8000/projects/${projectId}/data_source`, {
+		const response = await fetch(`/api/projects/${projectId}/data_source`, {
 			method: 'POST',
 			headers: { 
 				'accepts': 'application/json',
