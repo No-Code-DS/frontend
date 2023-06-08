@@ -89,7 +89,7 @@ export const LogIn = ({loginStatus, setLoginStatus}) => {
 
     if (!emailError[0]) {
       try {
-        const response = await fetch('http://localhost:8000/users/login', {
+        const response = await fetch('/api/users/login', {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',

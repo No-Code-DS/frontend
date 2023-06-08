@@ -24,7 +24,7 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 	async function handleClean() {
     const jsonData = JSON.stringify({"data_source_id": dataSourceId, "operations": selectedColumns.operations});
 		try {
-        const response = await fetch(`http://localhost:8000/projects/${projectId}/cleaning`, {
+        const response = await fetch(`/api/projects/${projectId}/cleaning`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export const DataCleaning = ({projectId, dataSourceId, existingSelectedColumns=f
 	}
 
 	async function getCleaningOptions() {
-		const response = await fetch("http://localhost:8000/projects/cleaning_map", {
+		const response = await fetch("/api/projects/cleaning_map", {
 			headers: {
 				'accepts': 'application/json',
 				'Authorization': 'Bearer ' + tokenCookie.access_token,
