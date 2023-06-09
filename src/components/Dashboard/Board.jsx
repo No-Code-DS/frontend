@@ -12,7 +12,7 @@ export const Board = ({activeProcesses, handleProcessCancel}) => {
         <Stack direction="row" spacing={2} style={{}} >
           {activeProcesses.map((proc, index) => (
             <Stack direction="row" spacing={2} key={index} alignItems="center" position="relative">
-              <Stack direction="column" alignItems="center" justifyContent="center" spacing={0} key={index+1} style={{ width: "5rem", height:"6rem", backgroundColor: "#fff", borderRadius:"4px"}}>
+              <Stack direction="column" alignItems="center" justifyContent="center" spacing={0} key={index+1} style={{ boxShadow: "0 2px 6px 0 rgba(0, 0, 0, 0.10)", width: "5rem", height:"6rem", backgroundColor: "#fff", borderRadius:"4px"}}>
                 <Stack direction="column" spacing={0}>
                   {proc.component}
                 </Stack>

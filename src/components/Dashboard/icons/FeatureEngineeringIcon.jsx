@@ -9,7 +9,7 @@ export default function FeatureEngineeringIcon(props) {
             width="324.000000pt" height="320.000000pt" viewBox="0 0 324.000000 320.000000"
             preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,320.000000) scale(0.100000,-0.100000)"
-            fill="#000000" stroke="none">
+            fill={props.color ?? "#000"} stroke="none">
             <path d="M2263 3052 c-125 -76 -235 -141 -243 -145 -8 -4 -28 -16 -45 -27 -16
             -11 -39 -24 -51 -29 -11 -5 -33 -24 -47 -41 -26 -30 -27 -36 -27 -154 0 -82
             -4 -126 -12 -134 -8 -8 -53 -12 -136 -12 l-124 0 -34 -34 -34 -34 0 -186 0

@@ -1,52 +1,48 @@
 import { css } from '@mui/system';
 
 const classes = {
-	  topPanel: css({
-			backgroundColor: "white", 
-			padding: "10px",
-			paddingLeft: "50px",
-			paddingRight: "50px",
-			display: "flex",
-			justifyContent: "space-between",
-			alignItems: "center"
-		}),
+	topPanel: css({
+		backgroundColor: "white", 
+		padding: "10px 5%",
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center"
+	}),
     stack: css({
-			backgroundColor: '#eee',
-			height: "100vh",
+		height: "100vh",
     }),
     sideBar: css({
-			// padding: "0px",
-			backgroundColor: "#fff",
+		// padding: "0px",
+		backgroundColor: "#fff",
     }),
     board: css({
         // padding: "auto",
     }),
     modelsContainer: css({
-			padding: "50px", 
-			backgroundColor: "#eee",
-			display: "flex",
-			flexWrap: "wrap",
-			flexDirection: "row",
-			// justifyContent: "space-between",
-			height: "100vh",
-			alignItems: "flex-start",
-			alignContent: "flex-start"
+		width: "90%",
+		padding: "50px 0",
+		margin: "auto",
+		display: "flex",
+		flexWrap: "wrap",
+		// flexDirection: "row",
+		alignItems: "center",
+		// alignContent: "flex-start"
+		justifyContent: "space-between",
+		gap: "20px",
     }),
-
-		model: css({
-			// flex: "0 0 360px",
-			display: "flex",
-			flexDirection: "column",
-			justifyContent: "space-between",
-			height: "240px",
-			width: "480px",
-			borderRadius: "5px",
-			boxShadow: "5px 7px 18px #888888",
-			padding: "20px", 
-			backgroundColor: "white",
-			margin: "6px",
-			// marginBottom: "40px"
-		})
+	model: css({
+		// flex: "0 0 360px",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "space-between",
+		height: "240px",
+		width: "480px",
+		borderRadius: "5px",
+		boxShadow: "0 2px 4px 0 rgba(56, 154, 244, 0.15)",
+		padding: "20px", 
+		backgroundColor: "white",
+		// marginBottom: "40px"
+	})
 }
 
 export default classes;

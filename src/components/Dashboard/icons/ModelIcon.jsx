@@ -10,7 +10,7 @@ export default function ModelIcon(props) {
             preserveAspectRatio="xMidYMid meet">
 
             <g transform="translate(0.000000,258.000000) scale(0.100000,-0.100000)"
-            fill="#000000" stroke="none">
+            fill={props.color ?? "#000"} stroke="none">
             <path d="M926 2537 c-56 -31 -79 -67 -84 -130 -13 -154 168 -242 277 -135 l31
             30 255 -103 255 -103 -43 -21 c-32 -15 -43 -26 -45 -47 -6 -49 24 -52 129 -15
             51 19 98 41 103 50 17 27 -52 216 -83 230 -20 10 -26 8 -42 -11 -16 -21 -17

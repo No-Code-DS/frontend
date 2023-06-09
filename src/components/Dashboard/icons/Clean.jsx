@@ -10,7 +10,7 @@ export default function Clean(props) {
  preserveAspectRatio="xMidYMid meet">
 
 <g transform="translate(0.000000,238.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+fill={props.color ?? "#000"} stroke="none">
 <path d="M590 2355 c-468 -74 -684 -335 -460 -555 85 -83 249 -152 445 -186
 134 -23 421 -24 557 -1 264 45 451 145 514 273 36 74 31 151 -16 224 -74 115
 -270 208 -512 244 -129 20 -408 20 -528 1z"/>

@@ -3,41 +3,34 @@ import { css } from '@mui/system';
 const classes = {
     mainContainer: css({
         minHeight: "calc(100vh - 200px)",
-        // marginTop: "10px",
-        marginBottom: "20px",
-        // border: "1px solid",
+        width: "80%",
+        margin: "auto",
     }),
     container: css({
-        maxWidth: "100%",
-        maxHeight: "100%",
+        height: "80vh",
         // border: "1px solid green",
     }),
-    welcome: css({
-        // border: "1px solid red",
-        // height: "50vh",
-        // width: "200px",
-        // padding: "20px 10px 20px",
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+    welcomeWrapper: css({
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+    }),
+    textContainer: css({
+        width: "50%"
     }),
     welcomeTextTop: css({
-        fontWeight: "bold",
-        fontSize:"1.9em"
+        fontWeight: "400",
+        fontSize:"4em"
     }),
     welcomeTextBottom: css({
         width: "60%",
-        fontSize:"1.5em",
-    }),
-    icon: css({
-        marginRight: '20px',
+        fontSize:"1.3em",
+        color: "#808080"
     }),
     buttons: css({
-        // marginTop: "40px",
-    }),
-    cardGrid: css({
-        padding: "20px 0",
+        marginTop: "40px",
     }),
     card: css({
         height: "100%",
@@ -51,15 +44,29 @@ const classes = {
         flexGrow: 1
     }),
     tutorial: css({
-        width: "100%",
-        padding: "20px 10px 20px",
+        // width: "100%",
+        padding: "40px",
+        display: "flex",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: "10px",
+        boxShadow: "0 5px 5px 0 rgba(56, 154, 244, 0.15)",
+        backgroundColor: "#fff"
+    }),
+    featureBox: css({
+        backgroundColor: "#fff",
+        width: "20%",
+        padding: "60px 40px",
+        borderRadius: "10px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: 'center',
-        alignItems: 'center',
-        border: "1px solid transparent",
-        borderRadius: "10px",
-        backgroundColor: "#D4E4FFFF"
+        alignItems: "center",
+        boxShadow: "0 3px 5px 0 rgba(56, 154, 244, 0.15)",
+    }),
+    featureBoxTitle: css({
+        margin: "50px 0 20px 0",
+        color: "#389AF4",
+        fontWeight: "medium",
     }),
     footer: css({
         // border: "1px solid",
