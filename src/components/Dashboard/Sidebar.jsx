@@ -48,6 +48,9 @@ export const Sidebar = ({activeProcesses, handleButtonClick, handleProcessCancel
         if (project.feature_engineering != null) {
           processes.push({"order": 3, "component": <FeatureEngineering projectId={curProjectId} existingSelectedColumns={project.cleaning.operations}/>});
         }
+        if (project.model != null) {
+          processes.push({"order": 4, "component": <Model projectId={curProjectId} existingColumn={project.model.prediction_field} existingConfig={project.model.config} />});
+        }
         handleAddProcess(false, false, processes);
       }
       hasEffectRun.current = true;
