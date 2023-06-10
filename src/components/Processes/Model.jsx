@@ -9,7 +9,7 @@ import classes from '../../styles/processStyles';
 import { getData } from './helperFunctions';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export const Model = ({projectId, existingColumn, existingOption, existingParam, existingStatus, existingConfig={"positive": false, "fit_intercept": false}}) => {
+export const Model = ({projectId, existingColumn, existingOption, existingParam, existingStatus, existingConfig=false}) => {
   const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
 	const storedCookies = new Cookies();
@@ -19,9 +19,10 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
   const [data, setData] = useState({columns: [], rows: []});
   const [selectedColumn, setSelectedColumn] = useState();
   const [selectedOption, setSelectedOption] = useState("LinearRegression");
-  const [selectedParam, setSelectedParam] = useState();
+  const [selectedParam, setSelectedParam] = useState({"positive": false, "fit_intercept": false});
   const [status, setStatus] = useState(0);
   const [loadingIconDisplay, setLoadingIconDisplay] = useState(false);
+  const [result, setResult] = useState(false);
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -84,11 +85,11 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 		console.log(responseData)
 		checkStatus();
 		setLoadingIconDisplay(true);
-		// setInterval(() => {checkStatus()}, 3000);
+		setInterval(() => {checkStatus()}, 3000);
 	}
 
 	useEffect(() => {
-		setSelectedParam(existingConfig);
+		if (existingConfig) {setSelectedParam(existingConfig)};
 		async function fetchData() {
 			let jsonData = await getData(projectId, tokenCookie);
 			setData(jsonData);
@@ -182,6 +183,7 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 							<>
 								<CircularProgress />
 								<span>Model is being trained</span>
+								{result ? <span>{result}</span> : null}
 							</> : null}
 					</Stack>
 					</Paper>
