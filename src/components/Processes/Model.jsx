@@ -9,7 +9,7 @@ import classes from '../../styles/processStyles';
 import { getData } from './helperFunctions';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export const Model = ({projectId, existingColumn, existingOption, existingParam, existingStatus, existingConfig}) => {
+export const Model = ({projectId, existingColumn, existingOption, existingParam, existingStatus, existingConfig={"positive": false, "fit_intercept": false}}) => {
   const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
 	const storedCookies = new Cookies();
