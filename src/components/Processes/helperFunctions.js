@@ -1,6 +1,6 @@
 export function convertDataFormat(inputObj) {
   const entries = Object.entries(inputObj);
-  const columns = entries.map(([key, value]) => key);
+  const columns = entries.map(([key]) => key);
   const rows = entries[0][1].map((_, rowIndex) => entries.map(([_, value]) => value[rowIndex]));
   return { columns, rows };
 }

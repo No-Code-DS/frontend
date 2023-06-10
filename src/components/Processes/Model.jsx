@@ -7,8 +7,9 @@ import AddIcon from '@mui/icons-material/Add';
 import { Cookies } from 'react-cookie';
 import classes from '../../styles/processStyles';
 import { getData } from './helperFunctions';
+import CircularProgress from '@mui/material/CircularProgress';
 
-export const Model = ({projectId}) => {
+export const Model = ({projectId, existingColumn, existingOption, existingParam, existingStatus, existingConfig}) => {
   const [open, setOpen] = useState(false);
 	const [page, setPage] = useState(0);
 	const storedCookies = new Cookies();
@@ -19,6 +20,8 @@ export const Model = ({projectId}) => {
   const [selectedColumn, setSelectedColumn] = useState();
   const [selectedOption, setSelectedOption] = useState("LinearRegression");
   const [selectedParam, setSelectedParam] = useState({"fit_intercept": false, "positive": false});
+  const [status, setStatus] = useState(0);
+  const [loadingIconDisplay, setLoadingIconDisplay] = useState(false);
 
 	const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -46,6 +49,20 @@ export const Model = ({projectId}) => {
 			setSelectedParam({"fit_intercept": false, "positive": false})
 		}
 	}
+	
+	async function checkStatus() {
+		console.log("hi")
+		const response = await fetch(`/api/projects/${projectId}/model`, {
+			method: 'GET',
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + tokenCookie.access_token,
+			},
+		});
+		const responseData = await response.json();
+		console.log(responseData);
+	}
 
 	async function handleSubmit() {
 		let obj = {
@@ -65,14 +82,20 @@ export const Model = ({projectId}) => {
 		});
 		const responseData = await response.json();
 		console.log(responseData)
+		checkStatus();
+		setLoadingIconDisplay(true);
+		// setInterval(() => {checkStatus()}, 3000);
 	}
 
 	useEffect(() => {
 		async function fetchData() {
 			let jsonData = await getData(projectId, tokenCookie);
 			setData(jsonData);
-			setSelectedColumn(jsonData.columns[0]);
+			existingColumn ? setSelectedColumn(existingColumn) : setSelectedColumn(jsonData.columns[0]);
 		}
+		if (existingOption) {setSelectedOption(existingOption)};
+		if (existingParam) {setSelectedParam(existingParam)};
+		if (existingStatus) {setStatus(existingStatus)};
 		fetchData();
 		getModelOptions()
 	}, [])	
@@ -84,7 +107,6 @@ export const Model = ({projectId}) => {
       </IconButton>
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>
 				<DialogTitle sx={{...classes.title}}>Model</DialogTitle>
-
 				<DialogContent dividers sx={{...classes.cleanWindowContainer}}>
 					<Paper sx={{ width: '100%', height: '100%', }}>
 					<TableContainer>
@@ -132,12 +154,14 @@ export const Model = ({projectId}) => {
 														<FormControlLabel
 															control={<Checkbox />}
 															label="fit intercept"
+															checked={existingConfig.fit_intercept}
 															onChange={(e) => setSelectedParam(prev => ({...prev, fit_intercept
 															:e.target.checked}))}
 														/>
 														<FormControlLabel
 															control={<Checkbox />}
 															label="positive"
+															checked={existingConfig.positive}
 															onChange={(e) => setSelectedParam(prev => ({...prev, positive
 															:e.target.checked}))}
 														/>
@@ -150,8 +174,15 @@ export const Model = ({projectId}) => {
 									</TableCell>
 								</TableRow>
 								</TableBody>
-							</Table>
+						</Table>
 					</TableContainer>
+					<Stack spacing={1} display="flex" justifyContent="center" alignItems="center" marginTop="20px">
+						{loadingIconDisplay ? 
+							<>
+								<CircularProgress />
+								<span>Model is being trained</span>
+							</> : null}
+					</Stack>
 					</Paper>
 				</DialogContent>
 

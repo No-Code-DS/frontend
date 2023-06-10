@@ -22,7 +22,6 @@ export const Models = ({setProjectId}) => {
 
   async function fetchProject(projectId="") {
     let url = "/api/projects/";
-    // url += projectId;
     const response = await fetch(url, {
       headers: { 
 				'Content-Type': 'application/json',

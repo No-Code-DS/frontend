@@ -23,11 +23,6 @@ export const Dashboard = ({projectId}) => {
     setActiveProcesses(activeProcesses.slice(0, -1))
   }
 
-  useEffect(() => {
-    console.log(activeProcesses.length)
-    console.log(activeProcesses)
-  }, [])
-
   return (
     <Stack 
       direction="row" 
