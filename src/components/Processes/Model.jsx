@@ -19,7 +19,7 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
   const [data, setData] = useState({columns: [], rows: []});
   const [selectedColumn, setSelectedColumn] = useState();
   const [selectedOption, setSelectedOption] = useState("LinearRegression");
-  const [selectedParam, setSelectedParam] = useState({"fit_intercept": false, "positive": false});
+  const [selectedParam, setSelectedParam] = useState();
   const [status, setStatus] = useState(0);
   const [loadingIconDisplay, setLoadingIconDisplay] = useState(false);
 
@@ -88,6 +88,7 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 	}
 
 	useEffect(() => {
+		setSelectedParam(existingConfig);
 		async function fetchData() {
 			let jsonData = await getData(projectId, tokenCookie);
 			setData(jsonData);
@@ -154,14 +155,14 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 														<FormControlLabel
 															control={<Checkbox />}
 															label="fit intercept"
-															checked={existingConfig.fit_intercept}
+															checked={selectedParam.fit_intercept}
 															onChange={(e) => setSelectedParam(prev => ({...prev, fit_intercept
 															:e.target.checked}))}
 														/>
 														<FormControlLabel
 															control={<Checkbox />}
 															label="positive"
-															checked={existingConfig.positive}
+															checked={selectedParam.positive}
 															onChange={(e) => setSelectedParam(prev => ({...prev, positive
 															:e.target.checked}))}
 														/>
