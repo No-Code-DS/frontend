@@ -83,7 +83,7 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 		});
 		const responseData = await response.json();
 		console.log(responseData)
-		checkStatus();
+		// checkStatus();
 		setLoadingIconDisplay(true);
 		setInterval(() => {checkStatus()}, 3000);
 	}
