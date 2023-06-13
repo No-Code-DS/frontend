@@ -9,7 +9,7 @@ export default function DataSource(props) {
  preserveAspectRatio="xMidYMid meet">
 
 <g transform="translate(0.000000,257.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+fill={props.color ?? "#000"} stroke="none">
 <path d="M850 2564 c-19 -2 -78 -9 -130 -15 -318 -35 -567 -132 -637 -247 -29
 -47 -29 -77 0 -123 91 -148 428 -250 882 -265 432 -15 859 70 1019 203 40 33
 76 91 76 123 0 50 -57 118 -140 167 -93 54 -281 109 -480 138 -100 15 -511 28

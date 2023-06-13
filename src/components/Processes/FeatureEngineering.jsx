@@ -87,7 +87,7 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
   return (
     <Box sx={{...classes.processBox}}>
       <IconButton onClick={() => setOpen(true)}>
-				<FeatureEngineeringIcon style={{ transform: 'scale(2.5)' }} />
+				<FeatureEngineeringIcon style={{ transform: 'scale(2.0)' }} />
 			</IconButton>
 
       <Dialog open={open} maxWidth={false} fullWidth={true} sx={{...classes.cleanDialogContainer}}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
- Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, Typography, Button, Stack,
+ Dialog, DialogTitle, DialogContent, TextField, Box, Typography, Button, Stack,
 } from "@mui/material";
 
 import { Cookies } from 'react-cookie';
@@ -10,7 +10,7 @@ import {
   Link as RouterLink,
 } from "react-router-dom";
 
-const statusColors = {"Deployed": "green", "Failed": "red", "Training": "orange"}
+const statusColors = {"Deployed": "#02B940", "Failed": "#F43C3C", "Training": "#F8BA1B", "Cleaning": "#808080", "Trained": "#00FF57", "Empty": "#808080", "FE": "#808080"}
 
 export const Models = ({setProjectId}) => {
 	const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ export const Models = ({setProjectId}) => {
       },
     });
     let jsonData = await response.json();
-    console.log(jsonData)
+
     setProjects(jsonData);
   }
 
@@ -124,14 +124,14 @@ export const Models = ({setProjectId}) => {
               </Box>
 
               <Box display="flex" justifyContent="space-between">
-                <Typography style={{ color: "#6c6c6c", fontWeight: "bold"}}>
+                <Typography style={{ color: "#808080", fontWeight: "500"}}>
                   Created at: <br/>
                   {model.created_at.replace("T", " ").split(".")[0]}
                 </Typography>
 
                 <Typography variant="h7" style={{ color: statusColors[model.status], fontWeight: "bold" }}>
                   <br/>
-                  hi
+                  <i class="fa-solid fa-circle"></i> {model.status}
                 </Typography>
               </Box>
 

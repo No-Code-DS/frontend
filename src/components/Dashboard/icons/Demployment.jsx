@@ -10,7 +10,7 @@ export default function Demployment(props) {
             preserveAspectRatio="xMidYMid meet">
 
             <g transform="translate(0.000000,245.000000) scale(0.100000,-0.100000)"
-            fill="#000000" stroke="none">
+            fill={props.color ?? "#000"} stroke="none">
             <path d="M820 2417 c-184 -53 -319 -221 -320 -399 0 -31 -5 -40 -29 -52 -42
             -22 -106 -99 -119 -144 -43 -144 34 -296 172 -337 74 -22 1138 -22 1212 0 138
             41 215 193 172 337 -15 50 -79 123 -132 150 -46 23 -56 34 -56 63 0 38 -49
