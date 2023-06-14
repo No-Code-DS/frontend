@@ -85,7 +85,7 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 		console.log(responseData)
 		// checkStatus();
 		setLoadingIconDisplay(true);
-		setInterval(() => {checkStatus()}, 3000);
+		// const checkStatusInterval = setInterval(() => {checkStatus()}, 3000);
 	}
 
 	useEffect(() => {

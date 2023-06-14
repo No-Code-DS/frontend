@@ -36,7 +36,7 @@ const classes = {
 		flexDirection: "column",
 		justifyContent: "space-between",
 		height: "240px",
-		width: "480px",
+		width: "450px",
 		borderRadius: "5px",
 		boxShadow: "0 2px 4px 0 rgba(56, 154, 244, 0.15)",
 		padding: "20px", 

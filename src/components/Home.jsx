@@ -38,7 +38,7 @@ export const Home = () => {
 							</Typography>
 							<Box sx={{...classes.buttons}}>
 								<Stack direction="row" spacing={2}>
-									<Button variant="contained" style={{ backgroundColor: "#389AF4"}}>
+									<Button variant="contained" style={{ backgroundColor: "#389AF4"}}> 
 										<Link component={RouterLink} to="/login" sx={{padding: "5px 30px", fontSize: "1.2em", color:"#fff", textTransform: "none", textDecoration: "none"}}>
 											Get Started
 										</Link>
