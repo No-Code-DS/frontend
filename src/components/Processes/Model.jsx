@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import ModelIcon from '../Dashboard/icons/ModelIcon';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem, TextField, BottomNavigation, FormControlLabel, Checkbox} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Stack, FormControl, InputLabel, Select, MenuItem, TextField, Typography,  FormControlLabel, Checkbox} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Cookies } from 'react-cookie';
 import classes from '../../styles/processStyles';
@@ -52,7 +52,6 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 	}
 	
 	async function checkStatus() {
-		console.log("hi")
 		const response = await fetch(`/api/projects/${projectId}/model`, {
 			method: 'GET',
 			headers: { 
@@ -62,7 +61,7 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		return responseData;
 	}
 
 	async function handleSubmit() {
@@ -85,7 +84,13 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 		console.log(responseData)
 		// checkStatus();
 		setLoadingIconDisplay(true);
-		// const checkStatusInterval = setInterval(() => {checkStatus()}, 3000);
+		const checkStatusInterval = setInterval(async () => {
+			let status = await checkStatus();
+			if (status.status === "Trained") {
+				clearInterval(checkStatusInterval);
+				setResult(status.metrics);
+			}
+		}, 3000);
 	}
 
 	useEffect(() => {
@@ -181,9 +186,17 @@ export const Model = ({projectId, existingColumn, existingOption, existingParam,
 					<Stack spacing={1} display="flex" justifyContent="center" alignItems="center" marginTop="20px">
 						{loadingIconDisplay ? 
 							<>
-								<CircularProgress />
-								<span>Model is being trained</span>
-								{result ? <span>{result}</span> : null}
+								{result ? 
+									<Stack display="flex" justifyContent="center" alignItems="center" marginTop="20px">
+										<Typography variant="h7" style={{color:"green", fontWeight:"bold"}}>Training finished</Typography>
+										<p style={{margin:"auto"}}>Metrics:</p> 
+										<span>MAE: {result.mae}, MSE: {result.mse} </span>
+									</Stack>: 
+									<>
+										<CircularProgress />
+										<span>Model is being trained</span>
+									</>
+									}
 							</> : null}
 					</Stack>
 					</Paper>
