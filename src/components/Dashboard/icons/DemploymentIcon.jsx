@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon } from '@mui/material';
 
-export default function Demployment(props) {
+export default function DemploymentIcon(props) {
     return (
         <SvgIcon 
             {...props}

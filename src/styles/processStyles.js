@@ -35,8 +35,23 @@ const classes = {
     chosenColumn: css({
         width: "50px",
         height: "40px",
+    }),
+    deploymentDialogContainer: css({
+        width: "50%",
+        // height: "1000px",
+        margin: "auto",
+    }),
+    deploymentWindowContainer: css({
+        margin: "auto",
+        height: "80%",
+        width: "80%",
+    }),
+    deploymentWindow: css ({
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column"
     })
-
 };
 
 export default classes;

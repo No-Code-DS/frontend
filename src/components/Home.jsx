@@ -19,7 +19,7 @@ import {
 import Clean from "./Dashboard/icons/Clean";
 import FeatureEngineeringIcon from "./Dashboard/icons/FeatureEngineeringIcon";
 import ModelIcon from "./Dashboard/icons/ModelIcon";
-import Deployment from "./Dashboard/icons/Demployment";
+import DeploymentIcon from "./Dashboard/icons/DemploymentIcon";
 
 export const Home = () => {
 	return (
@@ -125,7 +125,7 @@ export const Home = () => {
 					</Box>
 					<Box sx={{...classes.featureBox}}>
 						<Box>
-							<Deployment  style={{ margin: "auto", transform: 'scale(3)' }}color="#389AF4" />
+							<DeploymentIcon  style={{ margin: "auto", transform: 'scale(3)' }}color="#389AF4" />
 						</Box>
 
 						<Typography variant="h5" align="center" sx={{...classes.featureBoxTitle}}>

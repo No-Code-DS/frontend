@@ -8,17 +8,17 @@ const classes = {
 		justifyContent: "space-between",
 		alignItems: "center"
 	}),
-    stack: css({
-		height: "100vh",
-    }),
-    sideBar: css({
-		// padding: "0px",
-		backgroundColor: "#fff",
-    }),
-    board: css({
-        // padding: "auto",
-    }),
-    modelsContainer: css({
+	stack: css({
+	height: "100vh",
+	}),
+	sideBar: css({
+	// padding: "0px",
+	backgroundColor: "#fff",
+	}),
+	board: css({
+			// padding: "auto",
+	}),
+	modelsContainer: css({
 		width: "90%",
 		padding: "50px 0",
 		margin: "auto",
@@ -27,9 +27,9 @@ const classes = {
 		// flexDirection: "row",
 		alignItems: "center",
 		// alignContent: "flex-start"
-		justifyContent: "space-between",
+		// justifyContent: "space-between",
 		gap: "20px",
-    }),
+	}),
 	model: css({
 		// flex: "0 0 360px",
 		display: "flex",

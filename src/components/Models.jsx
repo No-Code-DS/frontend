@@ -30,7 +30,7 @@ export const Models = ({setProjectId}) => {
       },
     });
     let jsonData = await response.json();
-
+    console.log(jsonData)
     setProjects(jsonData);
   }
 
@@ -131,7 +131,7 @@ export const Models = ({setProjectId}) => {
 
                 <Typography variant="h7" style={{ color: statusColors[model.status], fontWeight: "bold" }}>
                   <br/>
-                  <i class="fa-solid fa-circle"></i> {model.status}
+                  <i className="fa-solid fa-circle"></i> {model.status}
                 </Typography>
               </Box>
 

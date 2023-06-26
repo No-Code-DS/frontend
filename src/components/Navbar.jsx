@@ -7,8 +7,6 @@ import { Box } from '@mui/material';
 import classes from '../styles/navBarStyles';
 import { Cookies } from 'react-cookie';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-
-
 import {
   Link as RouterLink,
 } from "react-router-dom";
@@ -37,14 +35,11 @@ function ElevationScroll(props) {
         color: "#fff",
       }
   })
-
 }
 
 export const Navbar = ({setLoginStatus}, props) => {
 	const storedCookies = new Cookies();
 	const tokenCookie = storedCookies.get("token");
-
-  console.log();
 
   return (
     <ElevationScroll {...props}>
@@ -91,6 +86,7 @@ export const Navbar = ({setLoginStatus}, props) => {
                     <Link component={RouterLink} to="/" sx={{...classes.navItem}} onClick={() => {
                       storedCookies.remove("token");
                       setLoginStatus(false);
+                      window.location.reload(true);
                     }}>
                       Logout
                     </Link>
