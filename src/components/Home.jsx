@@ -66,11 +66,11 @@ export const Home = () => {
 			<Box style={{ marginTop: "35px", width: "100%"}} >
 				<Box sx={{...classes.tutorial}} >
 					<iframe width="760" height="385" src="https://www.youtube.com/embed/RBSUwFGa6Fk" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-					<Stack direction="column" alignItems="start" spacing={3} sx={{ width: "45%"}}>
-						<Typography variant="h3" align="left">
-							Watch what you can do with our tool
+					<Stack direction="column" alignItems="start" spacing={1} sx={{ width: "45%"}} >
+						<Typography variant="h4" align="left" sx={{padding:"15px"}}>
+							See what you can do with our tool
 						</Typography>
-						<Typography variant="h6" align="left" style={{ color: "#808080"}}>
+						<Typography variant="h6" align="left" style={{ color: "#808080"}} sx={{padding:"15px"}}>
 							See how No-Code tools can be used to build reliable and optimized data driven solutions with ease.
 						</Typography>
 					</Stack>

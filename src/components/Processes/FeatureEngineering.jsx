@@ -214,6 +214,7 @@ export const FeatureEngineering = ({dataSourceId, projectId, existingSelectedCol
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">Close</Button>
 					<Button onClick={() => handleSubmit()} color="primary" autoFocus >Submit</Button>
+					<Button onClick={() => handleSubmit()} color="primary" autoFocus >Refresh</Button>
 				</DialogActions>
 
 			</Dialog>
