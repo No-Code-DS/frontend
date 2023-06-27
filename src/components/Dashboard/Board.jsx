@@ -25,7 +25,11 @@ export const Board = ({activeProcesses, handleProcessCancel}) => {
                 null 
               }
               </Stack>
-             <ArrowRightAltIcon style={{ transform: 'scale(1.5)', }} />
+              {index !== 4 ? 
+                <ArrowRightAltIcon style={{ transform: 'scale(1.5)', }} />
+                :
+                null
+             }
             </Stack> 
           ))}
         </Stack>
