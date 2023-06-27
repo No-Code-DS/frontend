@@ -66,14 +66,6 @@ export const Navbar = ({setLoginStatus}, props) => {
                   Pricing
                 </Link>
 
-                <Link component={RouterLink} to="/pricing" sx={{...classes.navItem}}>
-                  Resources
-                </Link>
-
-                <Link component={RouterLink} to="/pricing" sx={{...classes.navItem}}>
-                  Blog
-                </Link>
-
                 {tokenCookie ?
                   <Link component={RouterLink} to="/models" sx={{...classes.navItem}}>
                     Models
