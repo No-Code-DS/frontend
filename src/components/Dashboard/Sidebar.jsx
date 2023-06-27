@@ -51,6 +51,9 @@ export const Sidebar = ({activeProcesses, handleButtonClick, handleProcessCancel
         }
         if (project.model != null) {
           processes.push({"order": 4, "component": <Model projectId={curProjectId} existingColumn={project.model.prediction_field} existingConfig={project.model.config} />});
+          if (project.status == "Deployed") {
+            processes.push({"order": 5, "component": <Deployment />});
+          }
         }
         handleAddProcess(false, false, processes);
       }
